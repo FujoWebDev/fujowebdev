@@ -29,6 +29,12 @@
         background-color: var(--fujo-cream);
         color: var(--text-color-base);
       }
+      header {
+        max-width: var(--body-width);
+      }
+      main {
+        max-width: var(--body-width);
+      }
       h1 {
         font-family: "freude", sans-serif;
         font-weight: 400;
@@ -37,11 +43,20 @@
         font-size: 3rem;
         -webkit-text-stroke: 1px var(--terminal-dark);
       }
+      .logo {
+        max-width: 80%;
+        display: block;
+      }
+      .roster img {
+        max-width: 100%;
+        display: block;
+      }
     </style>
   </head>
   <body>
     <header>
       <img
+        class="logo"
         src="./images/bobatan-logo.png"
         alt="The logo for The Fujoshi Guide to Web Development. The graphic is aqua, orange, and pink text surrounded by a lavender bubble. Pink hearts bubble up from the word ‘web’ in the title. The word ‘to’ is framed by a terminal. On the left side of the title is a stylized computer screen showing an image of Boba-tan, the BobaBoard Mascot, wearing a raccoon kigurumi, glasses, and waving in greeting."
       />
