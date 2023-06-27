@@ -2,14 +2,136 @@
 ---
 
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="stylesheet" href="https://use.typekit.net/exd6spk.css" />
+    <title>The Fujoshi Guide to Web Development — Funded on Kickstarter</title>
+  </head>
+  <body>
+    <header>
+      <img
+        class="logo"
+        src="./images/bobatan-logo.png"
+        alt="The logo for The Fujoshi Guide to Web Development. The graphic is aqua, orange, and pink text surrounded by a lavender bubble. Pink hearts bubble up from the word ‘web’ in the title. The word ‘to’ is framed by a terminal. On the left side of the title is a stylized computer screen showing an image of Boba-tan, the BobaBoard Mascot, wearing a raccoon kigurumi, glasses, and waving in greeting."
+      />
+    </header>
+    <main>
+      <a
+        href="https://www.kickstarter.com/projects/essential-randomness/the-fujoshi-guide-to-web-development"
+      >
+        <figure class="roster">
+          <img
+            src="./images/roster-with-names.png"
+            alt="The character roster for The Fujoshi Guide to Web Development. The title is located near the bottom of the graphic in aqua, orange, and pink text surrounded by a lavender bubble. Pink hearts bubble up from the word ‘web’ in the title. The word ‘to’ is framed by a terminal. On the left side of the title is a stylized computer screen showing an image of Boba-tan, the BobaBoard Mascot, wearing a raccoon kigurumi, glasses, and waving in greeting. The background shows six characters that represent from left to right: Git, GitHub, Terminal, CSS, HTML, and ARIA. The background colors form a rainbow."
+          />
+        </figure>
+      </a>
+      <h1>The project</h1>
+      <p>
+        The Fujoshi Guide to Web Development is a series of zines/books
+        featuring anthropomorphized versions of programming languages and
+        concepts (aka gijinka), each one engineered from the ground up to cater
+        to transformational fandom (that is, people who create fanfictions,
+        fanarts, meta, and much more), and their sensibilities and interests.
+      </p>
+      <a
+        class="call-to-action"
+        href="https://www.kickstarter.com/projects/essential-randomness/the-fujoshi-guide-to-web-development"
+        >Back us on
+        <img
+          src="./images/kickstarter-logo-full.png"
+          alt="Kickstarter logo"
+        /></a
+      >
+    </main>
+  </body>
 </html>
+
+<style>
+  /* Handmade reset */
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    /* font family here because otherwise inputs don't inherit */
+    font-family: "nunito", sans-serif;
+  }
+  body {
+    --body-width: 750px;
+    --fujo-cream: #f7eedf;
+    --fujo-purple: #c29fc9;
+    --fujo-red: #ff7976;
+    --fujo-light-blue: #bbf7dd;
+    --terminal-dark: #464258;
+    --kickstarter-green: #05ce78;
+    --text-color-base: #56411e;
+    --text-color-disabled: #d0c4af;
+    background-color: var(--fujo-cream);
+    color: var(--text-color-base);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-block: 20px;
+  }
+  header {
+    max-width: var(--body-width);
+    margin-bottom: 35px;
+  }
+  main {
+    max-width: var(--body-width);
+  }
+  h1 {
+    font-family: "freude", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    color: var(--fujo-red);
+    font-size: 3rem;
+    -webkit-text-stroke: 1px var(--terminal-dark);
+    text-align: center;
+    margin-block-start: 3rem;
+  }
+  p {
+    line-height: 1.4em;
+    margin-top: 1rem;
+  }
+  .logo {
+    max-width: 80%;
+    display: block;
+    margin: 0 auto;
+  }
+  .roster img {
+    max-width: 100%;
+    display: block;
+  }
+  .call-to-action {
+    background-color: white;
+    padding: 15px 20px;
+    border: 2px solid var(--kickstarter-green);
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    font-weight: bold;
+    color: #317163;
+    text-decoration: none;
+    align-items: center;
+    max-width: 400px;
+    border-radius: 20px;
+    box-shadow: 0 3px 14px 0 rgba(0, 0, 0, 0.1);
+    margin: 0 auto;
+    transition: all 150ms ease-out;
+    line-height: 1rem;
+    margin-block-start: 2.4rem;
+  }
+  .call-to-action:hover {
+    cursor: pointer;
+    box-shadow: 0 3px 16px 0 rgba(0, 0, 0, 0.2);
+    transform: scale(1.01);
+  }
+  .call-to-action > img {
+    display: block;
+    max-width: 100%;
+  }
+</style>
