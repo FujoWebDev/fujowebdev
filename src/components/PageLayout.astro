@@ -1,5 +1,16 @@
 ---
 import Header from "../components/Header.astro";
+
+interface Props {
+  pageTitle?: string;
+}
+
+const props = Astro.props;
+
+let pageTitle = "Fully funded on Kickstarter";
+if (props.pageTitle) {
+  pageTitle = props.pageTitle;
+}
 ---
 
 <html lang="en">
@@ -9,7 +20,7 @@ import Header from "../components/Header.astro";
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <title>
-      The Fujoshi Guide to Web Development — Now raising on Kickstarter
+      The Fujoshi Guide to Web Development — {pageTitle}
     </title>
     <link rel="stylesheet" href="https://use.typekit.net/exd6spk.css" />
     <style is:global>
