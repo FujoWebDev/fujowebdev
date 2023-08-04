@@ -28,3 +28,38 @@ import PageLayout from "../components/PageLayout.astro";
     <img src="./images/kickstarter-logo-full.png" alt="Kickstarter logo" /></a
   >
 </PageLayout>
+
+<style>
+  .roster img {
+    max-width: 100%;
+    display: block;
+  }
+  .call-to-action {
+    background-color: white;
+    padding: 15px 20px;
+    border: 2px solid var(--kickstarter-green);
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    font-weight: bold;
+    color: #317163;
+    text-decoration: none;
+    align-items: center;
+    max-width: 400px;
+    border-radius: 20px;
+    box-shadow: 0 3px 14px 0 rgba(0, 0, 0, 0.1);
+    margin: 0 auto;
+    transition: all 150ms ease-out;
+    line-height: 1rem;
+    margin-block-start: 2.4rem;
+  }
+  .call-to-action:hover {
+    cursor: pointer;
+    box-shadow: 0 3px 16px 0 rgba(0, 0, 0, 0.2);
+    transform: scale(1.01);
+  }
+  .call-to-action > img {
+    display: block;
+    max-width: 100%;
+  }
+</style>
