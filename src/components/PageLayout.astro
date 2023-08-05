@@ -1,5 +1,6 @@
 ---
 import Header from "../components/Header.astro";
+import Nav from "./Nav.astro";
 
 interface Props {
   pageTitle?: string;
@@ -37,6 +38,7 @@ if (props.pageTitle) {
         --fujo-cream: #f7eedf;
         --fujo-purple: #c29fc9;
         --fujo-red: #ff7976;
+        --fujo-pink: #f4a8ab;
         --fujo-light-blue: #bbf7dd;
         --terminal-dark: #464258;
         --kickstarter-green: #05ce78;
@@ -69,6 +71,7 @@ if (props.pageTitle) {
     </style>
   </head>
   <body>
+    <Nav />
     <Header />
     <main>
       <slot />
