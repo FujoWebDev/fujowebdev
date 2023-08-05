@@ -1,7 +1,19 @@
 ---
+import Nav from "./Nav.astro";
+
+interface Props {
+  multiLine?: boolean;
+}
+
+const props = Astro.props;
 ---
 
-<header>
+<header
+  class:list={{
+    "single-line": !props.multiLine,
+  }}
+>
+  <Nav />
   <img
     class="logo"
     src="./images/bobatan-logo.png"
@@ -13,10 +25,23 @@
   header {
     max-width: var(--body-width);
     margin-bottom: 35px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  header.single-line {
+    display: flex;
+    flex-direction: row-reverse;
+    flex-wrap: wrap;
+    justify-content: center;
   }
   .logo {
     max-width: 80%;
     display: block;
     margin: 0 auto;
+  }
+  .single-line .logo {
+    width: 400px;
+    height: auto;
   }
 </style>
