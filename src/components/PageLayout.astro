@@ -1,9 +1,9 @@
 ---
 import Header from "../components/Header.astro";
-import Nav from "./Nav.astro";
 
 interface Props {
   pageTitle?: string;
+  multiLineHeader?: boolean;
 }
 
 const props = Astro.props;
@@ -71,8 +71,7 @@ if (props.pageTitle) {
     </style>
   </head>
   <body>
-    <Nav />
-    <Header />
+    <Header multiLine={props.multiLineHeader} />
     <main>
       <slot />
     </main>
