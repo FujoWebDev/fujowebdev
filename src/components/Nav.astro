@@ -1,0 +1,45 @@
+---
+const url = Astro.url.pathname;
+---
+
+<nav>
+  <ul>
+    <li class:list={{ current: url === "/" }}>
+      <a href="/">Home</a>
+    </li>
+    <li class:list={{ current: url === "/characters" }}>
+      <a href="/characters">Characters</a>
+    </li>
+    <li class:list={{ current: url === "/about-us" }}>
+      <a href="/about-us">About Us</a>
+    </li>
+  </ul>
+</nav>
+
+<style>
+  ul {
+    display: flex;
+    gap: 15px;
+  }
+  li {
+    list-style: none;
+  }
+  a {
+    text-decoration: none;
+    color: var(--text-color-base);
+  }
+  a:hover {
+    text-decoration: var(--fujo-pink) underline wavy;
+  }
+  .current,
+  .current a {
+    color: var(--fujo-red);
+  }
+  .current a:hover {
+    text-decoration-color: var(--fujo-red);
+  }
+  nav {
+    margin: 20px;
+    font-size: 1.4rem;
+  }
+</style>
