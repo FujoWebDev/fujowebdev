@@ -4,12 +4,11 @@ interface Props {
   imageSrc: string;
   likes: string[];
   dislikes: string[];
-  about: string;
   tropes: string[];
   trivia: string;
 }
 
-const { name, likes, dislikes, about, tropes, trivia, imageSrc } = Astro.props;
+const { name, likes, dislikes, tropes, trivia, imageSrc } = Astro.props;
 ---
 
 <article>
@@ -29,7 +28,7 @@ const { name, likes, dislikes, about, tropes, trivia, imageSrc } = Astro.props;
   </div>
   <div>
     <h3>About Him</h3>
-    <div>{about}</div>
+    <slot />
   </div>
   <div>
     <h3>Tropes</h3>
@@ -37,9 +36,15 @@ const { name, likes, dislikes, about, tropes, trivia, imageSrc } = Astro.props;
       {tropes.map((trope) => <li>{trope}</li>)}
     </ul>
   </div>
-  <div>{trivia}</div>
+  <div>
+    <h3>Trivia</h3>
+    {trivia}
+  </div>
 </article>
 <style>
+  h2 {
+    text-transform: capitalize;
+  }
   img {
     max-height: 400px;
   }

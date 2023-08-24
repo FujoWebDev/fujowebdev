@@ -1,12 +1,33 @@
 ---
 import PageLayout from "../components/PageLayout.astro";
 import CharacterCard from "../components/CharacterCard.astro";
-import git from "../images/characters-profiles/git.png";
+
+import { getCollection } from "astro:content";
+
+const data = await getCollection("characters");
 ---
 
 <PageLayout pageTitle="Our Characters">
   <h1>Our characters</h1>
-  <CharacterCard
+  {
+    data.map(async (character) => {
+      const renderedBody = await character.render();
+      console.log(renderedBody);
+      return (
+        <CharacterCard
+          name={character.slug}
+          imageSrc={character.data.image_src}
+          likes={character.data.likes}
+          dislikes={character.data.dislikes}
+          tropes={character.data.tropes}
+          trivia={character.data.trivia}
+        >
+          <renderedBody.Content />
+        </CharacterCard>
+      );
+    })
+  }
+  <!-- <CharacterCard
     name="Git"
     imageSrc={git}
     likes={["Gossip", "Junk Food", "People’s attention"]}
@@ -14,5 +35,5 @@ import git from "../images/characters-profiles/git.png";
     about="Localhost HQ’s resident catboy is as cute as he is changeable. Kind and sweet on the surface, his friendly demeanor can easily turn catty when provoked out of strangers’ sight."
     tropes={["Fake Cutie", "The Prima Donna", "Angel/Devil Ship"]}
     trivia="Git (the technology) will officially be 18 on April 7th, 2023. This equals 10010 years old in programming years."
-  />
+  /> -->
 </PageLayout>
