@@ -1,0 +1,46 @@
+---
+interface Props {
+  name: string;
+  imageSrc: string;
+  likes: string[];
+  dislikes: string[];
+  about: string;
+  tropes: string[];
+  trivia: string;
+}
+
+const { name, likes, dislikes, about, tropes, trivia, imageSrc } = Astro.props;
+---
+
+<article>
+  <h2>{name}</h2>
+  <img src={imageSrc} />
+  <div>
+    <h3>Likes</h3>
+    <ul>
+      {likes.map((like) => <li>{like}</li>)}
+    </ul>
+  </div>
+  <div>
+    <h3>Dislikes</h3>
+    <ul>
+      {dislikes.map((dislike) => <li>{dislike}</li>)}
+    </ul>
+  </div>
+  <div>
+    <h3>About Him</h3>
+    <div>{about}</div>
+  </div>
+  <div>
+    <h3>Tropes</h3>
+    <ul>
+      {tropes.map((trope) => <li>{trope}</li>)}
+    </ul>
+  </div>
+  <div>{trivia}</div>
+</article>
+<style>
+  img {
+    max-height: 400px;
+  }
+</style>
