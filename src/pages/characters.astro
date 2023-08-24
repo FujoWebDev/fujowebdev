@@ -1,21 +1,18 @@
 ---
 import PageLayout from "../components/PageLayout.astro";
-import bobawip from "../images/bobawip.png";
+import CharacterCard from "../components/CharacterCard.astro";
+import git from "../images/characters-profiles/git.png";
 ---
 
 <PageLayout pageTitle="Our Characters">
   <h1>Our characters</h1>
-  <img src={bobawip} />
-  <div>Under Construction</div>
+  <CharacterCard
+    name="Git"
+    imageSrc={git}
+    likes={["Gossip", "Junk Food", "People’s attention"]}
+    dislikes={["Physical exercise", "Desserts", "GitHub’s attention"]}
+    about="Localhost HQ’s resident catboy is as cute as he is changeable. Kind and sweet on the surface, his friendly demeanor can easily turn catty when provoked out of strangers’ sight."
+    tropes={["Fake Cutie", "The Prima Donna", "Angel/Devil Ship"]}
+    trivia="Git (the technology) will officially be 18 on April 7th, 2023. This equals 10010 years old in programming years."
+  />
 </PageLayout>
-
-<style>
-  img {
-    display: block;
-    max-width: 100%;
-  }
-  div {
-    text-align: center;
-    font-size: x-large;
-  }
-</style>
