@@ -11,6 +11,18 @@ const teamCollection = defineCollection({
     }),
 });
 
+const characterCollection = defineCollection({
+  type: "content",
+  schema: z.object({
+    image_src: z.string(),
+    likes: z.string().array(),
+    dislikes: z.string().array(),
+    tropes: z.string().array(),
+    trivia: z.string(),
+  }),
+});
+
 export const collections = {
   team: teamCollection,
+  characters: characterCollection,
 };
