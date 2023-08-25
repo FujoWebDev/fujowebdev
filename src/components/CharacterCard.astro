@@ -4,7 +4,7 @@ interface Props {
   imageSrc: string;
   likes: string[];
   dislikes: string[];
-  tropes: string[];
+  tropes: (string | { url: string; name: string })[];
   trivia: string;
 }
 

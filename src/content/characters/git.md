@@ -10,7 +10,8 @@ dislikes:
   - Desserts
   - GitHub’s attention
 tropes:
-  - Fake Cutie
+  - name: Fake Cutie
+    url: http://whatever.com
   - The Prima Donna
   - Angel/Devil Ship
 trivia: Git (the technology) will officially be 18 on April 7th, 2023. This equals `10010` years old in programming years.

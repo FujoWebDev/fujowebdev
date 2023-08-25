@@ -18,7 +18,15 @@ const characterCollection = defineCollection({
     home: z.enum(["localhost", "browserland"]),
     likes: z.string().array(),
     dislikes: z.string().array(),
-    tropes: z.string().array(),
+    tropes: z
+      .union([
+        z.string(),
+        z.object({
+          name: z.string(),
+          url: z.string().url(),
+        }),
+      ])
+      .array(),
     trivia: z.string(),
   }),
 });
