@@ -15,6 +15,7 @@ const characterCollection = defineCollection({
   type: "content",
   schema: z.object({
     image_src: z.string(),
+    home: z.enum(["localhost", "browserland"]),
     likes: z.string().array(),
     dislikes: z.string().array(),
     tropes: z.string().array(),

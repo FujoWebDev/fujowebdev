@@ -1,5 +1,6 @@
 ---
 image_src: images/characters-profiles/github.png
+home: localhost
 likes:
   - Floating around
   - Showing up uninvited
