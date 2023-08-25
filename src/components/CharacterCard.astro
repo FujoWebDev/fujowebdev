@@ -38,7 +38,7 @@ const { name, likes, dislikes, tropes, trivia, imageSrc } = Astro.props;
   </div>
   <div>
     <h3>Trivia</h3>
-    {trivia}
+    <p set:html={trivia} />
   </div>
 </article>
 <style>

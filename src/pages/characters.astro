@@ -3,6 +3,7 @@ import PageLayout from "../components/PageLayout.astro";
 import CharacterCard from "../components/CharacterCard.astro";
 
 import { getCollection } from "astro:content";
+import marked from "marked";
 
 const data = await getCollection("characters");
 ---
@@ -12,7 +13,6 @@ const data = await getCollection("characters");
   {
     data.map(async (character) => {
       const renderedBody = await character.render();
-      console.log(renderedBody);
       return (
         <CharacterCard
           name={character.slug}
@@ -20,7 +20,7 @@ const data = await getCollection("characters");
           likes={character.data.likes}
           dislikes={character.data.dislikes}
           tropes={character.data.tropes}
-          trivia={character.data.trivia}
+          trivia={marked.parse(character.data.trivia)}
         >
           <renderedBody.Content />
         </CharacterCard>
