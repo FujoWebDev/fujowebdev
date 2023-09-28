@@ -1,0 +1,10 @@
+---
+import { getCollection } from "astro:content";
+import PageLayout from "../components/PageLayout.astro";
+
+const team = await getCollection("team");
+---
+
+<PageLayout pageTitle="Our team">
+  <h1>Our team</h1>
+</PageLayout>
