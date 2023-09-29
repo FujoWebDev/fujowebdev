@@ -44,8 +44,36 @@ const memberEntry = (await getEntry("team", member)) as CollectionEntry<"team">;
         ))
       }
     </ul>
-    <a href="/team/">See other members</a>
-    {previous && <a href={`/team/${previous}`}>See previous member</a>}
-    {next && <a href={`/team/${next}`}>See next member</a>}
+    <nav>
+      {previous && <a href={`/team/${previous}`}>Previous member</a>}
+      <a href="/team/">All members</a>
+      {next && <a href={`/team/${next}`}>Next member</a>}
+    </nav>
   </div>
 </PageLayout>
+<style>
+  img {
+    max-width: 150px;
+  }
+  ul {
+    padding-left: 40px;
+  }
+  section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  h2 {
+    grid-column: span 2;
+  }
+  article {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  nav {
+    margin-top: 30px;
+    display: flex;
+    gap: 15px;
+  }
+</style>

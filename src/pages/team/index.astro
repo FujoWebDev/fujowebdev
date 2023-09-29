@@ -7,30 +7,55 @@ const team = await getCollection("team");
 
 <PageLayout pageTitle="Our team">
   <h1>Our team</h1>
-  {
-    team.map((member) => {
-      return (
-        <div>
-          <h2>
-            <a href={`/team/${member.id}`}>{member.data.name}</a>
-          </h2>
-          <img src={member.data.avatar.src} />
-          <h3>Roles</h3>
-          <ul>
-            {member.data.roles.map((role) => (
-              <li>{role}</li>
-            ))}
-          </ul>
-          <h3>Contacts</h3>
-          <ul>
-            {member.data.contacts.map((contact) => (
-              <li>
-                <a href={contact}>{contact}</a>
-              </li>
-            ))}
-          </ul>
-        </div>
-      );
-    })
-  }
+  <div>Note: this page is under construction, more team members exist!</div>
+  <section>
+    {
+      team.map((member) => {
+        return (
+          <article>
+            <h2>
+              <a href={`/team/${member.id}`}>{member.data.name}</a>
+            </h2>
+            <img src={member.data.avatar.src} />
+            <h3>Roles</h3>
+            <ul>
+              {member.data.roles.map((role) => (
+                <li>{role}</li>
+              ))}
+            </ul>
+            <h3>Contacts</h3>
+            <ul>
+              {member.data.contacts.map((contact) => (
+                <li>
+                  <a href={contact}>{contact.substring(8)}</a>
+                </li>
+              ))}
+            </ul>
+          </article>
+        );
+      })
+    }
+  </section>
 </PageLayout>
+
+<style>
+  img {
+    max-width: 150px;
+  }
+  ul {
+    padding-left: 40px;
+  }
+  section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  h2 {
+    grid-column: span 2;
+  }
+  article {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+</style>
