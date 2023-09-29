@@ -1,8 +1,14 @@
-name: essential randomness
-avatar: avatar.png
+name: essential-randomness
+avatar: "./avatars/essential-randomness.png"
 roles:
-  - project lead
   - writer
+  - project lead
   - merch designer
 contacts:
-  - https://essentialrandomness.com
+  - https://experimental.essentialrandomness.com
+  - https://essential-randomness.tumblr.com
+  - https://twitter.com/essentialrandom
+  - https://indiepocalypse.social/@essentialrandom
+  - https://github.com/essential-randomness
+  - https://patreon.com/essentialrandomness
+  - https://ko-fi.com/essentialrandomness

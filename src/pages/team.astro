@@ -7,4 +7,28 @@ const team = await getCollection("team");
 
 <PageLayout pageTitle="Our team">
   <h1>Our team</h1>
+  {
+    team.map((member) => {
+      return (
+        <div>
+          <h2>{member.data.name}</h2>
+          <img src={member.data.avatar.src} />
+          <h3>Roles</h3>
+          <ul>
+            {member.data.roles.map((role) => (
+              <li>{role}</li>
+            ))}
+          </ul>
+          <h3>Contacts</h3>
+          <ul>
+            {member.data.contacts.map((contact) => (
+              <li>
+                <a href={contact}>{contact}</a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      );
+    })
+  }
 </PageLayout>
