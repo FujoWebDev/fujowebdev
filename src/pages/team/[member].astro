@@ -1,0 +1,51 @@
+---
+import type { GetStaticPaths } from "astro";
+import { CollectionEntry, getCollection, getEntry } from "astro:content";
+import PageLayout from "../../components/PageLayout.astro";
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const team = await getCollection("team");
+  return team.map((member, index) => {
+    return {
+      params: {
+        member: member.id,
+      },
+      props: {
+        next: index < team.length - 1 ? team[index + 1].id : null,
+        previous: index > 0 ? team[index - 1].id : null,
+      },
+    };
+  });
+};
+
+const { member } = Astro.params;
+const { previous, next } = Astro.props;
+
+// @ts-ignore
+const memberEntry = (await getEntry("team", member)) as CollectionEntry<"team">;
+---
+
+<PageLayout pageTitle="Our team">
+  <h1>Our team</h1>
+  <div>
+    <h2>{memberEntry.data.name}</h2>
+    <img src={memberEntry.data.avatar.src} />
+    <h3>Roles</h3>
+    <ul>
+      {memberEntry.data.roles.map((role) => <li>{role}</li>)}
+    </ul>
+    <h3>Contacts</h3>
+    <ul>
+      {
+        memberEntry.data.contacts.map((contact) => (
+          <li>
+            <a href={contact}>{contact}</a>
+          </li>
+        ))
+      }
+    </ul>
+    <a href="/team/">See other members</a>
+    {previous && <a href={`/team/${previous}`}>See previous member</a>}
+    {next && <a href={`/team/${next}`}>See next member</a>}
+  </div>
+</PageLayout>
