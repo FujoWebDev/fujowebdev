@@ -55,7 +55,7 @@ const { name, likes, dislikes, tropes, trivia, imageSrc } = Astro.props;
 <style>
   article {
     display: grid;
-    grid-template-columns: 30% 35% 35%;
+    grid-template-columns: 35% 1fr 1fr;
     grid-template-areas:
       "character name name"
       "character likes dislikes"
@@ -67,6 +67,7 @@ const { name, likes, dislikes, tropes, trivia, imageSrc } = Astro.props;
     margin-bottom: 15px;
     border-radius: 10px;
     row-gap: 10px;
+    box-shadow: 2px 2px 0px 0px var(--text-color-disabled);
   }
 
   h2 {
@@ -82,10 +83,36 @@ const { name, likes, dislikes, tropes, trivia, imageSrc } = Astro.props;
     text-shadow: -1px -1px 0 var(--terminal-dark),
       1px -1px 0 var(--terminal-dark), -1px 1px 0 var(--terminal-dark),
       1px 1px 0 var(--terminal-dark);
+    filter: drop-shadow(1px 1px 0px var(--terminal-dark));
   }
 
   article :global(p) {
     margin: 0;
+  }
+
+  article :global(p + p) {
+    margin-top: 10px;
+  }
+
+  ul {
+  }
+
+  li::before {
+    content: "♥";
+    font-size: 10px;
+    color: var(--fujo-pink);
+  }
+
+  li {
+    list-style-type: none;
+    margin-bottom: 3px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  a {
+    color: var(--fujo-red);
   }
 
   h3 {
@@ -98,9 +125,11 @@ const { name, likes, dislikes, tropes, trivia, imageSrc } = Astro.props;
       1px -1px 0 var(--terminal-dark), -1px 1px 0 var(--terminal-dark),
       1px 1px 0 var(--terminal-dark);
     margin-bottom: 8px;
+    filter: drop-shadow(1px 1px 0px var(--terminal-dark));
   }
   img {
-    max-height: 400px;
+    max-height: 475px;
+    align-self: center;
     grid-area: character;
   }
   .likes {
@@ -115,6 +144,10 @@ const { name, likes, dislikes, tropes, trivia, imageSrc } = Astro.props;
   .tropes {
     grid-area: tropes;
   }
+  .tropes ul {
+    column-count: 2;
+    column-gap: 0px;
+  }
   .trivia {
     grid-area: trivia;
   }
@@ -128,12 +161,21 @@ const { name, likes, dislikes, tropes, trivia, imageSrc } = Astro.props;
       text-align: center;
       max-width: 450px;
     }
+
+    ul {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
     .trivia,
     .about-him {
       display: flex;
       flex-direction: column;
       max-width: 80%;
       align-items: center;
+    }
+    .tropes ul {
+      column-count: 1;
     }
   }
 </style>
