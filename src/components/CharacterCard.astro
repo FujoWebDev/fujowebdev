@@ -1,0 +1,181 @@
+---
+interface Props {
+  name: string;
+  imageSrc: string;
+  likes: string[];
+  dislikes: string[];
+  tropes: (string | { url: string; name: string })[];
+  trivia: string;
+}
+
+const { name, likes, dislikes, tropes, trivia, imageSrc } = Astro.props;
+---
+
+<article>
+  <h2>{name}</h2>
+  <img src={imageSrc} />
+  <div class="likes">
+    <h3>Likes</h3>
+    <ul>
+      {likes.map((like) => <li>{like}</li>)}
+    </ul>
+  </div>
+  <div class="dislikes">
+    <h3>Dislikes</h3>
+    <ul>
+      {dislikes.map((dislike) => <li>{dislike}</li>)}
+    </ul>
+  </div>
+  <div class="about-him">
+    <h3>About Him</h3>
+    <slot />
+  </div>
+  <div class="tropes">
+    <h3>Tropes</h3>
+    <ul>
+      {
+        tropes.map((trope) => (
+          <li>
+            {typeof trope === "object" ? (
+              <a href={trope.url}>{trope.name}</a>
+            ) : (
+              trope
+            )}
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+  <div class="trivia">
+    <h3>Trivia</h3>
+    <Fragment set:html={trivia} />
+  </div>
+</article>
+
+<style>
+  article {
+    display: grid;
+    grid-template-columns: 35% 1fr 1fr;
+    grid-template-areas:
+      "character name name"
+      "character likes dislikes"
+      "character about about"
+      "character tropes tropes"
+      "character trivia trivia";
+    background-color: white;
+    padding: 25px 30px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    row-gap: 10px;
+    box-shadow: 2px 2px 0px 0px var(--text-color-disabled);
+  }
+
+  h2 {
+    text-transform: capitalize;
+    grid-area: name;
+    text-transform: capitalize;
+    grid-area: name;
+    font-family: "freude", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    color: var(--fujo-red);
+    font-size: 2.7rem;
+    text-shadow: -1px -1px 0 var(--terminal-dark),
+      1px -1px 0 var(--terminal-dark), -1px 1px 0 var(--terminal-dark),
+      1px 1px 0 var(--terminal-dark);
+    filter: drop-shadow(1px 1px 0px var(--terminal-dark));
+  }
+
+  article :global(p) {
+    margin: 0;
+  }
+
+  article :global(p + p) {
+    margin-top: 10px;
+  }
+
+  ul {
+  }
+
+  li::before {
+    content: "♥";
+    font-size: 10px;
+    color: var(--fujo-pink);
+  }
+
+  li {
+    list-style-type: none;
+    margin-bottom: 3px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  a {
+    color: var(--fujo-red);
+  }
+
+  h3 {
+    font-family: "freude", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    color: var(--fujo-light-blue);
+    font-size: 1.7rem;
+    text-shadow: -1px -1px 0 var(--terminal-dark),
+      1px -1px 0 var(--terminal-dark), -1px 1px 0 var(--terminal-dark),
+      1px 1px 0 var(--terminal-dark);
+    margin-bottom: 8px;
+    filter: drop-shadow(1px 1px 0px var(--terminal-dark));
+  }
+  img {
+    max-height: 475px;
+    align-self: center;
+    grid-area: character;
+  }
+  .likes {
+    grid-area: likes;
+  }
+  .dislikes {
+    grid-area: dislikes;
+  }
+  .about-him {
+    grid-area: about;
+  }
+  .tropes {
+    grid-area: tropes;
+  }
+  .tropes ul {
+    column-count: 2;
+    column-gap: 0px;
+  }
+  .trivia {
+    grid-area: trivia;
+  }
+
+  @media (max-width: 749px) {
+    article {
+      display: flex;
+      flex-direction: column;
+      align-content: center;
+      align-items: center;
+      text-align: center;
+      max-width: 450px;
+    }
+
+    ul {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .trivia,
+    .about-him {
+      display: flex;
+      flex-direction: column;
+      max-width: 80%;
+      align-items: center;
+    }
+    .tropes ul {
+      column-count: 1;
+    }
+  }
+</style>
