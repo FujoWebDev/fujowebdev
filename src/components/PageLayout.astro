@@ -1,6 +1,7 @@
 ---
 import Header from "../components/Header.astro";
 import { ViewTransitions } from 'astro:transitions';
+import OgTags from "./OgTags.astro";
 
 
 interface Props {
@@ -19,9 +20,9 @@ if (props.pageTitle) {
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
+    <OgTags />
     <title>
       The Fujoshi Guide to Web Development — {pageTitle}
     </title>
@@ -90,6 +91,10 @@ if (props.pageTitle) {
         color: var(--fujo-red);
       }
     </style>
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/favicon/site.webmanifest">
   </head>
   <body>
     <Header multiLine={props.multiLineHeader} />
