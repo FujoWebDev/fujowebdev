@@ -1,0 +1,74 @@
+---
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+    memberId: string;
+    name: string;
+    avatar: ImageMetadata;
+    roles: string[];
+    contacts: string[];
+}
+
+const props = Astro.props;
+---
+<article>
+    <h2>
+        <a href={`/team/${props.memberId}`}>{props.name}</a>
+    </h2>
+    <img src={props.avatar.src} />
+    <h3>Roles</h3>
+    <ul>
+        {props.roles.map((role) => (
+        <li>{role}</li>
+        ))}
+    </ul>
+    <h3>Contacts</h3>
+    <ul class="contacts">
+        {props.contacts.map((contact) => (
+        <li>
+            <a href={contact}>{contact.substring(8)}</a>
+        </li>
+        ))}
+    </ul>
+</article>
+<style>
+  img {
+    max-width: 150px;
+    align-self: center;
+  }
+  ul {
+    padding-left: 40px;
+  }
+  h2 a {
+    grid-column: span 2;
+    font-family: "freude", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    color: var(--fujo-light-blue);
+    font-size: 1.7rem;
+    text-shadow: -1px -1px 0 var(--terminal-dark),
+      1px -1px 0 var(--terminal-dark), -1px 1px 0 var(--terminal-dark),
+      1px 1px 0 var(--terminal-dark);
+    margin-bottom: 8px;
+    filter: drop-shadow(1px 1px 0px var(--terminal-dark));
+    text-decoration: none;
+  }
+  h2 a:hover {
+    color: var(--fujo-red);
+  }
+  article {
+    display: flex;
+    flex-direction: column;
+    padding: 25px 30px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    row-gap: 10px;
+    box-shadow: 2px 2px 0px 0px var(--text-color-disabled);
+    background-color: white;  
+    word-break: break-all;
+  }
+  .contacts a {
+    text-decoration: none;
+  }
+</style>
+

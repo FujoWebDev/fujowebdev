@@ -57,7 +57,8 @@ if (props.pageTitle) {
         padding-inline: 15px;
       }
       main {
-        max-width: var(--body-width);
+        max-width: min(100%, var(--body-width));
+        padding-bottom: 30px;
       }
       h1 {
         font-family: "freude", sans-serif;
