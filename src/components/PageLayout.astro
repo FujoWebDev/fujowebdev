@@ -1,5 +1,7 @@
 ---
 import Header from "../components/Header.astro";
+import { ViewTransitions } from 'astro:transitions';
+
 
 interface Props {
   pageTitle?: string;
@@ -24,6 +26,7 @@ if (props.pageTitle) {
       The Fujoshi Guide to Web Development — {pageTitle}
     </title>
     <link rel="stylesheet" href="https://use.typekit.net/exd6spk.css" />
+    <ViewTransitions />
     <style is:global>
       /* Handmade reset */
       * {
