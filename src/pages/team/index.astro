@@ -1,6 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import PageLayout from "../../components/PageLayout.astro";
+import TeamMemberCard from "../../components/TeamMemberCard.astro";
 
 const team = await getCollection("team");
 ---
@@ -12,26 +13,13 @@ const team = await getCollection("team");
     {
       team.map((member) => {
         return (
-          <article>
-            <h2>
-              <a href={`/team/${member.id}`}>{member.data.name}</a>
-            </h2>
-            <img src={member.data.avatar.src} />
-            <h3>Roles</h3>
-            <ul>
-              {member.data.roles.map((role) => (
-                <li>{role}</li>
-              ))}
-            </ul>
-            <h3>Contacts</h3>
-            <ul>
-              {member.data.contacts.map((contact) => (
-                <li>
-                  <a href={contact}>{contact.substring(8)}</a>
-                </li>
-              ))}
-            </ul>
-          </article>
+          <TeamMemberCard
+              memberId={member.id}
+              name={member.data.name}
+              avatar={member.data.avatar}
+              roles={member.data.roles}
+              contacts={member.data.contacts}
+         />
         );
       })
     }
@@ -39,23 +27,10 @@ const team = await getCollection("team");
 </PageLayout>
 
 <style>
-  img {
-    max-width: 150px;
-  }
-  ul {
-    padding-left: 40px;
-  }
   section {
+    margin-top: 20px;
     display: flex;
     flex-direction: column;
-    gap: 20px;
-  }
-  h2 {
-    grid-column: span 2;
-  }
-  article {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
+    gap: 15px;
   }
 </style>

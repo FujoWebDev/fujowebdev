@@ -2,6 +2,7 @@
 import type { GetStaticPaths } from "astro";
 import { CollectionEntry, getCollection, getEntry } from "astro:content";
 import PageLayout from "../../components/PageLayout.astro";
+import TeamMemberCard from "../../components/TeamMemberCard.astro";
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const team = await getCollection("team");
@@ -28,32 +29,33 @@ const memberEntry = (await getEntry("team", member)) as CollectionEntry<"team">;
 <PageLayout pageTitle="Our team">
   <h1>Our team</h1>
   <div>
-    <h2>{memberEntry.data.name}</h2>
-    <img src={memberEntry.data.avatar.src} />
-    <h3>Roles</h3>
-    <ul>
-      {memberEntry.data.roles.map((role) => <li>{role}</li>)}
-    </ul>
-    <h3>Contacts</h3>
-    <ul>
-      {
-        memberEntry.data.contacts.map((contact) => (
-          <li>
-            <a href={contact}>{contact}</a>
-          </li>
-        ))
-      }
-    </ul>
+    <TeamMemberCard
+          transition:name="artist"
+          transition:animate="slide"
+          transition:persist
+          memberId={memberEntry.id}
+          name={memberEntry.data.name}
+          avatar={memberEntry.data.avatar}
+          roles={memberEntry.data.roles}
+          contacts={memberEntry.data.contacts}
+      />
     <nav>
-      {previous && <a href={`/team/${previous}`}>Previous member</a>}
-      <a href="/team/">All members</a>
-      {next && <a href={`/team/${next}`}>Next member</a>}
+      <a class:list={{
+            hidden: !previous
+          }}
+          href={`/team/${previous}`}>Previous</a>
+      <a href="/team/">All</a>
+      <a class:list={{
+            hidden: !next
+          }}
+          href={`/team/${next}`}>Next</a>
     </nav>
   </div>
 </PageLayout>
 <style>
   img {
     max-width: 150px;
+    align-self: center;
   }
   ul {
     padding-left: 40px;
@@ -75,5 +77,9 @@ const memberEntry = (await getEntry("team", member)) as CollectionEntry<"team">;
     margin-top: 30px;
     display: flex;
     gap: 15px;
+    justify-content: space-evenly;
   }
-</style>
+  .hidden {
+    visibility: hidden;
+  }
+  </style>
