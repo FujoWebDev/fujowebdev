@@ -1,4 +1,5 @@
 ---
+name: Github
 image_src: images/characters-profiles/github.png
 home: localhost
 likes:
@@ -10,9 +11,12 @@ dislikes:
   - Spicy food
   - Being rejected
 tropes:
-  - Combat Tentacles
-  - Harmless Villain
-  - Angel/Devil Ship
+  - name: Combat Tentacles
+    url: https://tvtropes.org/pmwiki/pmwiki.php/Main/CombatTentacles
+  - name: Harmless Villain
+    url: https://tvtropes.org/pmwiki/pmwiki.php/Main/HarmlessVillain
+  - name: Angel/Devil Ship
+    url: https://tvtropes.org/pmwiki/pmwiki.php/Main/AngelDevilShipping
 trivia: Cloud-based characters can instantly materialize wherever a web connection exists. Kinda like Castiel.
 ---
 

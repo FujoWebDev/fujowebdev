@@ -32,13 +32,30 @@ const props = Astro.props;
     </ul>
 </article>
 <style>
+
   img {
     max-width: 150px;
     align-self: center;
   }
-  ul {
+
+  ul, .contacts {
     padding-left: 40px;
   }
+
+  li {
+    list-style: none;
+    padding: 0;
+  }
+
+  li::before {
+    content: "\f004";
+    font-family: 'Font Awesome 6 Pro';
+    font-weight: bold;
+    font-size: 10px;
+    padding-right: 3px;
+    color: var(--fujo-pink);
+  }
+
   h2 a {
     grid-column: span 2;
     font-family: "freude", sans-serif;
@@ -53,9 +70,11 @@ const props = Astro.props;
     filter: drop-shadow(1px 1px 0px var(--terminal-dark));
     text-decoration: none;
   }
+
   h2 a:hover {
     color: var(--fujo-red);
   }
+
   article {
     display: flex;
     flex-direction: column;
@@ -67,8 +86,15 @@ const props = Astro.props;
     background-color: white;  
     word-break: break-all;
   }
-  .contacts a {
-    text-decoration: none;
+
+  a {
+    color: var(--fujo-red);
+    transition: 100ms;
   }
+
+  a:hover {
+    color: var(--fujo-pink)
+  }
+
 </style>
 

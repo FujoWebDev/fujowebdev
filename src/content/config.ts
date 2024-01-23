@@ -14,6 +14,7 @@ const teamCollection = defineCollection({
 const characterCollection = defineCollection({
   type: "content",
   schema: z.object({
+    name: z.string(),
     image_src: z.string(),
     home: z.enum(["localhost", "browserland"]),
     likes: z.string().array(),
