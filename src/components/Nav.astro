@@ -36,9 +36,11 @@ const url = Astro.url.pathname;
     text-decoration: none;
     color: var(--text-color-base);
     font-weight: 100;
+    transition: 200ms;
   }
   a:hover {
-    text-decoration: var(--fujo-pink) underline wavy;
+    color: var(--fujo-red);
+    text-decoration: var(--fujo-red) underline wavy;
   }
   .current,
   .current a {

@@ -12,8 +12,10 @@ dislikes:
 tropes:
   - name: Fake Cutie
     url: https://tvtropes.org/pmwiki/pmwiki.php/Main/TheFakeCutie
-  - The Prima Donna
-  - Angel/Devil Ship
+  - name: The Prima Donna
+    url: https://tvtropes.org/pmwiki/pmwiki.php/Main/ThePrimaDonna
+  - name: Angel/Devil Ship
+    url: https://tvtropes.org/pmwiki/pmwiki.php/Main/AngelDevilShipping
 trivia: Git (the technology) will officially be 18 on April 7th, 2023. This equals `10010` years old in programming years.
 ---
 
