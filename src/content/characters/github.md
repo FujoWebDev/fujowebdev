@@ -1,4 +1,5 @@
 ---
+name: Github
 image_src: images/characters-profiles/github.png
 home: localhost
 likes:

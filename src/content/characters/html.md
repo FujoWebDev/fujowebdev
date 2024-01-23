@@ -1,4 +1,5 @@
 ---
+name: HTML
 image_src: images/characters-profiles/html.png
 home: localhost
 likes:

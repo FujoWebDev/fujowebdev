@@ -1,4 +1,5 @@
 ---
+name: Terminal
 image_src: images/characters-profiles/terminal.png
 home: localhost
 likes:

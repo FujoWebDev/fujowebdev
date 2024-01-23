@@ -1,4 +1,5 @@
 ---
+name: CSS
 image_src: images/characters-profiles/css.png
 home: localhost
 likes:

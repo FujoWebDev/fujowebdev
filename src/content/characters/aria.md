@@ -1,4 +1,5 @@
 ---
+name: ARIA
 image_src: images/characters-profiles/aria.png
 home: localhost
 likes:

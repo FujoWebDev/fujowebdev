@@ -45,13 +45,3 @@ All commands are run from the root of the project, from a terminal:
 ## 👀 Want to learn more?
 
 Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
-
-### rudy tuesday's updates so he can remember
-
-- moved "PageLayout.astro" into "layouts" directory
-- added contributor card
-- created social icon links
-- added tv tropes links to git & github
-- redesigned heart markers
-- added character cards for aria, css, html and terminal
-- updated links for consistency
