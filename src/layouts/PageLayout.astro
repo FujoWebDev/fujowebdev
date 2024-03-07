@@ -1,9 +1,8 @@
 ---
 import Header from "../components/Header.astro";
-import { ViewTransitions } from 'astro:transitions';
+import { ViewTransitions } from "astro:transitions";
 import OgTags from "../components/OgTags.astro";
 import Socials from "../components/Socials.astro";
-
 
 interface Props {
   pageTitle?: string;
@@ -62,6 +61,9 @@ if (props.pageTitle) {
       main {
         max-width: min(100%, var(--body-width));
         padding-bottom: 30px;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
       }
 
       h1 {
@@ -73,8 +75,10 @@ if (props.pageTitle) {
         text-align: center;
         margin-block-start: 3rem;
         margin-block-end: 1.5rem;
-        text-shadow: -1px -1px 0 var(--terminal-dark),
-          1px -1px 0 var(--terminal-dark), -1px 1px 0 var(--terminal-dark),
+        text-shadow:
+          -1px -1px 0 var(--terminal-dark),
+          1px -1px 0 var(--terminal-dark),
+          -1px 1px 0 var(--terminal-dark),
           1px 1px 0 var(--terminal-dark);
         filter: drop-shadow(3px 1px 0px var(--terminal-dark));
       }
@@ -100,12 +104,25 @@ if (props.pageTitle) {
         text-decoration: 1px underline wavy;
         text-underline-offset: 2px;
       }
-
     </style>
-    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
-    <link rel="manifest" href="/favicon/site.webmanifest">
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/favicon/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/favicon/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/favicon/favicon-16x16.png"
+    />
+    <link rel="manifest" href="/favicon/site.webmanifest" />
   </head>
   <body>
     <Header multiLine={props.multiLineHeader} />
