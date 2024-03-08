@@ -4,36 +4,116 @@ import CharacterCard from "../components/CharacterCard.astro";
 
 import { getCollection } from "astro:content";
 import { parse } from "marked";
+import { Image } from "astro:assets";
 
-const data = await getCollection("characters");
+const characters = (await getCollection("characters")).toSorted(
+  (a, b) => a.data.order - b.data.order
+);
 ---
 
 <PageLayout pageTitle="Our Characters">
-  <h1>Our characters</h1>
-  {
-    data.map(async (character) => {
-      const renderedBody = await character.render();
-      return (
-        <CharacterCard
-          name={character.slug}
-          imageSrc={character.data.image_src}
-          likes={character.data.likes}
-          dislikes={character.data.dislikes}
-          tropes={character.data.tropes}
-          trivia={parse(character.data.trivia)}
-        >
-          <renderedBody.Content />
-        </CharacterCard>
-      );
-    })
-  }
-  <!-- <CharacterCard
-    name="Git"
-    imageSrc={git}
-    likes={["Gossip", "Junk Food", "People’s attention"]}
-    dislikes={["Physical exercise", "Desserts", "GitHub’s attention"]}
-    about="Localhost HQ’s resident catboy is as cute as he is changeable. Kind and sweet on the surface, his friendly demeanor can easily turn catty when provoked out of strangers’ sight."
-    tropes={["Fake Cutie", "The Prima Donna", "Angel/Devil Ship"]}
-    trivia="Git (the technology) will officially be 18 on April 7th, 2023. This equals 10010 years old in programming years."
-  /> -->
+  <section>
+    <h1>Our characters</h1>
+
+    <ul>
+      {
+        characters.map(async (character) => {
+          return (
+            <li>
+              <a href={`#${character.data.name.toLowerCase()}`}>
+                <Image
+                  src={character.data.icon}
+                  alt={`${character.data.name}'s beautiful face'`}
+                />
+              </a>
+            </li>
+          );
+        })
+      }
+    </ul>
+  </section>
+  <section>
+    <h2>Localhost</h2>
+    <div>
+      Localhost is where the characters that reside on your own computer live.
+      While GitHub theoretically comes from the Cloud, he's often following Git
+      around and (much to Terminal's chagrin) is an almost-permanent fixture of
+      the place.
+    </div>
+    {
+      characters
+        .filter((c) => c.data.home == "localhost")
+        .map(async (character) => {
+          const renderedBody = await character.render();
+          return (
+            <CharacterCard
+              name={character.data.name}
+              imageSrc={character.data.image}
+              likes={character.data.likes}
+              dislikes={character.data.dislikes}
+              tropes={character.data.tropes}
+              trivia={parse(character.data.trivia)}
+            >
+              <renderedBody.Content />
+            </CharacterCard>
+          );
+        })
+    }
+  </section>
+  <section>
+    <h2>Browserland</h2>
+    <div>
+      Browserland characters are responsible for bringing the web as you know it
+      to all users. Always hard at work to display any website in its full
+      glory, Browserland's most famous trio (HTML, CSS & ARIA) is inseparable.
+    </div>
+    {
+      characters
+        .filter((c) => c.data.home == "browserland")
+        .map(async (character) => {
+          const renderedBody = await character.render();
+          return (
+            <CharacterCard
+              name={character.data.name}
+              imageSrc={character.data.image}
+              likes={character.data.likes}
+              dislikes={character.data.dislikes}
+              tropes={character.data.tropes}
+              trivia={parse(character.data.trivia)}
+            >
+              <renderedBody.Content />
+            </CharacterCard>
+          );
+        })
+    }
+  </section>
 </PageLayout>
+
+<style>
+  :global(h2) {
+    margin-bottom: 0;
+  }
+  section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  ul {
+    display: flex;
+    gap: 10px;
+    list-style: none;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  img {
+    width: 55px;
+    height: 55px;
+    border: 3px solid var(--terminal-dark);
+    border-radius: 10px;
+  }
+  a:hover img {
+    border: 3px solid var(--fujo-red);
+    cursor: pointer;
+    transform: scale(1.5);
+  }
+</style>

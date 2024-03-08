@@ -1,6 +1,8 @@
 ---
-name: Github
-image_src: images/characters-profiles/github.png
+name: GitHub
+order: 20
+image: ./profiles/github.png
+icon: ./icons/github.png
 home: localhost
 likes:
   - Floating around

@@ -1,7 +1,9 @@
 ---
+import { Image } from "astro:assets";
+
 interface Props {
   name: string;
-  imageSrc: string;
+  imageSrc: ImageMetadata;
   likes: string[];
   dislikes: string[];
   tropes: (string | { url: string; name: string })[];
@@ -11,9 +13,9 @@ interface Props {
 const { name, likes, dislikes, tropes, trivia, imageSrc } = Astro.props;
 ---
 
-<article>
+<article id={name.toLowerCase()}>
   <h2>{name}</h2>
-  <img src={imageSrc} />
+  <Image src={imageSrc} alt={`${name}'s profile picture'`} />
   <div class="likes">
     <h3>Likes</h3>
     <ul>
@@ -64,22 +66,22 @@ const { name, likes, dislikes, tropes, trivia, imageSrc } = Astro.props;
       "character trivia trivia";
     background-color: white;
     padding: 25px 30px;
-    margin-bottom: 25px;
     border-radius: 10px;
     row-gap: 10px;
     box-shadow: 2px 2px 0px 0px var(--text-color-disabled);
   }
 
   h2 {
-    text-transform: capitalize;
     grid-area: name;
     font-family: "freude", sans-serif;
     font-weight: 400;
     font-style: normal;
     color: var(--fujo-red);
     font-size: 2.7rem;
-    text-shadow: -1px -1px 0 var(--terminal-dark),
-      1px -1px 0 var(--terminal-dark), -1px 1px 0 var(--terminal-dark),
+    text-shadow:
+      -1px -1px 0 var(--terminal-dark),
+      1px -1px 0 var(--terminal-dark),
+      -1px 1px 0 var(--terminal-dark),
       1px 1px 0 var(--terminal-dark);
     filter: drop-shadow(1px 1px 0px var(--terminal-dark));
   }
@@ -106,7 +108,7 @@ const { name, likes, dislikes, tropes, trivia, imageSrc } = Astro.props;
     content: "\f004";
     position: absolute;
     left: -16px;
-    font-family: 'Font Awesome 6 Pro';
+    font-family: "Font Awesome 6 Pro";
     font-weight: bold;
     font-size: 10px;
     padding-right: 3px;
@@ -127,8 +129,10 @@ const { name, likes, dislikes, tropes, trivia, imageSrc } = Astro.props;
     font-style: normal;
     color: var(--fujo-light-blue);
     font-size: 1.7rem;
-    text-shadow: -1px -1px 0 var(--terminal-dark),
-      1px -1px 0 var(--terminal-dark), -1px 1px 0 var(--terminal-dark),
+    text-shadow:
+      -1px -1px 0 var(--terminal-dark),
+      1px -1px 0 var(--terminal-dark),
+      -1px 1px 0 var(--terminal-dark),
       1px 1px 0 var(--terminal-dark);
     margin-bottom: 8px;
     filter: drop-shadow(1px 1px 0px var(--terminal-dark));
@@ -138,6 +142,7 @@ const { name, likes, dislikes, tropes, trivia, imageSrc } = Astro.props;
     max-height: 475px;
     align-self: center;
     grid-area: character;
+    width: auto;
   }
 
   .likes {
@@ -166,7 +171,6 @@ const { name, likes, dislikes, tropes, trivia, imageSrc } = Astro.props;
   }
 
   @media (max-width: 749px) {
-
     article {
       display: flex;
       flex-direction: column;
