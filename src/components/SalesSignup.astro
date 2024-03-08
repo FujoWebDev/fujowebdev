@@ -2,17 +2,50 @@
 
 ---
 
-<form action="/">
-  <input
-    type="email"
-    required
-    placeholder="boba-tan@fujocoded.com"
-    aria-label="Email"
-  />
-  <input type="submit" value="sign up" />
-</form>
+<div class="signup">
+  <p>Sign up here to be notified when the guide is available for purchase:</p>
+  <form action="/">
+    <input
+      type="email"
+      name="email"
+      required
+      placeholder="boba-tan@fujocoded.com"
+      aria-label="Email"
+    />
+    <input type="submit" value="sign up" />
+  </form>
+  <div class="thank-you">
+    Your email has been added to our list. We look forward to sharing <em
+      >The Fujoshi Guide to Web Development
+    </em> with you!
+  </div>
+</div>
+
+<script>
+  const webhook = "https://hooks.zapier.com/hooks/catch/9849274/303l8h3/";
+  document
+    .querySelector(".signup form")
+    .addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.srcElement);
+
+      const result = await fetch(webhook, {
+        method: "POST",
+        body: JSON.stringify({ email: formData.get("email") }),
+      });
+
+      document.querySelector(".signup").classList.add("success");
+    });
+</script>
 
 <style>
+  .signup:not(.success) .thank-you {
+    display: none;
+  }
+  .signup.success form,
+  .signup.success p {
+    display: none;
+  }
   form {
     display: flex;
     width: 100%;
