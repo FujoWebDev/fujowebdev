@@ -19,8 +19,7 @@ const characters = (await getCollection("characters")).toSorted(
         ><em>The Fujoshi Guide to Web Development</em> features gijinka (anthropomorphizations)
         of programming languages and concepts.</strong
       > Each of our characters is engineered from the ground up to cater to "transformative"
-      fandom—that is, people who create fanfiction, fanart, meta, and much more—and
-      their sensibilities and interests.
+      fandom—that is, people who create fanfiction, fanart, meta, and much more.
     </div>
     <ul class="selection">
       {
@@ -70,9 +69,9 @@ const characters = (await getCollection("characters")).toSorted(
   <section>
     <h2>Browserland</h2>
     <div>
-      Browserland characters are responsible for bringing the web as you know it
-      to all users. Always hard at work to display any website in its full
-      glory, Browserland's most famous trio (HTML, CSS & ARIA) is inseparable.
+      Browserland characters are responsible for bringing the web as we know it
+      to life. Always hard at work to display any website in its full glory,
+      Browserland's most famous trio (HTML, CSS & ARIA) is inseparable.
     </div>
     {
       characters
@@ -115,10 +114,16 @@ const characters = (await getCollection("characters")).toSorted(
     margin-block: 30px;
   }
   img {
-    width: 55px;
-    height: 55px;
+    width: 65px;
+    height: 65px;
     border: 3px solid var(--terminal-dark);
     border-radius: 10px;
+  }
+  @media (min-width: 650px) {
+    img {
+      width: 80px;
+      height: 80px;
+    }
   }
   a:hover img {
     border: 3px solid var(--fujo-red);
