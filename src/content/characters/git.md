@@ -1,6 +1,8 @@
 ---
 name: Git
-image_src: images/characters-profiles/git.png
+order: 10
+image: ./profiles/git.png
+icon: ./icons/git.png
 home: localhost
 likes:
   - Gossip

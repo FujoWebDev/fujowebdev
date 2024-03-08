@@ -1,6 +1,8 @@
 ---
 name: Terminal
-image_src: images/characters-profiles/terminal.png
+order: 30
+image: ./profiles/terminal.png
+icon: ./icons/terminal.png
 home: localhost
 likes:
   - Taking care of HQ

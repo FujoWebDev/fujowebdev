@@ -1,7 +1,9 @@
 ---
 name: ARIA
-image_src: images/characters-profiles/aria.png
-home: localhost
+order: 60
+image: ./profiles/aria.png
+icon: ./icons/aria.png
+home: browserland
 likes:
   - Escapades
   - Acting

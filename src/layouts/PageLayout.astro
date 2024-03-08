@@ -1,21 +1,20 @@
 ---
 import Header from "../components/Header.astro";
-import { ViewTransitions } from 'astro:transitions';
+import { ViewTransitions } from "astro:transitions";
 import OgTags from "../components/OgTags.astro";
 import Socials from "../components/Socials.astro";
 
-
 interface Props {
   pageTitle?: string;
+  pageDescription?: string;
   multiLineHeader?: boolean;
 }
 
-const props = Astro.props;
-
-let pageTitle = "Fully funded on Kickstarter";
-if (props.pageTitle) {
-  pageTitle = props.pageTitle;
-}
+const {
+  multiLineHeader,
+  pageTitle = "The Fujoshi Guide to Web Development – Fully funded on Kickstarter",
+  pageDescription,
+} = Astro.props;
 ---
 
 <html lang="en">
@@ -23,10 +22,7 @@ if (props.pageTitle) {
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
-    <OgTags />
-    <title>
-      The Fujoshi Guide to Web Development — {pageTitle}
-    </title>
+    <OgTags description={pageDescription} title={pageTitle} />
     <link rel="stylesheet" href="https://use.typekit.net/exd6spk.css" />
     <ViewTransitions />
     <style is:global>
@@ -62,6 +58,9 @@ if (props.pageTitle) {
       main {
         max-width: min(100%, var(--body-width));
         padding-bottom: 30px;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
       }
 
       h1 {
@@ -73,10 +72,27 @@ if (props.pageTitle) {
         text-align: center;
         margin-block-start: 3rem;
         margin-block-end: 1.5rem;
-        text-shadow: -1px -1px 0 var(--terminal-dark),
-          1px -1px 0 var(--terminal-dark), -1px 1px 0 var(--terminal-dark),
+        text-shadow:
+          -1px -1px 0 var(--terminal-dark),
+          1px -1px 0 var(--terminal-dark),
+          -1px 1px 0 var(--terminal-dark),
           1px 1px 0 var(--terminal-dark);
         filter: drop-shadow(3px 1px 0px var(--terminal-dark));
+      }
+
+      h2 {
+        font-family: "freude", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+        color: var(--fujo-light-blue);
+        font-size: 2rem;
+        text-shadow:
+          -1px -1px 0 var(--terminal-dark),
+          1px -1px 0 var(--terminal-dark),
+          -1px 1px 0 var(--terminal-dark),
+          1px 1px 0 var(--terminal-dark);
+        margin-bottom: 8px;
+        filter: drop-shadow(1px 1px 0px var(--terminal-dark));
       }
 
       p {
@@ -100,15 +116,28 @@ if (props.pageTitle) {
         text-decoration: 1px underline wavy;
         text-underline-offset: 2px;
       }
-
     </style>
-    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
-    <link rel="manifest" href="/favicon/site.webmanifest">
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/favicon/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/favicon/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/favicon/favicon-16x16.png"
+    />
+    <link rel="manifest" href="/favicon/site.webmanifest" />
   </head>
   <body>
-    <Header multiLine={props.multiLineHeader} />
+    <Header multiLine={multiLineHeader} />
     <main>
       <slot />
       <Socials />

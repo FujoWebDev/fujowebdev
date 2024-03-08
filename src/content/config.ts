@@ -13,23 +13,26 @@ const teamCollection = defineCollection({
 
 const characterCollection = defineCollection({
   type: "content",
-  schema: z.object({
-    name: z.string(),
-    image_src: z.string(),
-    home: z.enum(["localhost", "browserland"]),
-    likes: z.string().array(),
-    dislikes: z.string().array(),
-    tropes: z
-      .union([
-        z.string(),
-        z.object({
-          name: z.string(),
-          url: z.string().url(),
-        }),
-      ])
-      .array(),
-    trivia: z.string(),
-  }),
+  schema: ({ image }) =>
+    z.object({
+      name: z.string(),
+      image: image(),
+      icon: image(),
+      home: z.enum(["localhost", "browserland"]),
+      likes: z.string().array(),
+      dislikes: z.string().array(),
+      tropes: z
+        .union([
+          z.string(),
+          z.object({
+            name: z.string(),
+            url: z.string().url(),
+          }),
+        ])
+        .array(),
+      trivia: z.string(),
+      order: z.number(),
+    }),
 });
 
 export const collections = {

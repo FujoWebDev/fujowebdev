@@ -1,7 +1,9 @@
 ---
 name: CSS
-image_src: images/characters-profiles/css.png
-home: localhost
+order: 40
+image: ./profiles/css.png
+icon: ./icons/css.png
+home: browserland
 likes:
   - Arts & crafts
   - Shopkeeping

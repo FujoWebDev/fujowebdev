@@ -1,5 +1,5 @@
 ---
-import gitHubLogo from "../images/github-mark.png"
+import gitHubLogo from "../images/github-mark.png";
 const url = Astro.url.pathname;
 ---
 
@@ -13,6 +13,12 @@ const url = Astro.url.pathname;
     </li>
     <li class:list={{ current: url === "/team" }}>
       <a href="/team">Team</a>
+    </li>
+    <li>
+      <a
+        href="https://www.kickstarter.com/projects/essential-randomness/the-fujoshi-guide-to-web-development/posts"
+        >Updates</a
+      >
     </li>
     <li class="with-image">
       <a href="https://github.com/fujowebdev/fujowebdev/">
@@ -28,6 +34,12 @@ const url = Astro.url.pathname;
     display: flex;
     gap: 15px;
     align-items: center;
+  }
+
+  @media (max-width: 450px) {
+    ul {
+      flex-direction: column;
+    }
   }
   li {
     list-style: none;
@@ -67,6 +79,7 @@ const url = Astro.url.pathname;
   }
 
   .with-image a:hover {
-    filter: invert(61%) sepia(47%) saturate(2070%) hue-rotate(315deg) brightness(104%) contrast(108%);
+    filter: invert(61%) sepia(47%) saturate(2070%) hue-rotate(315deg)
+      brightness(104%) contrast(108%);
   }
 </style>

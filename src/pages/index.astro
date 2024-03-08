@@ -1,35 +1,68 @@
 ---
 import PageLayout from "../layouts/PageLayout.astro";
+import SalesSignup from "../components/SalesSignup.astro";
+import Socials from "../components/Socials.astro";
 ---
 
 <PageLayout multiLineHeader>
-  <a
-    href="https://www.kickstarter.com/projects/essential-randomness/the-fujoshi-guide-to-web-development"
-  >
+  <section>
     <figure class="roster">
       <img
         src="./images/roster-with-names.png"
         alt="The character roster for The Fujoshi Guide to Web Development. The title is located near the bottom of the graphic in aqua, orange, and pink text surrounded by a lavender bubble. Pink hearts bubble up from the word ‘web’ in the title. The word ‘to’ is framed by a terminal. On the left side of the title is a stylized computer screen showing an image of Boba-tan, the BobaBoard Mascot, wearing a raccoon kigurumi, glasses, and waving in greeting. The background shows six characters that represent from left to right: Git, GitHub, Terminal, CSS, HTML, and ARIA. The background colors form a rainbow."
       />
     </figure>
-  </a>
-  <h1>The project</h1>
-  <p>
-    <em>The Fujoshi Guide to Web Development</em> is a series of zines/books featuring
-    anthropomorphized versions of programming languages and concepts (aka
-    gijinka), each one engineered from the ground up to cater to
-    transformational fandom (that is, people who create fanfictions, fanarts,
-    meta, and much more), and their sensibilities and interests.
-  </p>
-  <p>
-    After a sucessful Kickstarter launched on April 1st, 2023 the guide is now in production.
-    You can learn more about the project and its current status by 
-    <a href="https://www.kickstarter.com/projects/essential-randomness/the-fujoshi-guide-to-web-development/updates">following our updates on Kickstarter.</a>
-  </p>
+    <h1>The project</h1>
+    <p>
+      <strong
+        ><em>The Fujoshi Guide to Web Development</em> is an upcoming series of instructional
+        <a href="https://en.wikipedia.org/wiki/Zine">zines</a> about coding.</strong
+      > Our mission is to empower more people (especially from fandom spaces) to
+      actively create the internet they want to inhabit. Each zine features gijinka–that
+      is, anthropomorphizations– of programming languages and concepts.
+    </p>
+    <p>
+      <em>The Fujoshi Guide</em> aims to fill the gap between beginner tutorials
+      and professional web development resources. Beginner tutorials ignore many
+      of the techniques crucial to modern web development, while professional resources
+      are so dense they are unapproachable to the average fan. As a result, many
+      capable potential developers abandon their programming dreams.
+    </p>
+
+    <p>
+      Our cunning plan to fix this? Tantalize our readers with <em
+        >irresistible</em
+      > characters who just <em>happen</em> to be willing to teach them to code,
+      easing them past any aversion with entertaining stories and exercises.
+    </p>
+  </section>
+  <section>
+    <h2>Volume 0: Git & GitHub</h2>
+    <p>
+      <em>The Fujoshi Guide</em> starts off by teaching two skills that most guides
+      don’t cover until far too late, if ever: how to maintain your code and how
+      to collaborate on coding projects. Armed with this knowledge, you can gain
+      access to the wider world of web development tools and start creating the web
+      you want to see.
+    </p>
+    <p>
+      Volume Zero covers the basics of:
+      <ul>
+        <li>Git</li>
+        <li>Github</li>
+        <li>Open source development</li>
+        <li>Command line interface (“Terminal”)</li>
+      </ul>
+    </p>
+  </section>
+  <section class="contact-card">
+    <h2>Want your own copy?</h2>
+    <SalesSignup />
+  </section>
   <a
     class="call-to-action"
     href="https://www.kickstarter.com/projects/essential-randomness/the-fujoshi-guide-to-web-development"
-    >Learn more on
+    >See our original pitch on
     <img src="./images/kickstarter-logo-full.png" alt="Kickstarter logo" /></a
   >
 </PageLayout>
@@ -67,5 +100,18 @@ import PageLayout from "../layouts/PageLayout.astro";
   .call-to-action > img {
     display: block;
     max-width: 100%;
+  }
+  .contact-card {
+    background-color: white;
+    padding: 20px 30px;
+    border-radius: 15px;
+  }
+  .contact-card h2 {
+    font-size: 2.2rem;
+  }
+
+  ul {
+    padding-block: 15px;
+    margin-left: 40px;
   }
 </style>

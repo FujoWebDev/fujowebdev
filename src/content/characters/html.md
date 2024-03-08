@@ -1,7 +1,9 @@
 ---
 name: HTML
-image_src: images/characters-profiles/html.png
-home: localhost
+order: 50
+image: ./profiles/html.png
+icon: ./icons/html.png
+home: browserland
 likes:
   - Music
   - Endlessly scrolling
