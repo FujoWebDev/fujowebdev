@@ -16,6 +16,7 @@ const { name, likes, dislikes, tropes, trivia, imageSrc } = Astro.props;
 <article id={name.toLowerCase()}>
   <h2>{name}</h2>
   <Image src={imageSrc} alt={`${name}'s profile picture'`} />
+  <button class="more">Learn More</button>
   <div class="likes">
     <h3>Likes</h3>
     <ul>
@@ -54,7 +55,32 @@ const { name, likes, dislikes, tropes, trivia, imageSrc } = Astro.props;
   </div>
 </article>
 
+<script>
+  const buttons = document.querySelectorAll("button.more");
+  buttons.forEach((button) => {
+    button.addEventListener("click", (e) => {
+      const article = button.closest("article");
+      article?.classList.add("show-all");
+    });
+  });
+</script>
+
 <style>
+  button {
+    width: 95%;
+    border-radius: 15px;
+    padding: 8px 5px;
+    font-size: 1rem;
+    background-color: white;
+    border: 2px solid var(--fujo-red);
+    font-family: "freude", sans-serif;
+    color: var(--fujo-red);
+  }
+  button:hover {
+    filter: drop-shadow(2px 2px var(--fujo-pink));
+    transform: translate(-1px, -1px);
+    cursor: pointer;
+  }
   article {
     display: grid;
     grid-template-columns: 35% 1fr 1fr;
@@ -69,6 +95,8 @@ const { name, likes, dislikes, tropes, trivia, imageSrc } = Astro.props;
     border-radius: 10px;
     row-gap: 10px;
     box-shadow: 2px 2px 0px 0px var(--text-color-disabled);
+    margin: 0 auto;
+    width: 100%;
   }
 
   h2 {
@@ -169,6 +197,9 @@ const { name, likes, dislikes, tropes, trivia, imageSrc } = Astro.props;
   .trivia {
     grid-area: trivia;
   }
+  button {
+    display: none;
+  }
 
   @media (max-width: 749px) {
     article {
@@ -196,6 +227,12 @@ const { name, likes, dislikes, tropes, trivia, imageSrc } = Astro.props;
 
     .tropes ul {
       column-count: 1;
+    }
+    article:not(.show-all) div {
+      display: none;
+    }
+    article:not(.show-all)button {
+      display: block;
     }
   }
 </style>
