@@ -14,8 +14,14 @@ const characters = (await getCollection("characters")).toSorted(
 <PageLayout pageTitle="Our Characters">
   <section>
     <h1>Our characters</h1>
-
-    <ul>
+    <div>
+      <em>The Fujoshi Guide to Web Development</em> features gijinka (anthropomorphizations)
+      of programming languages and concepts. Each of our characters is engineered
+      from the ground up to cater to "transformative" fandom—that is, people who
+      create fanfiction, fanart, meta, and much more—and their sensibilities and
+      interests.
+    </div>
+    <ul class="selection">
       {
         characters.map(async (character) => {
           return (
@@ -90,7 +96,8 @@ const characters = (await getCollection("characters")).toSorted(
 </PageLayout>
 
 <style>
-  :global(h2) {
+  :global(h2),
+  :global(h1) {
     margin-bottom: 0;
   }
   section {
@@ -104,6 +111,7 @@ const characters = (await getCollection("characters")).toSorted(
     list-style: none;
     justify-content: center;
     flex-wrap: wrap;
+    margin-block: 30px;
   }
   img {
     width: 55px;
