@@ -6,15 +6,15 @@ import Socials from "../components/Socials.astro";
 
 interface Props {
   pageTitle?: string;
+  pageDescription?: string;
   multiLineHeader?: boolean;
 }
 
-const props = Astro.props;
-
-let pageTitle = "Fully funded on Kickstarter";
-if (props.pageTitle) {
-  pageTitle = props.pageTitle;
-}
+const {
+  multiLineHeader,
+  pageTitle = "Fully funded on Kickstarter",
+  pageDescription,
+} = Astro.props;
 ---
 
 <html lang="en">
@@ -22,10 +22,7 @@ if (props.pageTitle) {
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
-    <OgTags />
-    <title>
-      The Fujoshi Guide to Web Development — {pageTitle}
-    </title>
+    <OgTags description={pageDescription} title={pageTitle} />
     <link rel="stylesheet" href="https://use.typekit.net/exd6spk.css" />
     <ViewTransitions />
     <style is:global>
@@ -140,7 +137,7 @@ if (props.pageTitle) {
     <link rel="manifest" href="/favicon/site.webmanifest" />
   </head>
   <body>
-    <Header multiLine={props.multiLineHeader} />
+    <Header multiLine={multiLineHeader} />
     <main>
       <slot />
       <Socials />

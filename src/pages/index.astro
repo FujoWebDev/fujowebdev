@@ -4,7 +4,10 @@ import SalesSignup from "../components/SalesSignup.astro";
 import Socials from "../components/Socials.astro";
 ---
 
-<PageLayout multiLineHeader>
+<PageLayout
+  multiLineHeader
+  pageDescription="The Fujoshi Guide to Web Development is an upcoming series of instructional zines about coding featuring anthropomorphizations of programming languages and concepts."
+>
   <section>
     <figure class="roster">
       <img
@@ -14,11 +17,12 @@ import Socials from "../components/Socials.astro";
     </figure>
     <h1>The project</h1>
     <p>
-      <em>The Fujoshi Guide to Web Development</em> is an upcoming series of instructional
-      <a href="https://en.wikipedia.org/wiki/Zine">zines</a> about coding. Our mission
-      is to empower more people from fandom spaces to actively create the internet
-      they want to inhabit. Each zine features gijinka (anthropomorphizations) of
-      programming languages and concepts.
+      <strong
+        ><em>The Fujoshi Guide to Web Development</em> is an upcoming series of instructional
+        <a href="https://en.wikipedia.org/wiki/Zine">zines</a> about coding.</strong
+      > Our mission is to empower more people (especially from fandom spaces) to
+      actively create the internet they want to inhabit. Each zine features gijinka–that
+      is, anthropomorphizations– of programming languages and concepts.
     </p>
     <p>
       <em>The Fujoshi Guide</em> aims to fill the gap between beginner tutorials
