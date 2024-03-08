@@ -6,7 +6,7 @@ import TeamMemberCard from "../../components/TeamMemberCard.astro";
 const team = await getCollection("team");
 ---
 
-<PageLayout pageTitle="Our team">
+<PageLayout pageTitle="The Fujoshi Guide to Web Development – Our team">
   <h1>Our team</h1>
   <div>Note: this page is under construction, more team members exist!</div>
   <section>
@@ -14,12 +14,12 @@ const team = await getCollection("team");
       team.map((member) => {
         return (
           <TeamMemberCard
-              memberId={member.id}
-              name={member.data.name}
-              avatar={member.data.avatar}
-              roles={member.data.roles}
-              contacts={member.data.contacts}
-         />
+            memberId={member.id}
+            name={member.data.name}
+            avatar={member.data.avatar}
+            roles={member.data.roles}
+            contacts={member.data.contacts}
+          />
         );
       })
     }

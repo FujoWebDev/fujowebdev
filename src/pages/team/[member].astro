@@ -26,29 +26,33 @@ const { previous, next } = Astro.props;
 const memberEntry = (await getEntry("team", member)) as CollectionEntry<"team">;
 ---
 
-<PageLayout pageTitle="Our team">
+<PageLayout pageTitle="The Fujoshi Guide to Web Development – Our team">
   <h1>Our team</h1>
   <div>
     <TeamMemberCard
-          transition:name="artist"
-          transition:animate="slide"
-          transition:persist
-          memberId={memberEntry.id}
-          name={memberEntry.data.name}
-          avatar={memberEntry.data.avatar}
-          roles={memberEntry.data.roles}
-          contacts={memberEntry.data.contacts}
-      />
+      transition:name="artist"
+      transition:animate="slide"
+      transition:persist
+      memberId={memberEntry.id}
+      name={memberEntry.data.name}
+      avatar={memberEntry.data.avatar}
+      roles={memberEntry.data.roles}
+      contacts={memberEntry.data.contacts}
+    />
     <nav>
-      <a class:list={{
-            hidden: !previous
-          }}
-          href={`/team/${previous}`}>Previous</a>
+      <a
+        class:list={{
+          hidden: !previous,
+        }}
+        href={`/team/${previous}`}>Previous</a
+      >
       <a href="/team/">All</a>
-      <a class:list={{
-            hidden: !next
-          }}
-          href={`/team/${next}`}>Next</a>
+      <a
+        class:list={{
+          hidden: !next,
+        }}
+        href={`/team/${next}`}>Next</a
+      >
     </nav>
   </div>
 </PageLayout>
@@ -82,4 +86,4 @@ const memberEntry = (await getEntry("team", member)) as CollectionEntry<"team">;
   .hidden {
     visibility: hidden;
   }
-  </style>
+</style>
