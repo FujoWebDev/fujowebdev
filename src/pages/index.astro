@@ -1,5 +1,6 @@
 ---
 import PageLayout from "../layouts/PageLayout.astro";
+import SalesSignup from "../components/SalesSignup.astro";
 ---
 
 <PageLayout multiLineHeader>
@@ -52,10 +53,11 @@ import PageLayout from "../layouts/PageLayout.astro";
       </ul>
     </p>
   </section>
-  <!-- <section>
+  <section class="contact-card">
     <h2>Keep in touch</h2>
     <p>Sign up here to be notified when the guide is available for purchase:</p>
-  </section> -->
+    <SalesSignup />
+  </section>
   <a
     class="call-to-action"
     href="https://www.kickstarter.com/projects/essential-randomness/the-fujoshi-guide-to-web-development"
@@ -111,6 +113,15 @@ import PageLayout from "../layouts/PageLayout.astro";
       1px 1px 0 var(--terminal-dark);
     margin-bottom: 8px;
     filter: drop-shadow(1px 1px 0px var(--terminal-dark));
+  }
+
+  .contact-card {
+    background-color: white;
+    padding: 20px 30px;
+    border-radius: 15px;
+  }
+  .contact-card h2 {
+    font-size: 2.2rem;
   }
 
   ul {

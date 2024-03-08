@@ -1,0 +1,46 @@
+---
+
+---
+
+<form action="/">
+  <input
+    type="email"
+    required
+    placeholder="boba-tan@fujocoded.com"
+    aria-label="Email"
+  />
+  <input type="submit" value="sign up" />
+</form>
+
+<style>
+  form {
+    display: flex;
+    width: 100%;
+    max-width: 350px;
+    margin: 20px auto;
+    --form-color: var(--fujo-purple);
+    --radius: 10px;
+    font-size: 1em;
+  }
+  input[type="email"] {
+    width: 100%;
+    padding: 7px 15px;
+    border-radius: var(--radius) 0 0 var(--radius);
+    border: 2px solid var(--form-color);
+    border-right: 0;
+    font-size: 15px;
+    background-color: var(--fujo-cream);
+  }
+  input[type="submit"] {
+    width: 150px;
+    border-radius: 0 var(--radius) var(--radius) 0;
+    border: 2px solid var(--form-color);
+    background-color: var(--form-color);
+    color: white;
+    font-weight: bold;
+    font-size: 15px;
+  }
+  input[type="submit"]:hover {
+    cursor: pointer;
+  }
+</style>
