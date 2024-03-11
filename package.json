@@ -10,7 +10,9 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@iconify-json/fa6-brands": "^1.1.18",
     "astro": "^4.5.0",
+    "astro-icon": "^1.1.0",
     "marked": "^12.0.1"
   },
   "engines": {
