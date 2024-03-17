@@ -143,16 +143,16 @@ const { name, likes, dislikes, tropes, trivia, imageSrc } = Astro.props;
     position: relative;
     list-style-type: none;
     margin-bottom: 3px;
-    display: flex;
-    align-items: center;
+    list-style: none;
+    padding: 0;
+		display: flex;
+		align-items: flex-start;
     gap: 5px;
     margin-left: 16px;
   }
 
   .heart {
     margin-left: -16px;
-    margin-top: -5px;
-    padding-right: 3px;
     color: var(--fujo-pink);
   }
 
