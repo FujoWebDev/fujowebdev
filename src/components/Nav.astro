@@ -1,5 +1,7 @@
 ---
 import gitHubLogo from "../images/github-mark.png";
+import { Icon } from "astro-icon/components";
+
 const url = Astro.url.pathname;
 ---
 
@@ -17,13 +19,16 @@ const url = Astro.url.pathname;
     <li>
       <a
         href="https://www.kickstarter.com/projects/essential-randomness/the-fujoshi-guide-to-web-development/posts"
-        >Updates</a
+        >Updates<Icon name="pixelarticons:external-link" class="external" /></a
       >
     </li>
-    <li class="with-image">
+    <li>
       <a href="https://github.com/fujowebdev/fujowebdev/">
-        <img src={gitHubLogo.src} alt="The GitHub logo" />
-        <span>GitHub</span>
+        <Icon
+          name="fa6-brands:github"
+          title="GitHub"
+          style="font-size: 1.75rem !important;"
+        />
       </a>
     </li>
   </ul>
@@ -66,20 +71,10 @@ const url = Astro.url.pathname;
     font-size: 1.4rem;
   }
 
-  .with-image a {
-    display: flex;
-    align-items: center;
-  }
-  .with-image img {
-    height: 36px;
-  }
-
-  .with-image span {
-    display: none;
-  }
-
-  .with-image a:hover {
-    filter: invert(61%) sepia(47%) saturate(2070%) hue-rotate(315deg)
-      brightness(104%) contrast(108%);
+  .external {
+    font-size: 1.25rem;
+    opacity: 0.65;
+    padding-left: 2px;
+    vertical-align: top;
   }
 </style>
