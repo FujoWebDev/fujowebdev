@@ -11,9 +11,10 @@
   },
   "dependencies": {
     "@iconify-json/fa6-brands": "^1.1.18",
+    "@iconify-json/fa6-solid": "^1.1.20",
     "@iconify-json/logos": "^1.1.42",
     "@iconify-json/pixelarticons": "^1.1.10",
-    "astro": "^4.5.0",
+    "astro": "^4.5.5",
     "astro-icon": "^1.1.0",
     "marked": "^12.0.1"
   },
