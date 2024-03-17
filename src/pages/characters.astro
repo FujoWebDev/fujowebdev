@@ -39,6 +39,26 @@ const characters = (await getCollection("characters")).toSorted(
     </ul>
   </section>
   <section>
+    <h2>The protagonist</h2>
+    {
+      characters
+        .filter((c) => c.data.home == "the real world")
+        .map(async (character) => {
+          const renderedBody = await character.render();
+          return (
+            <CharacterCard
+              name={character.data.name}
+              imageSrc={character.data.image}
+              likes={character.data.likes}
+              dislikes={character.data.dislikes}
+              tropes={character.data.tropes}
+              trivia={parse(character.data.trivia)}
+            >
+              <renderedBody.Content />
+            </CharacterCard>
+          );
+        })
+    }
     <h2>Localhost</h2>
     <div>
       Localhost is where the characters that reside on your own computer live.

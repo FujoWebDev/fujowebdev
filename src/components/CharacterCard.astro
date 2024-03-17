@@ -31,8 +31,8 @@ const { name, likes, dislikes, tropes, trivia, imageSrc } = Astro.props;
       {dislikes.map((dislike) => <li><Icon name="fa6-solid:heart-crack" class="heart" />{dislike}</li>)}
     </ul>
   </div>
-  <div class="about-him">
-    <h3>About Him</h3>
+  <div class="about">
+    <h3>About</h3>
     <slot />
   </div>
   <div class="tropes">
@@ -179,7 +179,7 @@ const { name, likes, dislikes, tropes, trivia, imageSrc } = Astro.props;
     grid-area: dislikes;
   }
 
-  .about-him {
+  .about {
     grid-area: about;
   }
 
@@ -216,7 +216,7 @@ const { name, likes, dislikes, tropes, trivia, imageSrc } = Astro.props;
     }
 
     .trivia,
-    .about-him {
+    .about {
       display: flex;
       flex-direction: column;
       max-width: 80%;
