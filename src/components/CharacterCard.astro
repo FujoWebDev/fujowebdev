@@ -1,6 +1,8 @@
 ---
 import { Image } from "astro:assets";
 
+import { Icon } from "astro-icon/components";
+
 interface Props {
   name: string;
   imageSrc: ImageMetadata;
@@ -20,13 +22,13 @@ const { name, likes, dislikes, tropes, trivia, imageSrc } = Astro.props;
   <div class="likes">
     <h3>Likes</h3>
     <ul>
-      {likes.map((like) => <li>{like}</li>)}
+      {likes.map((like) => <li><Icon name="fa6-solid:heart" class="heart" />{like}</li>)}
     </ul>
   </div>
   <div class="dislikes">
     <h3>Dislikes</h3>
     <ul>
-      {dislikes.map((dislike) => <li>{dislike}</li>)}
+      {dislikes.map((dislike) => <li><Icon name="fa6-solid:heart-crack" class="heart" />{dislike}</li>)}
     </ul>
   </div>
   <div class="about-him">
@@ -38,7 +40,7 @@ const { name, likes, dislikes, tropes, trivia, imageSrc } = Astro.props;
     <ul>
       {
         tropes.map((trope) => (
-          <li>
+          <li><Icon name="fa6-solid:splotch" class="heart" />
             {typeof trope === "object" ? (
               <a href={trope.url}>{trope.name}</a>
             ) : (
@@ -132,13 +134,9 @@ const { name, likes, dislikes, tropes, trivia, imageSrc } = Astro.props;
     margin-left: 16px;
   }
 
-  li::before {
-    content: "\f004";
-    position: absolute;
-    left: -16px;
-    font-family: "Font Awesome 6 Pro";
-    font-weight: bold;
-    font-size: 10px;
+  .heart {
+		margin-left: -16px;
+		margin-top: -5px;
     padding-right: 3px;
     color: var(--fujo-pink);
   }
