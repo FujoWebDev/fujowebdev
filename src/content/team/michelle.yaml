@@ -1,9 +1,10 @@
 name: Michelle
 avatar: "./avatars/michelle.png"
 roles:
-  - QA Testing
-  - Sensitivity Reading
-  - Additional Research, Feedback, Development, and Assistance
+  Volume 0 Kickstarter:
+    - QA Testing
+    - Sensitivity Reading
+    - Additional Research, Feedback, Development, and Assistance
 contacts:
   - https://mizunotic.neocities.org
   - https://www.tumblr.com/mizunotic

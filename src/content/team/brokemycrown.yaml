@@ -1,9 +1,12 @@
 name: brokemycrown
 avatar: ./avatars/brokemycrown.jpg
 roles:
-  - art director
-  - artist
-  - character designer
+  Volume 0 Kickstarter:
+    - art director
+    - artist
+    - character designer (Git & GitHub)
+  Volume 0:
+    - character designer (Git & GitHub)
 contacts:
   - https://linktr.ee/brokemycrown
   - https://www.patreon.com/thegentlemanscollection

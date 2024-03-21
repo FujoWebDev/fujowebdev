@@ -7,7 +7,7 @@ interface Props {
   memberId: string;
   name: string;
   avatar: ImageMetadata;
-  roles: string[];
+  roles: Record<string, string[]>;
   contacts: string[];
 }
 
@@ -20,11 +20,20 @@ const props = Astro.props;
   </h2>
   <img src={props.avatar.src} />
   <h3>Roles</h3>
-  <ul>
+  <ul class="projects">
     {
-      props.roles.map((role) => (
+      Object.keys(props.roles).map((project) => (
         <li>
-          <Icon name="fa6-solid:heart" class="heart" /> {role}
+          {project}:
+          {!!props.roles[project].length && (
+            <ul>
+              {props.roles[project].map((role) => (
+                <li>
+                  <Icon name="fa6-solid:heart" class="heart" /> {role}
+                </li>
+              ))}
+            </ul>
+          )}
         </li>
       ))
     }
@@ -51,14 +60,35 @@ const props = Astro.props;
   ul,
   .contacts {
     padding-left: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
   }
 
   li {
     list-style: none;
     padding: 0;
-		display: flex;
-		align-items: flex-start;
-		gap: 5px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .projects > li {
+    flex-direction: column;
+    gap: 10px;
+    font-weight: 800;
+  }
+
+  .projects > li > ul {
+    font-weight: normal;
+    gap: 5px;
+  }
+
+  .projects {
+    padding-left: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
   }
 
   .heart {
@@ -106,5 +136,9 @@ const props = Astro.props;
 
   a:hover {
     color: var(--fujo-pink);
+  }
+
+  img {
+    border-radius: 16px;
   }
 </style>

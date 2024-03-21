@@ -6,7 +6,11 @@ const teamCollection = defineCollection({
     z.object({
       name: z.string(),
       avatar: tools.image(),
-      roles: z.string().array(),
+      roles: z.object({
+        "Volume 0 Kickstarter": z.string().array().optional(),
+        "Volume 0": z.string().array().optional(),
+        Website: z.string().array().optional(),
+      }),
       contacts: z.string().url().array().default([]),
     }),
 });

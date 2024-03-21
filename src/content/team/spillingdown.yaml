@@ -1,8 +1,11 @@
 name: spillingdown
 avatar: "./avatars/spillingdown.png"
 roles:
-  - artist
-  - character designer
+  Volume 0 Kickstarter:
+    - artist
+    - character designer (Terminal)
+  Volume 0:
+    - character designer (Terminal)
 contacts:
   - https://mappapapa.neocities.org
   - https://mappapapa.neocities.org/comm/

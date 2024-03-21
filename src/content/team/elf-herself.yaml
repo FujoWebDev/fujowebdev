@@ -1,7 +1,10 @@
 name: Elf Herself
 avatar: "./avatars/elf-herself.png"
 roles:
-  - Lead Research
+  Volume 0 Kickstarter:
+    - Lead Research
+  Website:
+    - Copy writer
 contacts:
   - https://elf.dreamwidth.org
   - https://elfherself.bsky.social

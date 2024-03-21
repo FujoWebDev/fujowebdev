@@ -1,7 +1,10 @@
 name: Elendraug
 avatar: "./avatars/elendraug.png"
 roles:
-  - QA Testing
-  - Additional Research, Feedback, Development, and Assistance
+  Volume 0 Kickstarter:
+    - QA Testing
+    - Additional Research, Feedback, Development, and Assistance
+  Website:
+    - Data entry
 contacts:
   - https://elendraug.neocities.org

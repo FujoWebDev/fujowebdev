@@ -1,8 +1,9 @@
 name: wiredferret
 avatar: "./avatars/wiredferret.png"
 roles:
-  - Technical Writer
-  - Editor
+  Volume 0 Kickstarter:
+    - Technical Writer
+    - Editor
 contacts:
   - https://heidiwaterhouse.com
   - https://wiredferret.bsky.social
