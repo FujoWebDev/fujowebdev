@@ -7,7 +7,7 @@ const teamCollection = defineCollection({
       name: z.string(),
       avatar: tools.image(),
       roles: z.string().array(),
-      contacts: z.string().url().array(),
+      contacts: z.string().url().array().default([]),
     }),
 });
 
