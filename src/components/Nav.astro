@@ -10,13 +10,13 @@ const url = Astro.url.pathname;
     <li class:list={{ current: url === "/" }}>
       <a href="/">Home</a>
     </li>
-    <li class:list={{ current: url === "/characters" }}>
+    <li class:list={{ current: url.startsWith("/characters/") }}>
       <a href="/characters">Characters</a>
     </li>
-    <li class:list={{ current: url === "/volume-0" }}>
+    <li class:list={{ current: url.startsWith("/volume-0/") }}>
       <a href="/volume-0">Volume 0</a>
     </li>
-    <li class:list={{ current: url === "/team" }}>
+    <li class:list={{ current: url.startsWith("/team/") }}>
       <a href="/team">Team</a>
     </li>
     <li>
