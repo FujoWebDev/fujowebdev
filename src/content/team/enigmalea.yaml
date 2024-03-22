@@ -18,4 +18,6 @@ roles:
 contacts:
   - https://enigmalea.quest
   - https://enigmalea.tumblr.com
-  - https://easymode.im/@enigmalea
+  - url: https://easymode.im/@enigmalea
+    platform: firefish
+    username: enigmalea

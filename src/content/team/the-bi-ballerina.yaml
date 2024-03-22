@@ -6,4 +6,6 @@ roles:
 contacts:
   - https://thebiballerina.tumblr.com
   - https://thebiballerina.dreamwidth.org
-  - https://fandom.ink/@thebiballerina
+  - url: https://fandom.ink/@thebiballerina
+    platform: mastodon
+    username: thebiballerina

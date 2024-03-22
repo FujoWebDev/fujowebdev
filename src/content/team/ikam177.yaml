@@ -6,5 +6,7 @@ roles:
 contacts:
   - https://amkitakk.com
   - https://twitter.com/ikam177
-  - https://blorbo.social/@AmkiTakk
+  - url: https://blorbo.social/@AmkiTakk
+    platform: mastodon
+    username: AmkiTakk
   - https://ikam177.tumblr.com

@@ -1,4 +1,5 @@
 import { defineCollection, z } from "astro:content";
+import { socialsSchema, transformSocial } from "../lib/socials-transformer";
 
 const teamCollection = defineCollection({
   type: "data",
@@ -11,7 +12,10 @@ const teamCollection = defineCollection({
         "Volume 0": z.string().array().optional(),
         Website: z.string().array().optional(),
       }),
-      contacts: z.string().url().array().default([]),
+      contacts: socialsSchema
+        .array()
+        .default([])
+        .transform((contacts) => contacts.map(transformSocial)),
     }),
 });
 

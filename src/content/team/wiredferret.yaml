@@ -7,4 +7,6 @@ roles:
 contacts:
   - https://heidiwaterhouse.com
   - https://wiredferret.bsky.social
-  - https://hachyderm.io/@wiredferret
+  - url: https://hachyderm.io/@wiredferret
+    platform: mastodon
+    username: wiredferret
