@@ -1,14 +1,28 @@
 name: essential-randomness
 avatar: "./avatars/essential-randomness.png"
 roles:
-  - writer
-  - project lead
-  - merch designer
+  Volume 0 Kickstarter:
+    - project lead
+    - writer
+    - merch designer
+    - graphic design
+  Volume 0:
+    - project lead
+    - technical and scenario writer
+    - the person who talks with the lawyers
+  Website:
+    - web mistress
+    - coder
+    - copy
+
 contacts:
-  - https://experimental.essentialrandomness.com
+  - https://essentialrandomness.com
   - https://essential-randomness.tumblr.com
   - https://twitter.com/essentialrandom
-  - https://indiepocalypse.social/@essentialrandom
+  - https://essentialrandom.bsky.social
+  - url: https://indiepocalypse.social/@essentialrandom
+    platform: mastodon
+    username: essentialrandom
   - https://github.com/essential-randomness
   - https://patreon.com/essentialrandomness
   - https://ko-fi.com/essentialrandomness

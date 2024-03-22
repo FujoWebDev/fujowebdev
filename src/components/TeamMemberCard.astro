@@ -7,7 +7,7 @@ interface Props {
   memberId: string;
   name: string;
   avatar: ImageMetadata;
-  roles: string[];
+  roles: Record<string, string[]>;
   contacts: string[];
 }
 
@@ -16,49 +16,106 @@ const props = Astro.props;
 
 <article>
   <h2>
+    <img src={props.avatar.src} />
     <a href={`/team/${props.memberId}`}>{props.name}</a>
   </h2>
-  <img src={props.avatar.src} />
   <h3>Roles</h3>
-  <ul>
+  <ul class="projects">
     {
-      props.roles.map((role) => (
+      Object.keys(props.roles).map((project) => (
         <li>
-          <Icon name="fa6-solid:heart" class="heart" /> {role}
+          {project}:
+          {!!props.roles[project].length && (
+            <ul>
+              {props.roles[project].map((role) => (
+                <li>
+                  <Icon name="fa6-solid:heart" class="heart" /> {role}
+                </li>
+              ))}
+            </ul>
+          )}
         </li>
       ))
     }
   </ul>
-  <h3>Contacts</h3>
-  <ul class="contacts">
+  <h3 class:list={{ hidden: props.contacts.length == 0 }}>Contacts</h3>
+  <ul class:list={{ hidden: props.contacts.length == 0 }} class="contacts">
     {
       props.contacts.map((contact) => (
         <li>
-          {" "}
-          <Icon name="fa6-solid:heart" class="heart" />{" "}
-          <a href={contact}>{contact.substring(8)}</a>
+          <a href={contact.url}>
+            {contact.icon ? (
+              <>
+                <Icon name={contact.icon} />
+              </>
+            ) : (
+              <>
+                <Icon name={"lucide:home"} />
+              </>
+            )}
+          </a>
         </li>
       ))
     }
   </ul>
 </article>
 <style>
+  .hidden {
+    display: none;
+  }
   img {
     max-width: 150px;
     align-self: center;
   }
 
-  ul,
-  .contacts {
+  ul {
     padding-left: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
   }
 
+  .contacts {
+    padding-left: 10px;
+    display: flex;
+    gap: 10px;
+    font-size: xx-large;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
+  .contacts a {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
   li {
     list-style: none;
     padding: 0;
-		display: flex;
-		align-items: flex-start;
-		gap: 5px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .projects > li {
+    flex-direction: column;
+    gap: 10px;
+    font-weight: 800;
+    text-transform: capitalize;
+  }
+
+  .projects > li > ul {
+    font-weight: normal;
+    gap: 5px;
+  }
+
+  .projects {
+    padding-left: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
   }
 
   .heart {
@@ -78,13 +135,18 @@ const props = Astro.props;
       1px -1px 0 var(--terminal-dark),
       -1px 1px 0 var(--terminal-dark),
       1px 1px 0 var(--terminal-dark);
-    margin-bottom: 8px;
     filter: drop-shadow(1px 1px 0px var(--terminal-dark));
     text-decoration: none;
   }
 
   h2 a:hover {
     color: var(--fujo-red);
+  }
+
+  h2 {
+    display: flex;
+    gap: 10px;
+    align-items: flex-end;
   }
 
   article {
@@ -97,6 +159,8 @@ const props = Astro.props;
     box-shadow: 2px 2px 0px 0px var(--text-color-disabled);
     background-color: white;
     word-break: break-all;
+    width: 100%;
+    max-width: 450px;
   }
 
   a {
@@ -106,5 +170,12 @@ const props = Astro.props;
 
   a:hover {
     color: var(--fujo-pink);
+  }
+
+  img {
+    border-radius: 16px;
+    width: 50px;
+    margin-bottom: 5px;
+    border: 1px solid var(--terminal-dark);
   }
 </style>

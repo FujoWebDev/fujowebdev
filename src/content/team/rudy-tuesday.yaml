@@ -1,6 +1,7 @@
 name: rudy tuesday
 avatar: "./avatars/rudy-tuesday.png"
 roles:
-  - code contributor
+  Website:
+    - Coder
 contacts:
   - https://rudytues.day

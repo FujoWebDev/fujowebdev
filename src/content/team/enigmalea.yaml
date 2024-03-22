@@ -1,11 +1,23 @@
 name: enigmalea
 avatar: "./avatars/enigmalea.png"
 roles:
-  - Project Organizing
-  - Technical Writer
-  - Editor
-  - QA Testing
+  Volume 0 Kickstarter:
+    - Project Organizing
+    - Technical Writer
+    - Editor
+    - QA Testing
+  Volume 0:
+    - Project Organizing
+    - Technical Writer
+    - Editor
+    - Beta wrangler
+  Website:
+    - Maintainer
+    - Coder
+    - Copy
 contacts:
   - https://enigmalea.quest
   - https://enigmalea.tumblr.com
-  - https://easymode.im/@enigmalea
+  - url: https://easymode.im/@enigmalea
+    platform: firefish
+    username: enigmalea

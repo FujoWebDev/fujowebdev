@@ -1,0 +1,122 @@
+---
+import PageLayout from "../layouts/PageLayout.astro";
+import SalesSignup from "../components/SalesSignup.astro";
+import GitIntro from "../images/git-intro.png";
+import { Image } from "astro:assets";
+---
+
+<PageLayout multiLineHeader>
+  <div>
+    <em
+      >The Fujoshi Guide to Web Development is structured in issues containing a
+      single learning focus, which are then collected into volumes</em
+    >–similarly to a manga or comic. Featured in our first Kickstarter, Volume 0
+    collects our inaugural issues introducing Git, GitHub and open source
+    development.
+  </div>
+  <div class="sales">
+    <h2>Want your own copy?</h2>
+    <SalesSignup />
+  </div>
+  <article>
+    <h2>Issue 1 – Using Git locally</h2>
+    <Image src={GitIntro} alt="Git's introduction from the guide" />
+    <div>
+      Boba-tan learns how Git can help make tracking your code changes and
+      sorting through different versions of a codebase a breeze–no matter the
+      size of your wardrobe!
+
+      <h3>Topics</h3>
+      <ul>
+        <li>What is version control (Git)?</li>
+        <li>The commit cycle</li>
+        <li>Navigating and manipulating code history</li>
+      </ul>
+      <h3>The scenario</h3> Meet Git and learn about his most fundamental commands
+      through a dress-up game involving his friends: CSS, HTML, and Boba-tan.
+      <h3>Current status</h3> Beta testing (full issue, wave 2)
+    </div>
+  </article>
+
+  <article>
+    <h2>Issue 2 – Using Git(Hub) in the cloud</h2>
+
+    When Boba-tan's laptop breaks in the middle of her latest project, Git and
+    GitHub team up to save the day by combining their powers to back up code to
+    the cloud, help her continue working, and prevent future disasters.
+
+    <h3>Topics</h3>
+    <ul>
+      <li>Uploading code to remotes</li>
+      <li>Cloning a repository</li>
+      <li>Creating branches</li>
+      <li>Merging changes</li>
+    </ul>
+    <h3>The scenario</h3> Explore how to avoid losing your code and work on changes
+    in parallel by using the combined power of Git and GitHub to recover and improve
+    Boba-tan's lost Blorbo Shrine.
+    <h3>Current status</h3> Early draft ready, writing in progress
+  </article>
+  <article>
+    <h2>Issue 3 – Open Source Collaboration</h2>
+    Work in progress, check back later
+    <h3>Topics</h3>
+    <ul>
+      <li>Forking repositories</li>
+      <li>The pull request process</li>
+      <li>Opening issues</li>
+      <li>…and more</li>
+    </ul>
+    <h3>The scenario</h3>
+    Work in progress, check back later
+    <h3>Current status</h3> Brainstorming content and scenario
+  </article>
+</PageLayout>
+<style>
+  article {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  article:has(img) {
+    display: grid;
+    grid-template-columns: 300px auto;
+    row-gap: 5px;
+    column-gap: 20px;
+  }
+  article:has(img) h2 {
+    grid-column: span 2;
+  }
+  article:has(img) img {
+    width: 100%;
+    height: auto;
+    display: inline-block;
+    border-radius: 16px;
+    box-shadow: 2px 2px 0px 0px var(--text-color-disabled);
+  }
+  article:has(img) > div {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  @media (max-width: 700px) {
+    article:has(img) {
+      display: flex;
+      flex-direction: column;
+    }
+    article:has(img) img {
+      max-width: 400px;
+    }
+  }
+
+  ul {
+    padding-left: 40px;
+  }
+  .sales {
+    background-color: white;
+    padding: 15px 25px;
+    border-radius: 16px;
+  }
+</style>

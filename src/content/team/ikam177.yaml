@@ -1,9 +1,12 @@
 name: ikam177
 avatar: "./avatars/ikam177.jpg"
 roles:
-  - Additional Art & Layout
+  Volume 0 Kickstarter:
+    - Artist
 contacts:
   - https://amkitakk.com
   - https://twitter.com/ikam177
-  - https://blorbo.social/@AmkiTakk
+  - url: https://blorbo.social/@AmkiTakk
+    platform: mastodon
+    username: AmkiTakk
   - https://ikam177.tumblr.com

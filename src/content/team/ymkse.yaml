@@ -1,8 +1,11 @@
 name: ymkse
 avatar: "./avatars/ymkse.jpg"
 roles:
-  - artist
-  - character designer
+  Volume 0 Kickstarter:
+    - artist
+    - character designer (CSS & HTML)
+  Volume 0:
+    - character designer (CSS & HTML)
 contacts:
   - https://twitter.com/ymkse_art
   - https://ymkse.carrd.co/

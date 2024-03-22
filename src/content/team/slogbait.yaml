@@ -1,5 +1,6 @@
 name: slogbait
 avatar: "./avatars/slogbait.png"
 roles:
-  - Project Organizing
-  - Additional Art & Layout
+  Volume 0 Kickstarter:
+    - Project Organizing
+    - Additional Art & Layout

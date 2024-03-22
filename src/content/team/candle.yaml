@@ -1,4 +1,5 @@
 name: Candle
 avatar: "./avatars/default.png"
 roles:
-  - Additional Research, Feedback, Development, and Assistance
+  Volume 0 Kickstarter:
+    - Additional Research, Feedback, Development, and Assistance

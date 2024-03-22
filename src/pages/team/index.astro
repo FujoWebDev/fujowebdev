@@ -7,8 +7,7 @@ const team = await getCollection("team");
 ---
 
 <PageLayout pageTitle="The Fujoshi Guide to Web Development – Our team">
-  <h1>Our team</h1>
-  <div>Note: this page is under construction, more team members exist!</div>
+  <h1><a href="/team">Our team</a></h1>
   <section>
     {
       team.map((member) => {
@@ -28,7 +27,6 @@ const team = await getCollection("team");
 
 <style>
   section {
-    margin-top: 20px;
     display: flex;
     flex-direction: column;
     gap: 15px;
