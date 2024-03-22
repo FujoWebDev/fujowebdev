@@ -16,9 +16,9 @@ const props = Astro.props;
 
 <article>
   <h2>
+    <img src={props.avatar.src} />
     <a href={`/team/${props.memberId}`}>{props.name}</a>
   </h2>
-  <img src={props.avatar.src} />
   <h3>Roles</h3>
   <ul class="projects">
     {
@@ -46,11 +46,11 @@ const props = Astro.props;
           <a href={contact.url}>
             {contact.icon ? (
               <>
-                <Icon name={contact.icon} /> {contact.username}
+                <Icon name={contact.icon} />
               </>
             ) : (
               <>
-                <Icon name={"lucide:home"} /> {new URL(contact.url).hostname}
+                <Icon name={"lucide:home"} />
               </>
             )}
           </a>
@@ -68,14 +68,29 @@ const props = Astro.props;
     align-self: center;
   }
 
-  ul,
-  .contacts {
+  ul {
     padding-left: 40px;
     display: flex;
     flex-direction: column;
     gap: 10px;
   }
 
+  .contacts {
+    padding-left: 10px;
+    display: flex;
+    gap: 10px;
+    font-size: xx-large;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
+  .contacts a {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
   li {
     list-style: none;
     padding: 0;
@@ -120,13 +135,18 @@ const props = Astro.props;
       1px -1px 0 var(--terminal-dark),
       -1px 1px 0 var(--terminal-dark),
       1px 1px 0 var(--terminal-dark);
-    margin-bottom: 8px;
     filter: drop-shadow(1px 1px 0px var(--terminal-dark));
     text-decoration: none;
   }
 
   h2 a:hover {
     color: var(--fujo-red);
+  }
+
+  h2 {
+    display: flex;
+    gap: 10px;
+    align-items: flex-end;
   }
 
   article {
@@ -154,5 +174,8 @@ const props = Astro.props;
 
   img {
     border-radius: 16px;
+    width: 50px;
+    margin-bottom: 5px;
+    border: 1px solid var(--terminal-dark);
   }
 </style>
