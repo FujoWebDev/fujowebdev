@@ -13,6 +13,9 @@ const url = Astro.url.pathname;
     <li class:list={{ current: url === "/characters" }}>
       <a href="/characters">Characters</a>
     </li>
+    <li class:list={{ current: url === "/volume-0" }}>
+      <a href="/volume-0">Volume 0</a>
+    </li>
     <li class:list={{ current: url === "/team" }}>
       <a href="/team">Team</a>
     </li>
@@ -41,7 +44,7 @@ const url = Astro.url.pathname;
     align-items: center;
   }
 
-  @media (max-width: 450px) {
+  @media (max-width: 650px) {
     ul {
       flex-direction: column;
     }
