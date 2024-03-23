@@ -1,13 +1,13 @@
 {
   "name": "fujowebdev",
-  "type": "module",
   "version": "0.0.1",
+  "type": "module",
   "scripts": {
-    "dev": "astro dev",
-    "start": "astro dev",
+    "astro": "astro",
     "build": "astro build",
+    "dev": "astro dev",
     "preview": "astro preview",
-    "astro": "astro"
+    "start": "astro dev"
   },
   "dependencies": {
     "@iconify-json/fa6-brands": "^1.1.18",
@@ -20,10 +20,12 @@
     "astro-icon": "^1.1.0",
     "marked": "^12.0.1"
   },
+  "devDependencies": {
+    "prettier": "^3.2.5",
+    "prettier-plugin-astro": "^0.13.0",
+    "social-links": "^1.14.0"
+  },
   "engines": {
     "node": ">=20.0.0"
-  },
-  "devDependencies": {
-    "social-links": "^1.14.0"
   }
 }
