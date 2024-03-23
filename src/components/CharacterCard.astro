@@ -150,12 +150,14 @@ const { name, likes, dislikes, tropes, trivia, imageSrc } = Astro.props;
   }
 
   .icon {
+		display: inline;
+		vertical-align: text-bottom;
     color: var(--fujo-pink);
-		margin-bottom: -3px;
+		margin-bottom: 0px;
 		font-size: 1rem;
+		line-height: 1rem;
 		flex-shrink: 0;
 		flex-grow: 0;
-		line-height: 1rem;
   }
 
   a {
