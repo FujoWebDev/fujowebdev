@@ -29,7 +29,7 @@ const props = Astro.props;
             <ul>
               {props.roles[project].map((role) => (
                 <li>
-                  <Icon name="fa6-solid:heart" class="heart" /> {role}
+                  <Icon name="fa6-solid:heart" class="icon" /> {role}
                 </li>
               ))}
             </ul>
@@ -63,16 +63,31 @@ const props = Astro.props;
   .hidden {
     display: none;
   }
-  img {
-    max-width: 150px;
-    align-self: center;
-  }
-
   ul {
     padding-left: 40px;
     display: flex;
     flex-direction: column;
     gap: 10px;
+  }
+
+  li {
+    position: relative;
+    margin-bottom: 3px;
+    list-style: none;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 5px;
+  }
+
+  .icon {
+    color: var(--fujo-pink);
+    margin-bottom: 0px;
+    font-size: 1rem;
+    line-height: 1rem;
+    align-self: baseline;
+    flex-shrink: 0;
+    flex-grow: 0;
   }
 
   .contacts {
@@ -91,13 +106,6 @@ const props = Astro.props;
     justify-content: center;
     align-items: center;
   }
-  li {
-    list-style: none;
-    padding: 0;
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-  }
 
   .projects > li {
     flex-direction: column;
@@ -115,12 +123,6 @@ const props = Astro.props;
     padding-left: 15px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
-  }
-
-  .heart {
-    margin-left: -16px;
-    color: var(--fujo-pink);
   }
 
   h2 a {
@@ -158,7 +160,6 @@ const props = Astro.props;
     row-gap: 10px;
     box-shadow: 2px 2px 0px 0px var(--text-color-disabled);
     background-color: white;
-    word-break: break-all;
     width: 100%;
     max-width: 450px;
   }

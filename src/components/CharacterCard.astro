@@ -25,7 +25,7 @@ const { name, likes, dislikes, tropes, trivia, imageSrc } = Astro.props;
       {
         likes.map((like) => (
           <li>
-            <Icon name="fa6-solid:heart" class="heart" />
+            <Icon name="fa6-solid:heart" class="icon" />
             {like}
           </li>
         ))
@@ -38,7 +38,7 @@ const { name, likes, dislikes, tropes, trivia, imageSrc } = Astro.props;
       {
         dislikes.map((dislike) => (
           <li>
-            <Icon name="fa6-solid:heart-crack" class="heart" />
+            <Icon name="fa6-solid:heart-crack" class="icon" />
             {dislike}
           </li>
         ))
@@ -55,7 +55,7 @@ const { name, likes, dislikes, tropes, trivia, imageSrc } = Astro.props;
       {
         tropes.map((trope) => (
           <li>
-            <Icon name="fa6-solid:splotch" class="heart" />
+            <Icon name="fa6-solid:splotch" class="icon" />
             {typeof trope === "object" ? (
               <a href={trope.url}>{trope.name}</a>
             ) : (
@@ -141,19 +141,22 @@ const { name, likes, dislikes, tropes, trivia, imageSrc } = Astro.props;
 
   li {
     position: relative;
-    list-style-type: none;
     margin-bottom: 3px;
     list-style: none;
-    padding: 0;
-		display: flex;
-		align-items: flex-start;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
     gap: 5px;
-    margin-left: 16px;
   }
 
-  .heart {
-    margin-left: -16px;
+  .icon {
     color: var(--fujo-pink);
+    margin-bottom: 0px;
+    font-size: 1rem;
+    line-height: 1rem;
+    align-self: baseline;
+    flex-shrink: 0;
+    flex-grow: 0;
   }
 
   a {
@@ -220,8 +223,8 @@ const { name, likes, dislikes, tropes, trivia, imageSrc } = Astro.props;
       flex-direction: column;
       align-content: center;
       align-items: center;
-      text-align: center;
-      max-width: 450px;
+      max-width: 90vw;
+      padding: 18px 20px;
     }
 
     ul {
@@ -234,8 +237,7 @@ const { name, likes, dislikes, tropes, trivia, imageSrc } = Astro.props;
     .about {
       display: flex;
       flex-direction: column;
-      max-width: 80%;
-      align-items: center;
+      max-width: 95%;
     }
 
     .tropes ul {
@@ -246,6 +248,10 @@ const { name, likes, dislikes, tropes, trivia, imageSrc } = Astro.props;
     }
     article:not(.show-all)button {
       display: block;
+    }
+
+    h3 {
+      text-align: center;
     }
   }
 </style>

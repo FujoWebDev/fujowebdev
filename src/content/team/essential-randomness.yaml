@@ -13,7 +13,7 @@ roles:
   Website:
     - web mistress
     - coder
-    - copy
+    - copy writer
 
 contacts:
   - https://essentialrandomness.com

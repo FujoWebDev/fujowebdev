@@ -120,6 +120,7 @@ const characters = (await getCollection("characters")).toSorted(
   :global(h1) {
     margin-bottom: 0;
   }
+
   section {
     display: flex;
     flex-direction: column;
@@ -139,12 +140,7 @@ const characters = (await getCollection("characters")).toSorted(
     border: 3px solid var(--terminal-dark);
     border-radius: 10px;
   }
-  @media (min-width: 650px) {
-    img {
-      width: 80px;
-      height: 80px;
-    }
-  }
+
   a:hover img {
     border: 3px solid var(--fujo-red);
     cursor: pointer;
