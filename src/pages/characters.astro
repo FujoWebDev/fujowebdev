@@ -1,6 +1,7 @@
 ---
 import PageLayout from "../layouts/PageLayout.astro";
 import CharacterCard from "../components/CharacterCard.astro";
+import FAQs from "../components/FAQs.astro";
 
 import { getCollection } from "astro:content";
 import { parse } from "marked";
@@ -52,8 +53,7 @@ const characters = (await getCollection("characters")).toSorted(
               likes={character.data.likes}
               dislikes={character.data.dislikes}
               tropes={character.data.tropes}
-              trivia={parse(character.data.trivia)}
-            >
+              trivia={parse(character.data.trivia)}>
               <renderedBody.Content />
             </CharacterCard>
           );
@@ -78,8 +78,7 @@ const characters = (await getCollection("characters")).toSorted(
               likes={character.data.likes}
               dislikes={character.data.dislikes}
               tropes={character.data.tropes}
-              trivia={parse(character.data.trivia)}
-            >
+              trivia={parse(character.data.trivia)}>
               <renderedBody.Content />
             </CharacterCard>
           );
@@ -105,13 +104,17 @@ const characters = (await getCollection("characters")).toSorted(
               likes={character.data.likes}
               dislikes={character.data.dislikes}
               tropes={character.data.tropes}
-              trivia={parse(character.data.trivia)}
-            >
+              trivia={parse(character.data.trivia)}>
               <renderedBody.Content />
             </CharacterCard>
           );
         })
     }
+  </section>
+
+  <section>
+    <h2>FAQs</h2>
+		<FAQs />
   </section>
 </PageLayout>
 
@@ -125,6 +128,7 @@ const characters = (await getCollection("characters")).toSorted(
     display: flex;
     flex-direction: column;
     gap: 20px;
+		width: 100%;
   }
   ul {
     display: flex;
