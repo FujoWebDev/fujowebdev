@@ -1,0 +1,160 @@
+---
+import { Image } from "astro:assets";
+import characterx from "../images/characterx.png";
+import charactery from "../images/charactery.png";
+---
+
+<article>
+  <details>
+    <summary>What is [character]'s [race, sex, gender, etc]?</summary>
+
+    <p>
+      Our character creation process has two main goals:
+      <ul>
+        <li>
+          Creating a diverse cast of characters
+          <li>
+            Providing characters that are exciting and dynamic, but still blank
+            slates for the community to build on and identify with
+          </li>
+        </li>
+      </ul>
+    </p>
+    <p>
+      Since these characters are anthropomorphized versions of software and
+      development concepts, they are not constrained by our concepts of race,
+      sex, gender, ethnicity, country of origin, and religion. While we are
+      developing some characters with specific communities in mind, they can be
+      anything to anyone. We invite people to play around with them as they see
+      fit!
+    </p>
+    <p>
+      Our desire to not make fan creators feel constrained by specific pronouns
+      posed a challenge when assigning our own defaults. Official materials
+      currently use he/him pronouns for the characters, as a callback to the
+      genres that inspired us which avoids singling out any character’s
+      preferred gender expression. We encourage the community to use whatever
+      pronouns they prefer within their own versions of Localhost HQ. We’ll be
+      exploring other ways to handle this issue in the future.
+    </p>
+  </details>
+</article>
+
+<article>
+  <details>
+    <summary>
+      Even though the characters aren't from the real world, you took
+      inspiration from something. Do you use sensitivity readers?
+    </summary>
+
+    <p>
+      Although the volunteers and collaborators working on The Fujoshi Guide to
+      Web Development are diverse, we don't have a broad enough cross-section to
+      cover all axes of marginalization. To that end, we do extensive research
+      and work with sensitivity consultants when exploring character traits,
+      relationships, and design.
+    </p>
+
+    <p>
+      You can see a current list of the consultants we've worked with during the
+      production of the demo in the credits. They include:
+      <ul>
+        <li>
+          A sensitivity reader from the Mi'kmaq tribe for CSS.
+          <li>A sensitivity reader from the deaf community, also for CSS.</li>
+        </li>
+      </ul>
+    </p>
+    <p>
+      We are committed to continuing to increase the FujoGuide cast's diversity,
+      and have additional characters in various stages of development that could
+      not fit in this first release. If you're interested in helping as a
+      sensitivity reader, please contact our lead Essential Randomness through
+      Kickstarter to let us know what you would like to read for.
+    </p>
+  </details>
+</article>
+
+<article>
+  <details>
+    <summary> Do you have any other characters? </summary>
+
+    <p>
+      When we were first working on character design, we didn't actually know
+      what our first volume would cover, so we discussed and began developing
+      many gijinka who did not make it into Volume 0, like the two hotties
+      below.
+    </p>
+    <figure>
+      <Image
+        src={characterx}
+        alt="Sketches of the unreleased FujoGuide character [Redacted]. He has a thicc build, a medium-dark skin tone, and tightly curled black hair shown in different styles. On the left is a nearly full-body drawing of him wearing a patchwork sweater, smiling, with a flat top hair style, and holding a steaming mug. The artist’s notes read “dimples? uwu”. In the middle are two side profiles with hair ideas: the top one has a flat top with fade hair style and the bottom one has box braids on top with a fade. The artist’s notes read “yarn braids :3”. On the right is a drawing of him knitting with his elbows on the table and his tongue sticking out in focus mode. He is wearing a white long-sleeve shirt and a very short hairstyle. The artist’s notes read “focusing too hard”."
+      />
+      <Image
+        src={charactery}
+        alt="Sketches of the unreleased FujoGuide character [Redacted]. He has a thin build, a light skin tone, and long hair swept to one side and gathered in a ponytail. He is neatly dressed in a button down shirt, collared vest, dress pants, driving gloves, and oval bottom rim glasses. On the left, he is holding and reading a large book. In the middle, he is sitting cross-legged and looking thoughtful with a finger on his lips. On the right, he is walking down a grand staircase with one hand on the railing and a pencil behind his ear."
+      />
+    </figure>
+    <p>
+      We can't go into many details because they will be featured in future
+      volumes, but know that there are so, so many more hot anime boys waiting
+      for you.
+    </p>
+  </details>
+</article>
+
+<style>
+  article {
+    background-color: white;
+    padding: 25px 30px;
+    border-radius: 10px;
+    row-gap: 10px;
+    box-shadow: 2px 2px 0px 0px var(--text-color-disabled);
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  summary {
+    font-family: "freude", sans-serif;
+    font-weight: 400;
+    color: var(--fujo-red);
+  }
+
+  li {
+    margin-left: 20px;
+  }
+
+  figure {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+		margin-top: 10px;
+		margin-bottom: 10px;
+  }
+
+  img {
+    min-width: 300px;
+    max-width: 50%;
+    height: auto;
+  }
+
+  @media (max-width: 749px) {
+    article {
+      display: flex;
+      flex-direction: column;
+      align-content: center;
+      align-items: center;
+      max-width: 90vw;
+      padding: 18px 20px;
+    }
+
+		figure {
+    display: flex;
+		flex-direction: column;
+    align-items: center;
+    justify-content: center;
+		margin-top: 10px;
+		margin-bottom: 10px;
+  }
+  }
+</style>
