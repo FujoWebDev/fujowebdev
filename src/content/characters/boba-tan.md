@@ -5,9 +5,9 @@ image: ./profiles/boba-tan.png
 icon: ./icons/boba-tan.png
 home: the real world
 likes:
-  - Boba
+  - Programming
   - Yaoi
-  - Keysmashing
+  - Boba
 dislikes:
   - Bigotry
   - Bullies
@@ -28,5 +28,5 @@ After getting isekai'd to a world where programming concepts are
 anthropomorphized as hot fictional characters, Boba-tan has now embarked on an
 exilarating journey to learn all she can about web development.
 
-Kind, enthusiastic and a bit weird (but, unless you're fictional, generally
+Kind, enthusiastic, intense and a bit weird (but, unless you're fictional, generally
 harmless), Boba-tan represents the best a fujoshi can be.
