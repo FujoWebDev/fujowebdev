@@ -53,7 +53,8 @@ const characters = (await getCollection("characters")).toSorted(
               likes={character.data.likes}
               dislikes={character.data.dislikes}
               tropes={character.data.tropes}
-              trivia={parse(character.data.trivia)}>
+              trivia={parse(character.data.trivia)}
+            >
               <renderedBody.Content />
             </CharacterCard>
           );
@@ -78,7 +79,8 @@ const characters = (await getCollection("characters")).toSorted(
               likes={character.data.likes}
               dislikes={character.data.dislikes}
               tropes={character.data.tropes}
-              trivia={parse(character.data.trivia)}>
+              trivia={parse(character.data.trivia)}
+            >
               <renderedBody.Content />
             </CharacterCard>
           );
@@ -104,7 +106,8 @@ const characters = (await getCollection("characters")).toSorted(
               likes={character.data.likes}
               dislikes={character.data.dislikes}
               tropes={character.data.tropes}
-              trivia={parse(character.data.trivia)}>
+              trivia={parse(character.data.trivia)}
+            >
               <renderedBody.Content />
             </CharacterCard>
           );
@@ -114,7 +117,7 @@ const characters = (await getCollection("characters")).toSorted(
 
   <section>
     <h2>FAQs</h2>
-		<FAQs />
+    <FAQs />
   </section>
 </PageLayout>
 
@@ -128,7 +131,7 @@ const characters = (await getCollection("characters")).toSorted(
     display: flex;
     flex-direction: column;
     gap: 20px;
-		width: 100%;
+    width: 100%;
   }
   ul {
     display: flex;
