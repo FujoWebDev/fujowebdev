@@ -11,6 +11,8 @@ roles:
     - Technical Writer
     - Editor
     - Beta wrangler
+  Volume 0 Issue 1:
+    - Technical Writer
   Website:
     - Maintainer
     - Coder
