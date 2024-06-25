@@ -10,6 +10,9 @@ roles:
     - project lead
     - technical and scenario writer
     - the person who talks with the lawyers
+  Volume 0 Issue 1:
+    - Technical Writer
+    - Scenario Writer
   Website:
     - web mistress
     - coder

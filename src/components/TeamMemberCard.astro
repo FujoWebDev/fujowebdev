@@ -22,20 +22,21 @@ const props = Astro.props;
   <h3>Roles</h3>
   <ul class="projects">
     {
-      Object.keys(props.roles).map((project) => (
-        <li>
-          {project}:
-          {!!props.roles[project].length && (
-            <ul>
-              {props.roles[project].map((role) => (
-                <li>
-                  <Icon name="fa6-solid:heart" class="icon" /> {role}
-                </li>
-              ))}
-            </ul>
-          )}
-        </li>
-      ))
+      Object.keys(props.roles).map(
+        (project) =>
+          !!props.roles[project].length && (
+            <li>
+              {project}:{" "}
+              <ul>
+                {props.roles[project].map((role) => (
+                  <li>
+                    <Icon name="fa6-solid:heart" class="icon" /> {role}
+                  </li>
+                ))}
+              </ul>
+            </li>
+          )
+      )
     }
   </ul>
   <h3 class:list={{ hidden: props.contacts.length == 0 }}>Contacts</h3>

@@ -7,8 +7,8 @@ export default defineConfig({
   integrations: [icon()],
   redirects: {
     "/streams": {
-      destination: 'https://www.essentialrandomness.com/streams',
-      status: 307
-    }
-  }
+      destination: "https://www.essentialrandomness.com/streams",
+      status: 307,
+    },
+  },
 });

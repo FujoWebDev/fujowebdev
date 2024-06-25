@@ -1,6 +1,15 @@
 import { defineCollection, z } from "astro:content";
 import { socialsSchema, transformSocial } from "../lib/socials-transformer";
 
+const Volume0Issue1 = z
+  .enum([
+    "Technical Writer",
+    "Scenario Writer",
+    "Beta Reading Coordinator",
+    "Beta Reader",
+  ])
+  .array();
+
 const teamCollection = defineCollection({
   type: "data",
   schema: (tools) =>
@@ -11,6 +20,7 @@ const teamCollection = defineCollection({
         "Volume 0 Kickstarter": z.string().array().optional(),
         "Volume 0": z.string().array().optional(),
         Website: z.string().array().optional(),
+        "Volume 0 Issue 1": Volume0Issue1.default([]),
       }),
       contacts: socialsSchema
         .array()
