@@ -3,5 +3,7 @@ avatar: "./avatars/default.png"
 roles:
   Volume 0 Kickstarter:
     - Additional Research, Feedback, Development, and Assistance
+  Volume 0:
+    - Beta Reading Coordinator
 contacts:
   - https://playerprophet.com
