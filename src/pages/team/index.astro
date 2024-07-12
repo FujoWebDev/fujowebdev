@@ -1,27 +1,38 @@
 ---
 import { getCollection } from "astro:content";
 import PageLayout from "../../layouts/PageLayout.astro";
-import TeamMemberCard from "../../components/TeamMemberCard.astro";
+import { Icon } from "astro-icon/components";
 
 const team = await getCollection("team");
+
+let projects: string[] = [];
+
+team.map((member) => {
+  for (const project in member.data.roles) {
+    if (!projects.includes(project)) {
+      projects.push(project);
+    }
+  }
+});
 ---
 
 <PageLayout pageTitle="The Fujoshi Guide to Web Development – Our team">
   <h1><a href="/team">Our team</a></h1>
   <section>
-    {
-      team.map((member) => {
-        return (
-          <TeamMemberCard
-            memberId={member.id}
-            name={member.data.name}
-            avatar={member.data.avatar}
-            roles={member.data.roles}
-            contacts={member.data.contacts}
-          />
-        );
-      })
-    }
+    <ul class="projects">
+      {
+        projects.map((project) => {
+          return (
+            <li>
+              <a href={`/team/${project}`}>
+                <Icon name="fa6-solid:heart" class="icon" />
+                {project}
+              </a>
+            </li>
+          );
+        })
+      }
+    </ul>
   </section>
 </PageLayout>
 
@@ -30,5 +41,49 @@ const team = await getCollection("team");
     display: flex;
     flex-direction: column;
     gap: 15px;
+  }
+  ul {
+    padding-left: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  li {
+    position: relative;
+    margin-bottom: 3px;
+    list-style: none;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 5px;
+  }
+
+  .icon {
+    color: var(--fujo-red);
+    margin-bottom: 0px;
+    font-size: 1rem;
+    line-height: 1rem;
+    align-self: baseline;
+    flex-shrink: 0;
+    flex-grow: 0;
+  }
+
+  .projects > li {
+    flex-direction: column;
+    gap: 10px;
+    font-weight: 800;
+    text-transform: capitalize;
+  }
+
+  .projects > li > ul {
+    font-weight: normal;
+    gap: 5px;
+  }
+
+  .projects {
+    padding-left: 15px;
+    display: flex;
+    flex-direction: column;
   }
 </style>

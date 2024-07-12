@@ -8,6 +8,7 @@ interface Props {
   name: string;
   avatar: ImageMetadata;
   roles: Record<string, string[]>;
+  project?: string;
   contacts: string[];
 }
 
@@ -22,20 +23,30 @@ const props = Astro.props;
   <h3>Roles</h3>
   <ul class="projects">
     {
-      Object.keys(props.roles).map(
-        (project) =>
-          !!props.roles[project].length && (
+      props.project ? (
+        <ul>
+          {props.roles[props.project].map((role) => (
             <li>
-              {project}:{" "}
-              <ul>
-                {props.roles[project].map((role) => (
-                  <li>
-                    <Icon name="fa6-solid:heart" class="icon" /> {role}
-                  </li>
-                ))}
-              </ul>
+              <Icon name="fa6-solid:heart" class="icon" /> {role}
             </li>
-          )
+          ))}
+        </ul>
+      ) : (
+        Object.keys(props.roles).map(
+          (project) =>
+            !!props.roles[project].length && (
+              <li>
+                {project}:{" "}
+                <ul>
+                  {props.roles[project].map((role) => (
+                    <li>
+                      <Icon name="fa6-solid:heart" class="icon" /> {role}
+                    </li>
+                  ))}
+                </ul>
+              </li>
+            )
+        )
       )
     }
   </ul>
