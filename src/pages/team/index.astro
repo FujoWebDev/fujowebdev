@@ -1,89 +1,111 @@
 ---
 import { getCollection } from "astro:content";
 import PageLayout from "../../layouts/PageLayout.astro";
-import { Icon } from "astro-icon/components";
+import TeamMemberCard from "../../components/TeamMemberCard.astro";
 
 const team = await getCollection("team");
 
-let projects: string[] = [];
+const PROJECTS: Record<string, any> = {};
 
 team.map((member) => {
   for (const project in member.data.roles) {
-    if (!projects.includes(project)) {
-      projects.push(project);
+    if (!PROJECTS[project]) {
+      PROJECTS[project] = {};
+      PROJECTS[project].members = [];
+    }
+    if (member.data.roles[project].length > 0) {
+      PROJECTS[project].members.push(member);
     }
   }
 });
+
+const projectsArray = [];
+
+for (const proj in PROJECTS) {
+  projectsArray.push({
+    name: proj,
+    url: proj.replace(/\s/g, "-").toLowerCase(),
+    members: PROJECTS[proj].members,
+  });
+}
 ---
 
 <PageLayout pageTitle="The Fujoshi Guide to Web Development – Our team">
   <h1><a href="/team">Our team</a></h1>
-  <section>
-    <ul class="projects">
-      {
-        projects.map((project) => {
-          return (
-            <li>
-              <a href={`/team/${project}`}>
-                <Icon name="fa6-solid:heart" class="icon" />
-                {project}
-              </a>
-            </li>
-          );
-        })
-      }
-    </ul>
-  </section>
+  <div class="tabs">
+    {
+      projectsArray.map((project, index) => (
+        <>
+          <input
+            type="radio"
+            name="tab"
+            id={project.url}
+            checked={index === 0}
+          />
+          <label for={project.url}>{project.name}</label>
+          <div class="tab-content" id={`content-${project.url}`}>
+            {project.members.map((memberEntry) => {
+              return (
+                <TeamMemberCard
+                  transition:name="artist"
+                  transition:animate="slide"
+                  transition:persist
+                  memberId={memberEntry.id}
+                  name={memberEntry.data.name}
+                  avatar={memberEntry.data.avatar}
+                  roles={memberEntry.data.roles}
+                  project={project.name}
+                  contacts={memberEntry.data.contacts}
+                />
+              );
+            })}
+          </div>
+        </>
+      ))
+    }
+  </div>
 </PageLayout>
-
 <style>
-  section {
+  :global(h1) {
+    margin-bottom: 0;
+  }
+  .tabs {
     display: flex;
-    flex-direction: column;
-    gap: 15px;
-  }
-  ul {
-    padding-left: 40px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    justify-content: center;
+    align-items: center;
   }
 
-  li {
-    position: relative;
-    margin-bottom: 3px;
-    list-style: none;
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-    gap: 5px;
+  .tabs label {
+    background: var(--fujo-pink);
+    color: var(--fujo-cream);
+    cursor: pointer;
+    display: block;
+    margin: 0.3rem;
+    font-weight: 700;
+    padding: 0.5rem 1rem;
+    transition: background ease 0.3s;
+    width: auto;
+    order: 1;
+  }
+  .tabs .tab-content {
+    display: none;
+    margin-top: 1rem;
+    padding: 0 1rem;
+    order: 99;
   }
 
-  .icon {
-    color: var(--fujo-red);
-    margin-bottom: 0px;
-    font-size: 1rem;
-    line-height: 1rem;
-    align-self: baseline;
-    flex-shrink: 0;
-    flex-grow: 0;
+  .tabs input[type="radio"] {
+    display: none;
   }
 
-  .projects > li {
-    flex-direction: column;
-    gap: 10px;
-    font-weight: 800;
-    text-transform: capitalize;
+  .tabs input[type="radio"]:checked + label {
+    background: var(--fujo-red);
+    color: var(--fujo-cream);
   }
 
-  .projects > li > ul {
-    font-weight: normal;
-    gap: 5px;
-  }
-
-  .projects {
-    padding-left: 15px;
-    display: flex;
-    flex-direction: column;
+  .tabs input[type="radio"]:checked + label + .tab-content {
+    display: block;
   }
 </style>
