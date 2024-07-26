@@ -4,31 +4,108 @@ import PageLayout from "../../layouts/PageLayout.astro";
 import TeamMemberCard from "../../components/TeamMemberCard.astro";
 
 const team = await getCollection("team");
+
+const PROJECTS: Record<string, any> = {};
+
+team.map((member) => {
+  for (const project in member.data.roles) {
+    if (!PROJECTS[project]) {
+      PROJECTS[project] = {};
+      PROJECTS[project].members = [];
+    }
+    if (member.data.roles[project].length > 0) {
+      PROJECTS[project].members.push(member);
+    }
+  }
+});
+
+const projectsArray = [];
+
+for (const proj in PROJECTS) {
+  projectsArray.push({
+    name: proj,
+    url: proj.replace(/\s/g, "-").toLowerCase(),
+    members: PROJECTS[proj].members,
+  });
+}
 ---
 
 <PageLayout pageTitle="The Fujoshi Guide to Web Development – Our team">
   <h1><a href="/team">Our team</a></h1>
-  <section>
+  <div class="tabs">
     {
-      team.map((member) => {
-        return (
-          <TeamMemberCard
-            memberId={member.id}
-            name={member.data.name}
-            avatar={member.data.avatar}
-            roles={member.data.roles}
-            contacts={member.data.contacts}
+      projectsArray.map((project, index) => (
+        <>
+          <input
+            type="radio"
+            name="tab"
+            id={project.url}
+            checked={index === 0}
           />
-        );
-      })
+          <label for={project.url}>{project.name}</label>
+          <div class="tab-content" id={`content-${project.url}`}>
+            {project.members.map((memberEntry) => {
+              return (
+                <TeamMemberCard
+                  transition:name="artist"
+                  transition:animate="slide"
+                  transition:persist
+                  memberId={memberEntry.id}
+                  name={memberEntry.data.name}
+                  avatar={memberEntry.data.avatar}
+                  roles={memberEntry.data.roles}
+                  project={project.name}
+                  contacts={memberEntry.data.contacts}
+                />
+              );
+            })}
+          </div>
+        </>
+      ))
     }
-  </section>
+  </div>
 </PageLayout>
-
 <style>
-  section {
+  :global(h1) {
+    margin-bottom: 0;
+  }
+  .tabs {
     display: flex;
-    flex-direction: column;
-    gap: 15px;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .tabs label {
+    background: var(--fujo-pink);
+    color: var(--fujo-cream);
+    cursor: pointer;
+    display: block;
+    margin: 0.3rem;
+    font-weight: 700;
+    padding: 0.5rem 1rem;
+    transition: background ease 0.3s;
+    width: auto;
+    order: 1;
+  }
+  .tabs .tab-content {
+    display: none;
+    margin-top: 1rem;
+    padding: 0 1rem;
+    order: 99;
+  }
+
+  .tabs input[type="radio"] {
+    display: none;
+  }
+
+  .tabs input[type="radio"]:checked + label {
+    background: var(--fujo-red);
+    color: var(--fujo-cream);
+  }
+
+  .tabs input[type="radio"]:checked + label + .tab-content {
+    display: block;
   }
 </style>

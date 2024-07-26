@@ -1,0 +1,95 @@
+---
+import type { GetStaticPaths } from "astro";
+import { getCollection, type CollectionEntry } from "astro:content";
+import PageLayout from "../../layouts/PageLayout.astro";
+import TeamMemberCard from "../../components/TeamMemberCard.astro";
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const PROJECTS: string[] = [];
+
+  const team = await getCollection("team");
+
+  team.map((member) => {
+    const memberProjects = member.data.roles;
+    for (const project in memberProjects) {
+      if (!PROJECTS.includes(project)) {
+        PROJECTS.push(project);
+      }
+    }
+  });
+
+  console.log({ PROJECTS });
+  //.replace(/\s/g, "").toLowerCase()
+
+  return PROJECTS.map((project) => {
+    return {
+      params: {
+        project: project,
+      },
+    };
+  });
+};
+
+const { project } = Astro.params;
+
+if (!project || typeof project === "number") return;
+
+const memberEntries = await getCollection("team", ({ data }) => {
+  return data.roles[project] && data.roles[project].length;
+});
+---
+
+<PageLayout pageTitle="The Fujoshi Guide to Web Development – Our team">
+  <h1><a href="/team">Our team</a></h1>
+  <h2>{project}</h2>
+  <div>
+    {
+      memberEntries.map((memberEntry) => {
+        return (
+          <TeamMemberCard
+            transition:name="artist"
+            transition:animate="slide"
+            transition:persist
+            memberId={memberEntry.id}
+            name={memberEntry.data.name}
+            avatar={memberEntry.data.avatar}
+            roles={memberEntry.data.roles}
+            project={project}
+            contacts={memberEntry.data.contacts}
+          />
+        );
+      })
+    }
+  </div>
+</PageLayout>
+<style>
+  img {
+    max-width: 150px;
+    align-self: center;
+  }
+  ul {
+    padding-left: 40px;
+  }
+  section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  h2 {
+    grid-column: span 2;
+  }
+  article {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  nav {
+    margin-top: 30px;
+    display: flex;
+    gap: 15px;
+    justify-content: space-evenly;
+  }
+  .hidden {
+    visibility: hidden;
+  }
+</style>
