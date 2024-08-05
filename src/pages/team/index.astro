@@ -7,7 +7,7 @@ const team = await getCollection("team");
 
 const PROJECTS: Record<string, any> = {};
 
-team.map((member) => {
+team.forEach((member) => {
   for (const project in member.data.roles) {
     if (!PROJECTS[project]) {
       PROJECTS[project] = {};
@@ -19,49 +19,67 @@ team.map((member) => {
   }
 });
 
-const projectsArray = [];
-
-for (const proj in PROJECTS) {
-  projectsArray.push({
-    name: proj,
-    url: proj.replace(/\s/g, "-").toLowerCase(),
-    members: PROJECTS[proj].members,
-  });
-}
+const projectsArray = Object.keys(PROJECTS).map((proj) => ({
+  name: proj,
+  url: proj.replace(/\s/g, "-").toLowerCase(),
+  members: PROJECTS[proj].members,
+}));
 ---
 
 <PageLayout pageTitle="The Fujoshi Guide to Web Development – Our team">
   <h1><a href="/team">Our team</a></h1>
+  <div class="description">
+    Whether for one single adventure or as part of our continued efforts, these
+    are the people whose hard work makes FujoGuide possible.
+  </div>
   <div class="tabs">
     {
-      projectsArray.map((project, index) => (
-        <>
-          <input
-            type="radio"
-            name="tab"
-            id={project.url}
-            checked={index === 0}
-          />
-          <label for={project.url}>{project.name}</label>
-          <div class="tab-content" id={`content-${project.url}`}>
-            {project.members.map((memberEntry) => {
-              return (
-                <TeamMemberCard
-                  transition:name="artist"
-                  transition:animate="slide"
-                  transition:persist
-                  memberId={memberEntry.id}
-                  name={memberEntry.data.name}
-                  avatar={memberEntry.data.avatar}
-                  roles={memberEntry.data.roles}
-                  project={project.name}
-                  contacts={memberEntry.data.contacts}
-                />
-              );
-            })}
-          </div>
-        </>
-      ))
+      projectsArray.map((project, index) => {
+        // Exclude from members with card people that have exclusively done beta reading
+        const membersWithCard = project.members.filter(
+          (member) =>
+            member.data.roles[project.name]?.length !== 1 ||
+            member.data.roles[project.name][0] !== "Beta Reader"
+        );
+        const betaReaders = project.members.filter((member) =>
+          member.data.roles[project.name]?.includes("Beta Reader")
+        );
+
+        return (
+          <>
+            <input
+              type="radio"
+              name="tab"
+              id={project.url}
+              checked={index === 0}
+            />
+            <label for={project.url}>{project.name}</label>
+            <div class="tab-content" id={`content-${project.url}`}>
+              {membersWithCard.map((memberEntry) => {
+                return (
+                  <TeamMemberCard
+                    transition:name="artist"
+                    transition:animate="slide"
+                    transition:persist
+                    memberId={memberEntry.id}
+                    name={memberEntry.data.name}
+                    avatar={memberEntry.data.avatar}
+                    roles={memberEntry.data.roles}
+                    project={project.name}
+                    contacts={memberEntry.data.contacts}
+                  />
+                );
+              })}
+              {betaReaders.length > 0 && (
+                <div class="beta-readers">
+                  <h2>...and our heroic beta readers:</h2>
+                  {betaReaders.map((reader) => reader.data.name).join(", ")}
+                </div>
+              )}
+            </div>
+          </>
+        );
+      })
     }
   </div>
 </PageLayout>
@@ -107,5 +125,17 @@ for (const proj in PROJECTS) {
 
   .tabs input[type="radio"]:checked + label + .tab-content {
     display: block;
+  }
+
+  .beta-readers {
+    text-align: center;
+    margin: 0 auto;
+    margin-top: 40px;
+    font-size: 1.17em;
+  }
+
+  .description {
+    text-align: center;
+    max-width: 540px;
   }
 </style>
