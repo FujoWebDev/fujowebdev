@@ -28,6 +28,10 @@ const projectsArray = Object.keys(PROJECTS).map((proj) => ({
 
 <PageLayout pageTitle="The Fujoshi Guide to Web Development – Our team">
   <h1><a href="/team">Our team</a></h1>
+  <div class="description">
+    Whether for one single adventure or as part of our continued efforts, these
+    are the people whose hard work makes FujoGuide possible.
+  </div>
   <div class="tabs">
     {
       projectsArray.map((project, index) => {
@@ -128,5 +132,10 @@ const projectsArray = Object.keys(PROJECTS).map((proj) => ({
     margin: 0 auto;
     margin-top: 40px;
     font-size: 1.17em;
+  }
+
+  .description {
+    text-align: center;
+    max-width: 540px;
   }
 </style>
