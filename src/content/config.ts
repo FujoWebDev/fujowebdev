@@ -7,6 +7,7 @@ const Volume0Issue1 = z
     "Scenario Writer",
     "Beta Reading Coordinator",
     "Beta Reader",
+    "Proof Reader",
   ])
   .array();
 
