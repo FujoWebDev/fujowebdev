@@ -1,25 +1,23 @@
 ---
 import type { GetStaticPaths } from "astro";
 import { getCollection, type CollectionEntry } from "astro:content";
+import type { Project } from "../../content/config";
 import PageLayout from "../../layouts/PageLayout.astro";
 import TeamMemberCard from "../../components/TeamMemberCard.astro";
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const PROJECTS: string[] = [];
+  const PROJECTS: Project[] = [];
 
   const team = await getCollection("team");
 
   team.map((member) => {
     const memberProjects = member.data.roles;
-    for (const project in memberProjects) {
+    for (const project of Object.keys(memberProjects) as Project[]) {
       if (!PROJECTS.includes(project)) {
         PROJECTS.push(project);
       }
     }
   });
-
-  console.log({ PROJECTS });
-  //.replace(/\s/g, "").toLowerCase()
 
   return PROJECTS.map((project) => {
     return {
@@ -30,7 +28,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   });
 };
 
-const { project } = Astro.params;
+const { project } = Astro.params as { project: Project };
 
 if (!project || typeof project === "number") return;
 

@@ -1,6 +1,6 @@
 ---
 import type { GetStaticPaths } from "astro";
-import { CollectionEntry, getCollection, getEntry } from "astro:content";
+import { type CollectionEntry, getCollection, getEntry } from "astro:content";
 import PageLayout from "../../layouts/PageLayout.astro";
 import TeamMemberCard from "../../components/TeamMemberCard.astro";
 
@@ -22,8 +22,10 @@ export const getStaticPaths: GetStaticPaths = async () => {
 const { member } = Astro.params;
 const { previous, next } = Astro.props;
 
-// @ts-ignore
-const memberEntry = (await getEntry("team", member)) as CollectionEntry<"team">;
+const memberEntry = await getEntry(
+  "team",
+  member as CollectionEntry<"team">["id"]
+);
 ---
 
 <PageLayout pageTitle="The Fujoshi Guide to Web Development – Our team">

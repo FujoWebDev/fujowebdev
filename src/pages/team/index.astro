@@ -1,26 +1,28 @@
 ---
-import { getCollection } from "astro:content";
+import { getCollection, type CollectionEntry } from "astro:content";
+import type { Project } from "../../content/config";
 import PageLayout from "../../layouts/PageLayout.astro";
 import TeamMemberCard from "../../components/TeamMemberCard.astro";
 
 const team = await getCollection("team");
 
-const PROJECTS: Record<string, any> = {};
+const PROJECTS: Record<string, { members: CollectionEntry<"team">[] }> = {};
 
 team.forEach((member) => {
-  for (const project in member.data.roles) {
+  for (const project of Object.keys(member.data.roles) as Project[]) {
     if (!PROJECTS[project]) {
-      PROJECTS[project] = {};
-      PROJECTS[project].members = [];
+      PROJECTS[project] = {
+        members: [] as CollectionEntry<"team">[],
+      };
     }
-    if (member.data.roles[project].length > 0) {
+    if (member.data.roles[project] && member.data.roles[project].length > 0) {
       PROJECTS[project].members.push(member);
     }
   }
 });
 
 const projectsArray = Object.keys(PROJECTS).map((proj) => ({
-  name: proj,
+  name: proj as Project,
   url: proj.replace(/\s/g, "-").toLowerCase(),
   members: PROJECTS[proj].members,
 }));
@@ -39,7 +41,7 @@ const projectsArray = Object.keys(PROJECTS).map((proj) => ({
         const membersWithCard = project.members.filter(
           (member) =>
             member.data.roles[project.name]?.length !== 1 ||
-            member.data.roles[project.name][0] !== "Beta Reader"
+            member.data.roles[project.name]?.[0] !== "Beta Reader"
         );
         const betaReaders = project.members.filter((member) =>
           member.data.roles[project.name]?.includes("Beta Reader")

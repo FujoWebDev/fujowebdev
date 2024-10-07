@@ -2,6 +2,7 @@
 import type { ImageMetadata } from "astro";
 
 import { Icon } from "astro-icon/components";
+import type { SocialsData } from "../lib/socials-transformer";
 
 interface Props {
   memberId: string;
@@ -9,7 +10,7 @@ interface Props {
   avatar: ImageMetadata;
   roles: Record<string, string[]>;
   project?: string;
-  contacts: string[];
+  contacts: SocialsData[];
 }
 
 const props = Astro.props;

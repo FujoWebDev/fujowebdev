@@ -1,15 +1,34 @@
 import { defineCollection, z } from "astro:content";
-import { socialsSchema, transformSocial } from "../lib/socials-transformer";
+import {
+  socialsSchema,
+  transformSocial,
+  type SocialsData,
+} from "../lib/socials-transformer";
 
-const Volume0Issue1 = z
-  .enum([
-    "Technical Writer",
-    "Scenario Writer",
-    "Beta Reading Coordinator",
-    "Beta Reader",
-    "Proof Reader",
-  ])
-  .array();
+const Volume0Issue1Role = z.enum([
+  "Technical Writer",
+  "Scenario Writer",
+  "Beta Reading Coordinator",
+  "Beta Reader",
+  "Proof Reader",
+  "Character Designer",
+]);
+
+const Role = (roleType: any = z.string()) =>
+  z.union([
+    roleType,
+    z.object({
+      role: roleType,
+      details: z.string(),
+    }),
+  ]);
+
+const roles = z.object({
+  "Volume 0 Kickstarter": Role().array().optional(),
+  "Volume 0": Role().array().optional(),
+  Website: Role().array().optional(),
+  "Volume 0 Issue 1": Role(Volume0Issue1Role).array().default([]),
+});
 
 const teamCollection = defineCollection({
   type: "data",
@@ -17,18 +36,17 @@ const teamCollection = defineCollection({
     z.object({
       name: z.string(),
       avatar: tools.image(),
-      roles: z.object({
-        "Volume 0 Kickstarter": z.string().array().optional(),
-        "Volume 0": z.string().array().optional(),
-        Website: z.string().array().optional(),
-        "Volume 0 Issue 1": Volume0Issue1.default([]),
-      }),
+      roles,
       contacts: socialsSchema
         .array()
         .default([])
-        .transform((contacts) => contacts.map(transformSocial)),
+        .transform(
+          (contacts) => contacts.map(transformSocial) as Array<SocialsData>
+        ),
     }),
 });
+
+export type Project = keyof typeof roles.shape;
 
 const characterCollection = defineCollection({
   type: "content",

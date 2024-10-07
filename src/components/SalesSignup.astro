@@ -24,17 +24,19 @@
 <script>
   const webhook = "https://hooks.zapier.com/hooks/catch/9849274/303l8h3/";
   document
-    .querySelector(".signup form")
+    .querySelector(".signup form")!
     .addEventListener("submit", async (e) => {
       e.preventDefault();
-      const formData = new FormData(e.srcElement);
+      const formData = new FormData(
+        (e.srcElement as HTMLFormElement) ?? undefined
+      );
 
-      const result = await fetch(webhook, {
+      await fetch(webhook, {
         method: "POST",
         body: JSON.stringify({ email: formData.get("email") }),
       });
 
-      document.querySelector(".signup").classList.add("success");
+      document.querySelector(".signup")?.classList.add("success");
     });
 </script>
 
