@@ -3,6 +3,9 @@ avatar: "./avatars/kiwipon.png"
 roles:
   Volume 0 Kickstarter:
     - Artist
+  Volume 0 Issue 1:
+    - role: artist
+      details: We Can Do It!
 contacts:
   - https://twitter.com/kiwi_pon
   - https://www.instagram.com/kiwipon

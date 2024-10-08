@@ -8,6 +8,9 @@ roles:
   Volume 0:
     - role: character designer
       details: HTML & CSS
+  Volume 0 Issue 1:
+    - role: artist
+      details: cover & HTML maid
 contacts:
   - https://twitter.com/ymkse_art
   - https://ymkse.carrd.co/

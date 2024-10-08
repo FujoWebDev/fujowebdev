@@ -13,6 +13,8 @@ roles:
   Volume 0 Issue 1:
     - Technical Writer
     - Scenario Writer
+    - role: artist
+      details: beta sketches
   Website:
     - web mistress
     - coder

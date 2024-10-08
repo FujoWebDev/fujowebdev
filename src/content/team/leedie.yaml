@@ -3,6 +3,8 @@ avatar: ./avatars/leedie.png
 roles:
   Website:
     - Data collector
+  Volume 0 Issue 1:
+    - Tasks coordinator
 contacts:
   - https://twitter.com/pyhpyjka/
   - https://tarantasina.tumblr.com/
