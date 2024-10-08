@@ -44,7 +44,7 @@ const memberEntry = await getEntry(
     <nav>
       <a
         class:list={{
-          hidden: !previous,
+          disabled: !previous,
         }}
         href={`/team/${previous}`}>Previous</a
       >
@@ -84,8 +84,17 @@ const memberEntry = await getEntry(
     display: flex;
     gap: 15px;
     justify-content: space-evenly;
+    width: 100%;
+    max-width: 500px;
   }
-  .hidden {
-    visibility: hidden;
+  div {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .disabled {
+    opacity: 25%;
+    pointer-events: none;
   }
 </style>

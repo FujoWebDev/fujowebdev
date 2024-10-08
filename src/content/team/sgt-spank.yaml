@@ -3,9 +3,11 @@ avatar: "./avatars/sgt-spank.jpg"
 roles:
   Volume 0 Kickstarter:
     - artist
-    - character designer (ARIA)
+    - role: character designer
+      details: ARIA
   Volume 0:
-    - character designer (ARIA)
+    - role: character designer
+      details: ARIA
 contacts:
   - https://linktr.ee/sgtspankshops
   - https://twitter.com/sgtspank

@@ -2,7 +2,8 @@ name: CMDonovann
 avatar: "./avatars/cmdonovann.png"
 roles:
   Volume 0 Kickstarter:
-    - character designer (NPM & Yarn)
+    - role: character designer
+      details: NPM & Yarn
     - QA Testing
     - Additional Research, Feedback, Development, and Assistance
 contacts:

@@ -14,7 +14,9 @@ const Volume0Issue1Role = z.enum([
   "Character Designer",
 ]);
 
-const Role = (roleType: any = z.string()) =>
+const Role = <T extends z.ZodEnum<any> | z.ZodString = z.ZodString>(
+  roleType: T | z.ZodString = z.string()
+) =>
   z.union([
     roleType,
     z.object({
@@ -24,9 +26,9 @@ const Role = (roleType: any = z.string()) =>
   ]);
 
 const roles = z.object({
-  "Volume 0 Kickstarter": Role().array().optional(),
-  "Volume 0": Role().array().optional(),
-  Website: Role().array().optional(),
+  "Volume 0 Kickstarter": Role().array().default([]),
+  "Volume 0": Role().array().default([]),
+  Website: Role().array().default([]),
   "Volume 0 Issue 1": Role(Volume0Issue1Role).array().default([]),
 });
 

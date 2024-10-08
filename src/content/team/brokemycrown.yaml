@@ -4,7 +4,8 @@ roles:
   Volume 0 Kickstarter:
     - art director
     - artist
-    - character designer (Git & GitHub)
+    - role: character designer
+      details: Git & GitHub
   Volume 0:
     - character designer (Git & GitHub)
 contacts:

@@ -3,9 +3,11 @@ avatar: "./avatars/ymkse.jpg"
 roles:
   Volume 0 Kickstarter:
     - artist
-    - character designer (CSS & HTML)
+    - role: character designer
+      details: HTML & CSS
   Volume 0:
-    - character designer (CSS & HTML)
+    - role: character designer
+      details: HTML & CSS
 contacts:
   - https://twitter.com/ymkse_art
   - https://ymkse.carrd.co/

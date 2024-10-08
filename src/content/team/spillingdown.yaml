@@ -3,9 +3,11 @@ avatar: "./avatars/spillingdown.png"
 roles:
   Volume 0 Kickstarter:
     - artist
-    - character designer (Terminal)
+    - role: character designer
+      details: Terminal
   Volume 0:
-    - character designer (Terminal)
+    - role: character designer
+      details: Terminal
 contacts:
   - https://mappapapa.neocities.org
   - url: https://mappapapa.neocities.org/comm/
