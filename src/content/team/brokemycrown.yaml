@@ -7,7 +7,8 @@ roles:
     - role: character designer
       details: Git & GitHub
   Volume 0:
-    - character designer (Git & GitHub)
+    - role: character designer
+      details: Git & GitHub
 contacts:
   - https://linktr.ee/brokemycrown
   - https://www.patreon.com/reanimatedheartvn
