@@ -11,6 +11,9 @@ const Volume0Issue1Role = z.enum([
   "Beta Reading Coordinator",
   "Beta Reader",
   "Proof Reader",
+  "Artist",
+  "Tasks Coordinator",
+  "Communication",
   "Character Designer",
 ]);
 

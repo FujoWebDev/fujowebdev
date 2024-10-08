@@ -4,7 +4,7 @@ roles:
   Volume 0 Kickstarter:
     - Artist
   Volume 0 Issue 1:
-    - role: artist
+    - role: Artist
       details: We Can Do It!
 contacts:
   - https://twitter.com/kiwi_pon

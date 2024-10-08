@@ -3,7 +3,7 @@ avatar: ./avatars/brokemycrown.jpg
 roles:
   Volume 0 Kickstarter:
     - art director
-    - artist
+    - Artist
     - role: character designer
       details: Git & GitHub
   Volume 0:

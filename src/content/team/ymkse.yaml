@@ -9,7 +9,7 @@ roles:
     - role: character designer
       details: HTML & CSS
   Volume 0 Issue 1:
-    - role: artist
+    - role: Artist
       details: cover & HTML maid
 contacts:
   - https://twitter.com/ymkse_art
