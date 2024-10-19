@@ -3,6 +3,9 @@ avatar: "./avatars/ikam177.jpg"
 roles:
   Volume 0 Kickstarter:
     - Artist
+  Volume 0 Issue 1:
+    - role: Artist
+      details: Boba-tan in Screen
 contacts:
   - https://amkitakk.com
   - https://twitter.com/ikam177

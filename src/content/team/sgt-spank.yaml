@@ -8,6 +8,9 @@ roles:
   Volume 0:
     - role: character designer
       details: ARIA
+  Volume 0 Issue 1:
+    - role: Artist
+      details: Full-body Git
 contacts:
   - https://linktr.ee/sgtspankshops
   - https://twitter.com/sgtspank

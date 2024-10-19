@@ -9,6 +9,9 @@ roles:
   Volume 0:
     - role: character designer
       details: Git & GitHub
+    - role: Artist
+      details: Full-body Git
+    - beta reader
 contacts:
   - https://linktr.ee/brokemycrown
   - https://www.patreon.com/reanimatedheartvn

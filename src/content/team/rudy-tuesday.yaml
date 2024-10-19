@@ -3,5 +3,7 @@ avatar: "./avatars/rudy-tuesday.png"
 roles:
   Website:
     - Coder
+  Volume 0 Issue 1:
+    - Beta Reader
 contacts:
   - https://rudytues.day
