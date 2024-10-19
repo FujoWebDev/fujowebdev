@@ -14,7 +14,7 @@ roles:
     - Technical Writer
     - Scenario Writer
     - role: Artist
-      details: beta sketches
+      details: Beta Sketches
   Website:
     - web mistress
     - coder
