@@ -16,7 +16,7 @@ const Volume0Issue1Role = z.enum([
   "Communications",
   "Character Designer",
   "Additional Coding",
-  "Data collection & Entry",
+  "Data Collection & Entry",
 ]);
 
 const Role = <T extends z.ZodEnum<any> | z.ZodString = z.ZodString>(
