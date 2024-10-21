@@ -35,6 +35,26 @@ const projectsArray = Object.keys(PROJECTS).map((proj) => ({
     are the people whose hard work makes FujoGuide possible.
   </div>
   <div class="tabs">
+    <input type="radio" name="tab" id="all-projects" checked={false} />
+    <label for="all-projects">All projects</label>
+    <div class="tab-content" id={`content-all-projects`}>
+      {
+        team.map((member) => {
+          return (
+            <TeamMemberCard
+              transition:name="artist"
+              transition:animate="slide"
+              transition:persist
+              memberId={member.id}
+              name={member.data.name}
+              avatar={member.data.avatar}
+              roles={member.data.roles}
+              contacts={member.data.contacts}
+            />
+          );
+        })
+      }
+    </div>
     {
       projectsArray.map((project, index) => {
         // Exclude from members with card people that have exclusively done beta reading
