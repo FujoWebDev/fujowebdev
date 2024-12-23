@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
-    "@iconify-json/fa6-brands": "^1.1.18",
+    "@iconify-json/fa6-brands": "^1.2.5",
     "@iconify-json/fa6-solid": "^1.1.20",
     "@iconify-json/logos": "^1.1.42",
     "@iconify-json/lucide": "^1.1.177",
