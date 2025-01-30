@@ -12,6 +12,7 @@ roles:
     - role: Artist
       details: Cover & HTML Maid
 contacts:
+  - https://bsky.app/profile/ymkse.bsky.social
   - https://twitter.com/ymkse_art
   - https://ymkse.carrd.co/
   - https://ymkse.tumblr.com/
