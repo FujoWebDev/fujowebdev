@@ -158,6 +158,15 @@ const {
       src="https://plausible.io/js/script.js"></script>
   </head>
   <body>
+    <div class="learn-site-banner">
+      <div class="banner-text">
+        <span class="longer-text"
+          >Want to learn to use a Terminal (and beyond)?&nbsp;</span
+        >Find free guides at&nbsp;<a href="https://learn.fujoweb.dev/"
+          >learn.fujoweb.dev</a
+        >, now in beta!
+      </div>
+    </div>
     <Header multiLine={multiLineHeader} />
     <main>
       <slot />
@@ -165,3 +174,24 @@ const {
     </main>
   </body>
 </html>
+
+<style>
+  .learn-site-banner {
+    background-color: rgb(70, 66, 88);
+    color: white;
+    padding-block: 12px;
+    padding-inline: 20px;
+    width: 100vw;
+    margin-top: -20px;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    font-size: 0.9rem;
+    text-wrap: balance;
+  }
+  @media (max-width: 768px) {
+    .learn-site-banner .longer-text {
+      display: none;
+    }
+  }
+</style>
