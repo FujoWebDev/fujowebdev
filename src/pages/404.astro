@@ -1,0 +1,66 @@
+---
+import PageLayout from "../layouts/PageLayout.astro";
+import { Image } from "astro:assets";
+import Error from "../images/error.png";
+import { Icon } from "astro-icon/components";
+
+const description =
+  "The page you are looking for could not be found. Please check the URL and try again.";
+---
+
+<PageLayout
+  pageTitle="404: Not Found - FujoCoded LLC"
+  pageDescription={description}
+>
+  <section>
+    <h1><em>Oops!</em> This page could not be found.</h1>
+    <Image
+      src={Error}
+      alt="Boba-tan in her fursuit crawling around looking for her glasses"
+    />
+    <a
+      class="button-link my-2 rounded-xl px-12 py-3 text-center text-lg font-medium"
+      href="/"
+      ><Icon name="lucide:home" class="inline stroke-2 text-2xl font-bold" /> Take
+      me home
+    </a>
+    <p>
+      We’ve lost track of this page, but you can still keep track of us through <a
+        href="https://fujocoded.com/#newsletter">FujoCoded's newsletter</a
+      >.
+    </p>
+  </section>
+  <style>
+    img {
+      filter: hue-rotate(310deg) brightness(100%) saturate(90%);
+      margin: 2rem 0 4rem;
+    }
+    .button-link {
+      text-decoration: none;
+      width: fit-content;
+      margin: 0.5rem auto 1rem;
+      border-radius: 15px;
+      padding: 0.5rem;
+      font-size: 1rem;
+      background-color: white;
+      border: 2px solid var(--fujo-red);
+      font-family: "freude", sans-serif;
+      color: var(--fujo-red);
+    }
+    .button-link:hover {
+      filter: drop-shadow(2px 2px var(--fujo-pink));
+      transform: translate(-1px, -1px);
+      cursor: pointer;
+    }
+    section {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      width: 100%;
+    }
+    img {
+      width: 100%;
+      height: auto;
+    }
+  </style>
+</PageLayout>
