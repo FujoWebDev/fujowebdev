@@ -16,7 +16,7 @@ const { name, likes, dislikes, tropes, trivia, imageSrc } = Astro.props;
 ---
 
 <article id={name.toLowerCase()}>
-  <h2>{name}</h2>
+  <h2><a href={`/characters/${name.toLowerCase()}`}>{name}</a></h2>
   <Image src={imageSrc} alt={`${name}'s profile picture'`} />
   <button class="more">Learn More</button>
   <div class="likes">
