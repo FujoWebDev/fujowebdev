@@ -1,9 +1,6 @@
 import { defineCollection, z } from "astro:content";
-import {
-  socialsSchema,
-  transformSocial,
-  type SocialsData,
-} from "../lib/socials-transformer";
+
+import { SocialLinks } from "@fujocoded/zod-transform-socials";
 
 const Volume0Issue1Role = z.enum([
   "Technical Writer",
@@ -44,12 +41,7 @@ const teamCollection = defineCollection({
       name: z.string(),
       avatar: tools.image(),
       roles,
-      contacts: socialsSchema
-        .array()
-        .default([])
-        .transform(
-          (contacts) => contacts.map(transformSocial) as Array<SocialsData>
-        ),
+      contacts: SocialLinks,
     }),
 });
 

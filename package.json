@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
+    "@fujocoded/zod-transform-socials": "^0.0.11",
     "@iconify-json/fa6-brands": "^1.2.5",
     "@iconify-json/fa6-solid": "^1.1.20",
     "@iconify-json/logos": "^1.1.42",
@@ -24,8 +25,7 @@
   },
   "devDependencies": {
     "prettier": "^3.2.5",
-    "prettier-plugin-astro": "^0.14.1",
-    "social-links": "^1.14.0"
+    "prettier-plugin-astro": "^0.14.1"
   },
   "engines": {
     "node": ">=20.0.0"
