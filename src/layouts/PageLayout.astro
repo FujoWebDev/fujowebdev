@@ -54,6 +54,7 @@ const {
         align-items: center;
         padding-block: 20px;
         padding-inline: 15px;
+        overflow-x: hidden;
       }
 
       main {
@@ -173,26 +174,25 @@ const {
       <slot />
       <Socials />
     </main>
+    <style>
+      .learn-site-banner {
+        background-color: rgb(70, 66, 88);
+        color: white;
+        padding-block: 12px;
+        padding-inline: 20px;
+        width: 100vw;
+        margin-top: -20px;
+        display: flex;
+        justify-content: center;
+        text-align: center;
+        font-size: 0.9rem;
+        text-wrap: balance;
+      }
+      @media (max-width: 768px) {
+        .learn-site-banner .longer-text {
+          display: none;
+        }
+      }
+    </style>
   </body>
 </html>
-
-<style>
-  .learn-site-banner {
-    background-color: rgb(70, 66, 88);
-    color: white;
-    padding-block: 12px;
-    padding-inline: 20px;
-    width: 100vw;
-    margin-top: -20px;
-    display: flex;
-    justify-content: center;
-    text-align: center;
-    font-size: 0.9rem;
-    text-wrap: balance;
-  }
-  @media (max-width: 768px) {
-    .learn-site-banner .longer-text {
-      display: none;
-    }
-  }
-</style>
