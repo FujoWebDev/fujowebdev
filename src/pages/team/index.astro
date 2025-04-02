@@ -89,6 +89,11 @@ const projectsArray = Object.keys(PROJECTS).map((proj) => ({
   :global(h1) {
     margin-bottom: 0;
   }
+
+  body {
+    --main-width: 1200px !important;
+  }
+
   .tabs {
     display: flex;
     flex-wrap: wrap;
@@ -126,7 +131,10 @@ const projectsArray = Object.keys(PROJECTS).map((proj) => ({
   }
 
   .tabs input[type="radio"]:checked + label + .tab-content {
-    display: block;
+    display: flex;
+    gap: 0 0.75rem;
+    flex-wrap: wrap;
+    justify-content: center;
   }
 
   .beta-readers {
