@@ -16,11 +16,13 @@ const characters = (await getCollection("characters")).toSorted(
   <section>
     <h1>Our characters</h1>
     <div>
-      <strong
-        ><em>The Fujoshi Guide to Web Development</em> features gijinka (anthropomorphizations)
-        of programming languages and concepts.</strong
-      > Each of our characters is engineered from the ground up to cater to "transformative"
-      fandom—that is, people who create fanfiction, fanart, meta, and much more.
+      <p>
+        <strong
+          ><em>The Fujoshi Guide to Web Development</em> features gijinka (anthropomorphizations)
+          of programming languages and concepts.</strong
+        > Each of our characters is engineered from the ground up to cater to "transformative"
+        fandom—that is, people who create fanfiction, fanart, meta, and much more.
+      </p>
     </div>
     <ul class="selection">
       {
@@ -60,12 +62,14 @@ const characters = (await getCollection("characters")).toSorted(
           );
         })
     }
-    <h2>Localhost</h2>
+    <h2 id="localhost"><a href="#localhost">Localhost</a></h2>
     <div>
-      Localhost is where the characters that reside on your own computer live.
-      While GitHub theoretically comes from the Cloud, he's often following Git
-      around and (much to Terminal's chagrin) is an almost-permanent fixture of
-      the place.
+      <p>
+        Localhost is where the characters that reside on your own computer live.
+        While GitHub theoretically comes from the Cloud, he's often following
+        Git around and (much to Terminal's chagrin) is an almost-permanent
+        fixture of the place.
+      </p>
     </div>
     {
       characters
@@ -88,11 +92,13 @@ const characters = (await getCollection("characters")).toSorted(
     }
   </section>
   <section>
-    <h2>Browserland</h2>
+    <h2 id="browserland"><a href="#browserland">Browserland</a></h2>
     <div>
-      Browserland characters are responsible for bringing the web as we know it
-      to life. Always hard at work to display any website in its full glory,
-      Browserland's most famous trio (HTML, CSS & ARIA) is inseparable.
+      <p>
+        Browserland characters are responsible for bringing the web as we know
+        it to life. Always hard at work to display any website in its full
+        glory, Browserland's most famous trio (HTML, CSS & ARIA) is inseparable.
+      </p>
     </div>
     {
       characters
@@ -116,7 +122,7 @@ const characters = (await getCollection("characters")).toSorted(
   </section>
 
   <section>
-    <h2>FAQs</h2>
+    <h2 id="faqs"><a href="#faqs">FAQs</a></h2>
     <FAQs />
   </section>
 </PageLayout>
@@ -152,5 +158,14 @@ const characters = (await getCollection("characters")).toSorted(
     border: 3px solid var(--fujo-red);
     cursor: pointer;
     transform: scale(1.5);
+  }
+
+  h2 {
+    margin-top: 2rem;
+  }
+  h2 > a {
+    color: var(--fujo-light-blue);
+    font-size: 2.5rem;
+    font-weight: 800;
   }
 </style>

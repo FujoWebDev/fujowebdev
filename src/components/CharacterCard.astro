@@ -16,7 +16,7 @@ const { name, likes, dislikes, tropes, trivia, imageSrc } = Astro.props;
 ---
 
 <article id={name.toLowerCase()}>
-  <h2><a href={`/characters/${name.toLowerCase()}`}>{name}</a></h2>
+  <h2><a href={`/characters#${name.toLowerCase()}`}>{name}</a></h2>
   <Image src={imageSrc} alt={`${name}'s profile picture'`} />
   <button class="more">Learn More</button>
   <div class="likes">
@@ -141,12 +141,13 @@ const { name, likes, dislikes, tropes, trivia, imageSrc } = Astro.props;
 
   li {
     position: relative;
-    margin-bottom: 3px;
+    margin-bottom: 10px;
     list-style: none;
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
-    gap: 5px;
+    gap: 8px;
+    line-height: 20px;
   }
 
   .icon {

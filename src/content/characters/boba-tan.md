@@ -9,8 +9,8 @@ likes:
   - Yaoi
   - Boba
 dislikes:
-  - Bigotry
   - Bullies
+  - Bigotry
   - Boredom
 tropes:
   - name: Yaoi Fangirl

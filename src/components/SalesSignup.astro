@@ -53,9 +53,16 @@
     width: 100%;
     max-width: 350px;
     margin: 20px auto;
-    --form-color: var(--fujo-purple);
+    --form-color: var(--terminal-dark);
     --radius: 10px;
     font-size: 1em;
+  }
+  input {
+    height: 43px;
+    font-family: sans-serif;
+  }
+  form:has(:focus) :where(input, button) {
+    --form-color: var(--fujo-red);
   }
   input[type="email"] {
     width: 100%;
@@ -65,6 +72,9 @@
     border-right: 0;
     font-size: 15px;
     background-color: var(--fujo-cream);
+  }
+  input:focus-within {
+    outline: none;
   }
   input[type="submit"] {
     width: 150px;

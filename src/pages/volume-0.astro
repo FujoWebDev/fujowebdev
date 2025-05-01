@@ -7,12 +7,14 @@ import { Image } from "astro:assets";
 
 <PageLayout multiLineHeader>
   <div>
-    <em
-      >The Fujoshi Guide to Web Development is structured in issues containing a
-      single learning focus, which are then collected into volumes</em
-    >–similarly to a manga or comic. Featured in our first Kickstarter, Volume 0
-    collects our inaugural issues introducing Git, GitHub and open source
-    development.
+    <p>
+      <em
+        >The Fujoshi Guide to Web Development is structured in issues with a
+        single learning focus, which are then collected into volumes</em
+      >–similarly to a manga or comic. Featured in our first Kickstarter, Volume
+      0 collects our inaugural issues introducing Git, GitHub and open source
+      development.
+    </p>
   </div>
   <div class="sales">
     <h2>Want your own copy?</h2>
@@ -21,10 +23,12 @@ import { Image } from "astro:assets";
   <article>
     <h2>Issue 1 – Using Git locally</h2>
     <Image src={GitIntro} alt="Git's introduction from the guide" />
-    <div>
-      Boba-tan learns how Git can help make tracking your code changes and
-      sorting through different versions of a codebase a breeze–no matter the
-      size of your wardrobe!
+    <div class="issue-content">
+      <p>
+        Boba-tan learns how Git can help make tracking your code changes and
+        sorting through different versions of a codebase a breeze–no matter the
+        size of your wardrobe!
+      </p>
 
       <h3>Topics</h3>
       <ul>
@@ -32,91 +36,122 @@ import { Image } from "astro:assets";
         <li>The commit cycle</li>
         <li>Navigating and manipulating code history</li>
       </ul>
-      <h3>The scenario</h3> Meet Git and learn about his most fundamental commands
-      through a dress-up game involving his friends: CSS, HTML, ARIA, and Boba-tan.
-      <h3>Current status</h3> Beta testing (full issue, wave 2)
+      <h3>The scenario</h3>
+      <p>
+        Meet Git and learn about his most fundamental commands through a
+        dress-up game involving his friends: CSS, HTML, ARIA, and Boba-tan.
+      </p>
+      <h3>Current status</h3>
+      <p>Preview released! Full issue coming soon</p>
     </div>
   </article>
 
   <article>
     <h2>Issue 2 – Using Git(Hub) in the cloud</h2>
 
-    When Boba-tan's laptop breaks in the middle of her latest project, Git and
-    GitHub team up to save the day by combining their powers to back up code to
-    the cloud, help her continue working, and prevent future disasters.
+    <div class="issue-content">
+      <p>
+        When Boba-tan's laptop breaks in the middle of her latest project, Git
+        and GitHub team up to save the day by combining their powers to back up
+        code to the cloud, help her continue working, and prevent future
+        disasters.
+      </p>
 
-    <h3>Topics</h3>
-    <ul>
-      <li>Uploading code to remotes</li>
-      <li>Cloning a repository</li>
-      <li>Creating branches</li>
-      <li>Merging changes</li>
-    </ul>
-    <h3>The scenario</h3> Explore how to avoid losing your code and work on changes
-    in parallel by using the combined power of Git and GitHub to recover and improve
-    Boba-tan's lost Blorbo Shrine.
-    <h3>Current status</h3> Early draft ready, writing in progress
+      <h3>Topics</h3>
+      <ul>
+        <li>Uploading code to remotes</li>
+        <li>Cloning a repository</li>
+        <li>Creating branches</li>
+        <li>Merging changes</li>
+      </ul>
+      <h3>The scenario</h3>
+      <p>
+        Explore how to avoid losing your code and work on changes in parallel by
+        using the combined power of Git and GitHub to recover and improve
+        Boba-tan's lost Blorbo Shrine.
+      </p>
+      <h3>Current status</h3>
+      <p>Early draft ready, writing in progress</p>
+    </div>
+    <article>
+      <h2>Issue 3 – Open Source Collaboration</h2>
+      <div class="issue-content">
+        Work in progress, check back later
+        <h3>Topics</h3>
+        <ul>
+          <li>Forking repositories</li>
+          <li>The pull request process</li>
+          <li>Opening issues</li>
+          <li>…and more</li>
+        </ul>
+        <h3>The scenario</h3>
+        <p>Work in progress, check back later</p>
+        <h3>Current status</h3>
+        <p>Brainstorming content and scenario</p>
+      </div>
+    </article>
   </article>
-  <article>
-    <h2>Issue 3 – Open Source Collaboration</h2>
-    Work in progress, check back later
-    <h3>Topics</h3>
-    <ul>
-      <li>Forking repositories</li>
-      <li>The pull request process</li>
-      <li>Opening issues</li>
-      <li>…and more</li>
-    </ul>
-    <h3>The scenario</h3>
-    Work in progress, check back later
-    <h3>Current status</h3> Brainstorming content and scenario
-  </article>
-</PageLayout>
-<style>
-  article {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  article:has(img) {
-    display: grid;
-    grid-template-columns: 300px auto;
-    row-gap: 5px;
-    column-gap: 20px;
-  }
-  article:has(img) h2 {
-    grid-column: span 2;
-  }
-  article:has(img) img {
-    width: 100%;
-    height: auto;
-    display: inline-block;
-    border-radius: 16px;
-    box-shadow: 2px 2px 0px 0px var(--text-color-disabled);
-  }
-  article:has(img) > div {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  @media (max-width: 700px) {
-    article:has(img) {
+  <style>
+    article {
+      width: 100%;
       display: flex;
       flex-direction: column;
+      gap: 10px;
+    }
+    article:has(img) {
+      display: grid;
+      grid-template-columns: 300px auto;
+      row-gap: 5px;
+      column-gap: 20px;
+    }
+    article:has(img) h2 {
+      grid-column: span 2;
     }
     article:has(img) img {
-      max-width: 400px;
+      width: 100%;
+      height: auto;
+      display: inline-block;
+      border-radius: 16px;
+      box-shadow: 2px 2px 0px 0px var(--text-color-disabled);
     }
-  }
+    article:has(img) > div {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
 
-  ul {
-    padding-left: 40px;
-  }
-  .sales {
-    background-color: white;
-    padding: 15px 25px;
-    border-radius: 16px;
-  }
-</style>
+    @media (max-width: 700px) {
+      article:has(img) {
+        display: flex;
+        flex-direction: column;
+      }
+      article:has(img) img {
+        max-width: 400px;
+      }
+    }
+
+    ul {
+      padding-left: 40px;
+    }
+    .sales {
+      background-color: white;
+      padding: 20px 35px;
+      border-radius: 16px;
+      box-shadow: 6px 6px 0px 0px var(--fujo-red);
+      border: 2px solid var(--terminal-dark);
+    }
+    .issue-content {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    article:has(img) .issue-content {
+      align-self: center;
+    }
+
+    .issue-content > * {
+      margin: 0;
+    }
+  </style>
+</PageLayout>
