@@ -7,8 +7,8 @@ roles:
     - role: Artist
       details: Boba-tan in Screen
 contacts:
-  - https://amkitakk.com
-  - https://twitter.com/ikam177
+  - https://amkitakk.be
+  - https://ikam177.bsky.social
   - url: https://blorbo.social/@AmkiTakk
     platform: mastodon
     username: AmkiTakk
