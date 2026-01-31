@@ -1,0 +1,132 @@
+---
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+
+interface Props {
+  images: {
+    src: ImageMetadata;
+    alt: string;
+  }[];
+  disabled?: boolean;
+}
+
+const { images, disabled = false } = Astro.props;
+---
+
+<div class:list={["preview-stack", { disabled }]}>
+  {
+    images.map((image, i) => (
+      <div class="preview-card" style={`--pos: ${i}`}>
+        <Image src={image.src} alt={image.alt} />
+      </div>
+    ))
+  }
+</div>
+
+<style>
+  .preview-stack {
+    --stack-width: 260px;
+    --card-count: 4;
+
+    --default-rotation: 3deg;
+    --default-spread-x: 8px;
+    --default-spread-y: 4px;
+
+    --hover-rotation: 4deg;
+    --hover-spread-x: 10px;
+    --hover-spread-y: 5px;
+
+    --front-hover-rotation: -1.5deg;
+    --front-hover-x: -4px;
+    --front-hover-y: -2px;
+
+    --bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+    --duration: 0.4s;
+
+    position: relative;
+    width: var(--stack-width);
+    cursor: pointer;
+  }
+
+  .preview-stack.disabled {
+    pointer-events: none;
+    filter: brightness(0.9);
+  }
+  .disabled * {
+    box-shadow: none !important;
+  }
+
+  .preview-card {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    transition: transform var(--duration) var(--bounce);
+    transform-origin: center center;
+    z-index: calc(var(--card-count) - var(--pos, 0));
+    transform: rotate(calc(var(--pos, 0) * var(--default-rotation)))
+      translate(
+        calc(var(--pos, 0) * var(--default-spread-x)),
+        calc(var(--pos, 0) * var(--default-spread-y))
+      );
+  }
+
+  .preview-card:first-child {
+    position: relative;
+  }
+
+  .preview-stack:hover .preview-card {
+    transform: rotate(calc(var(--pos, 0) * var(--hover-rotation)))
+      translate(
+        calc(var(--pos, 0) * var(--hover-spread-x)),
+        calc(var(--pos, 0) * var(--hover-spread-y))
+      );
+  }
+
+  .preview-stack:hover .preview-card.is-front {
+    transform: rotate(var(--front-hover-rotation))
+      translate(var(--front-hover-x), var(--front-hover-y));
+  }
+
+  .preview-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+    border: 2px solid var(--terminal-dark);
+    box-shadow: 3px 3px 0 var(--text-color-disabled);
+    background: white;
+    transition: box-shadow 0.3s ease;
+  }
+
+  .preview-stack:hover .preview-card.is-front img {
+    box-shadow: 4px 4px 0 var(--fujo-red);
+  }
+</style>
+
+<script>
+  document.addEventListener("astro:page-load", () => {
+    document.querySelectorAll(".preview-stack").forEach(function (stack) {
+      const cards = stack.querySelectorAll(".preview-card");
+      const totalCards = cards.length;
+      let topCardIndex = 0;
+
+      const updatePositions = () => {
+        cards.forEach(function (card, i) {
+          const cardPosition = (i - topCardIndex + totalCards) % totalCards;
+          (card as HTMLElement).style.setProperty(
+            "--pos",
+            String(cardPosition)
+          );
+          card.classList.toggle("is-front", cardPosition === 0);
+        });
+      };
+
+      stack.addEventListener("click", function () {
+        topCardIndex = (topCardIndex + 1) % totalCards;
+        updatePositions();
+      });
+
+      updatePositions();
+    });
+  });
+</script>
