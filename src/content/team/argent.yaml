@@ -1,5 +1,7 @@
 name: Argent
 avatar: "./avatars/default.png"
+aliases:
+  - codeargent
 roles:
   Volume 0 Issue 1:
     - Beta Reader
