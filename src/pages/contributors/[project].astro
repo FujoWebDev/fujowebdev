@@ -3,14 +3,14 @@ import type { GetStaticPaths } from "astro";
 import { getCollection, type CollectionEntry } from "astro:content";
 import type { Project } from "../../content/config";
 import PageLayout from "../../layouts/PageLayout.astro";
-import TeamMemberCard from "../../components/TeamMemberCard.astro";
+import ContributorsMemberCard from "../../components/ContributorsMemberCard.astro";
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const PROJECTS: Project[] = [];
 
-  const team = await getCollection("team");
+  const contributors = await getCollection("contributors");
 
-  team.map((member) => {
+  contributors.map((member) => {
     const memberProjects = member.data.roles;
     for (const project of Object.keys(memberProjects) as Project[]) {
       if (!PROJECTS.includes(project)) {
@@ -32,19 +32,19 @@ const { project } = Astro.params as { project: Project };
 
 if (!project || typeof project === "number") return;
 
-const memberEntries = await getCollection("team", ({ data }) => {
+const memberEntries = await getCollection("contributors", ({ data }) => {
   return data.roles[project] && data.roles[project].length;
 });
 ---
 
-<PageLayout pageTitle="The Fujoshi Guide to Web Development – Our team">
-  <h1><a href="/team">Our team</a></h1>
+<PageLayout pageTitle="The Fujoshi Guide to Web Development – Our contributors">
+  <h1><a href="/contributors">Our contributors</a></h1>
   <h2>{project}</h2>
   <div>
     {
       memberEntries.map((memberEntry) => {
         return (
-          <TeamMemberCard
+          <ContributorsMemberCard
             transition:name="artist"
             transition:animate="slide"
             transition:persist

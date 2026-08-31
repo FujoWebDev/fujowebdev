@@ -37,7 +37,7 @@ const roles = z.object({
   "Volume 0 Issue 1": Role(Volume0Issue1Role).array().default([]),
 });
 
-const teamCollection = defineCollection({
+const contributorsCollection = defineCollection({
   type: "data",
   schema: (tools) =>
     z.object({
@@ -80,6 +80,6 @@ const characterCollection = defineCollection({
 });
 
 export const collections = {
-  team: teamCollection,
+  contributors: contributorsCollection,
   characters: characterCollection,
 };

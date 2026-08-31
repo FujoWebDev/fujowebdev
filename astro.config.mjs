@@ -10,6 +10,6 @@ export default defineConfig({
       destination: "https://www.essentialrandomness.com/streams",
       status: 307,
     },
-    "/team/codeargent": "/team/argent",
+    "/contributors/codeargent": "/contributors/argent",
   },
 });

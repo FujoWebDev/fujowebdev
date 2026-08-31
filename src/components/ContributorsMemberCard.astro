@@ -10,7 +10,7 @@ interface Props {
   memberId: string;
   name: string;
   avatar: ImageMetadata;
-  roles: CollectionEntry<"team">["data"]["roles"];
+  roles: CollectionEntry<"contributors">["data"]["roles"];
   project?: Project | undefined;
   contacts: SocialsData[];
 }
@@ -21,7 +21,7 @@ const props = Astro.props;
 <article>
   <h2>
     <img src={props.avatar.src} />
-    <a href={`/team/${props.memberId}`}>{props.name}</a>
+    <a href={`/contributors/${props.memberId}`}>{props.name}</a>
   </h2>
   <h3>Roles</h3>
   <ul class="projects">

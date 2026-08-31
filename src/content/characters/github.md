@@ -24,4 +24,4 @@ trivia: Cloud-based characters can instantly materialize wherever a web connecti
 
 Corrupted by the evil tendrils of <strike>capitalism</strike> the Cloud, GitHub is Git’s online counterpart. Materializing near Git every chance he gets, their psychic connection drives his obsessive behavior.
 
-Despite his villainous demeanor, GitHub is a good team player who loves social gatherings — not that he’d want anyone to know that.
+Despite his villainous demeanor, GitHub is a good contributorsplayer who loves social gatherings — not that he’d want anyone to know that.

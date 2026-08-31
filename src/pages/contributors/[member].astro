@@ -2,18 +2,19 @@
 import type { GetStaticPaths } from "astro";
 import { type CollectionEntry, getCollection, getEntry } from "astro:content";
 import PageLayout from "../../layouts/PageLayout.astro";
-import TeamMemberCard from "../../components/TeamMemberCard.astro";
+import ContributorsMemberCard from "../../components/ContributorsMemberCard.astro";
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const team = await getCollection("team");
-  return team.map((member, index) => {
+  const contributors = await getCollection("contributors");
+  return contributors.map((member, index) => {
     return {
       params: {
         member: member.id,
       },
       props: {
-        next: index < team.length - 1 ? team[index + 1].id : null,
-        previous: index > 0 ? team[index - 1].id : null,
+        next:
+          index < contributors.length - 1 ? contributors[index + 1].id : null,
+        previous: index > 0 ? contributors[index - 1].id : null,
       },
     };
   });
@@ -23,15 +24,15 @@ const { member } = Astro.params;
 const { previous, next } = Astro.props;
 
 const memberEntry = await getEntry(
-  "team",
-  member as CollectionEntry<"team">["id"]
+  "contributors",
+  member as CollectionEntry<"contributors">["id"]
 );
 ---
 
-<PageLayout pageTitle="The Fujoshi Guide to Web Development – Our team">
-  <h1><a href="/team">Our team</a></h1>
+<PageLayout pageTitle="The Fujoshi Guide to Web Development – Our contributors">
+  <h1><a href="/contributors">Our contributors</a></h1>
   <div>
-    <TeamMemberCard
+    <ContributorsMemberCard
       transition:name="artist"
       transition:animate="slide"
       transition:persist
@@ -46,14 +47,14 @@ const memberEntry = await getEntry(
         class:list={{
           disabled: !previous,
         }}
-        href={`/team/${previous}`}>Previous</a
+        href={`/contributors/${previous}`}>Previous</a
       >
-      <a href="/team/">All</a>
+      <a href="/contributors/">All</a>
       <a
         class:list={{
           hidden: !next,
         }}
-        href={`/team/${next}`}>Next</a
+        href={`/contributors/${next}`}>Next</a
       >
     </nav>
   </div>

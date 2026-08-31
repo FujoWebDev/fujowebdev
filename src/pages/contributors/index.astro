@@ -2,17 +2,18 @@
 import { getCollection, type CollectionEntry } from "astro:content";
 import type { Project } from "../../content/config";
 import PageLayout from "../../layouts/PageLayout.astro";
-import TeamMemberCard from "../../components/TeamMemberCard.astro";
+import ContributorsMemberCard from "../../components/ContributorsMemberCard.astro";
 
-const team = await getCollection("team");
+const contributors = await getCollection("contributors");
 
-const PROJECTS: Record<string, { members: CollectionEntry<"team">[] }> = {};
+const PROJECTS: Record<string, { members: CollectionEntry<"contributors">[] }> =
+  {};
 
-team.forEach((member) => {
+contributors.forEach((member) => {
   for (const project of Object.keys(member.data.roles) as Project[]) {
     if (!PROJECTS[project]) {
       PROJECTS[project] = {
-        members: [] as CollectionEntry<"team">[],
+        members: [] as CollectionEntry<"contributors">[],
       };
     }
     if (member.data.roles[project] && member.data.roles[project].length > 0) {
@@ -28,8 +29,8 @@ const projectsArray = Object.keys(PROJECTS).map((proj) => ({
 }));
 ---
 
-<PageLayout pageTitle="The Fujoshi Guide to Web Development – Our team">
-  <h1><a href="/team">Our team</a></h1>
+<PageLayout pageTitle="The Fujoshi Guide to Web Development – Our contributors">
+  <h1><a href="/contributors">Our contributors</a></h1>
   <div class="description">
     Whether for one single adventure or as part of our continued efforts, these
     are the people whose hard work makes FujoGuide possible.
@@ -59,7 +60,7 @@ const projectsArray = Object.keys(PROJECTS).map((proj) => ({
             <div class="tab-content" id={`content-${project.url}`}>
               {membersWithCard.map((memberEntry) => {
                 return (
-                  <TeamMemberCard
+                  <ContributorsMemberCard
                     transition:name="artist"
                     transition:animate="slide"
                     transition:persist
