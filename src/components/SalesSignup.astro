@@ -1,5 +1,5 @@
 ---
-const props = Astro.props;
+const { tag } = Astro.props;
 ---
 
 <div class="signup">
@@ -18,7 +18,7 @@ const props = Astro.props;
       aria-label="Email"
     />
     <input type="submit" value="sign up" />
-    <input type="hidden" value={props.tag} name="tag" />
+    <input type="hidden" value={tag} name="tag" />
   </form>
   <div class="thank-you">
     Your email has been added to our list. We look forward to sharing <em

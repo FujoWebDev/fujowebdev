@@ -3,12 +3,12 @@ import PageLayout from "../layouts/PageLayout.astro";
 import CharacterCard from "../components/CharacterCard.astro";
 import FAQs from "../components/FAQs.astro";
 
-import { getCollection } from "astro:content";
+import { getCollection, render } from "astro:content";
 import { parse } from "marked";
 import { Image } from "astro:assets";
 
 const characters = (await getCollection("characters")).toSorted(
-  (a, b) => a.data.order - b.data.order
+  (left, right) => left.data.order - right.data.order
 );
 ---
 
@@ -47,7 +47,7 @@ const characters = (await getCollection("characters")).toSorted(
       characters
         .filter((c) => c.data.home == "the real world")
         .map(async (character) => {
-          const renderedBody = await character.render();
+          const renderedBody = await render(character);
           return (
             <CharacterCard
               name={character.data.name}
@@ -75,7 +75,7 @@ const characters = (await getCollection("characters")).toSorted(
       characters
         .filter((c) => c.data.home == "localhost")
         .map(async (character) => {
-          const renderedBody = await character.render();
+          const renderedBody = await render(character);
           return (
             <CharacterCard
               name={character.data.name}
@@ -104,7 +104,7 @@ const characters = (await getCollection("characters")).toSorted(
       characters
         .filter((c) => c.data.home == "browserland")
         .map(async (character) => {
-          const renderedBody = await character.render();
+          const renderedBody = await render(character);
           return (
             <CharacterCard
               name={character.data.name}

@@ -1,12 +1,12 @@
-import { z } from "astro:content";
+import { z } from "astro/zod";
 import { type ProfileMatch, SocialLinks } from "social-links";
 
 export const socialsSchema = z.union([
-  z.string().url(),
+  z.url(),
   z.object({
     icon: z.string().optional(),
     platform: z.string().optional(),
-    url: z.string().url(),
+    url: z.url(),
     username: z.string().optional(),
   }),
 ]);
@@ -147,7 +147,7 @@ const getSocialIcon = (platform: WEBSITE_TYPES) => {
   if (platform === "dreamwidth") {
     return "simple-icons:livejournal";
   }
-  return "simple-icons:" + platform.replaceAll("-", "");
+  return `simple-icons:${platform.replaceAll("-", "")}`;
 };
 
 export const extractSocialData = ({ url }: { url: string }): SocialsData => {

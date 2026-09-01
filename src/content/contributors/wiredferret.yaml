@@ -1,5 +1,11 @@
+# ────────────────────────────────────────────────────────────
+# DO NOT EDIT — synced from FujoWebDev/contributors @ 41e1ae70e729
+# Source: contributors/wiredferret.yaml
+# Refresh: pnpm sync
+# ────────────────────────────────────────────────────────────
 name: wiredferret
 avatar: "./avatars/wiredferret.png"
+type: community
 roles:
   Volume 0 Kickstarter:
     - Technical Writer

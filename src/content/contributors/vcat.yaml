@@ -1,5 +1,13 @@
-name: vCat
+# ────────────────────────────────────────────────────────────
+# DO NOT EDIT — synced from FujoWebDev/contributors @ 41e1ae70e729
+# Source: contributors/vcat.yaml
+# Refresh: pnpm sync
+# ────────────────────────────────────────────────────────────
+name: VCat
 avatar: "./avatars/vcat.jpg"
+type:
+  - community
+  - contractor
 roles:
   Volume 0 Kickstarter:
     - Additional Research, Feedback, Development, and Assistance

@@ -111,8 +111,8 @@ const { images, disabled = false } = Astro.props;
       let topCardIndex = 0;
 
       const updatePositions = () => {
-        cards.forEach(function (card, i) {
-          const cardPosition = (i - topCardIndex + totalCards) % totalCards;
+        cards.forEach(function (card, index) {
+          const cardPosition = (index - topCardIndex + totalCards) % totalCards;
           (card as HTMLElement).style.setProperty(
             "--pos",
             String(cardPosition)

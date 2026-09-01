@@ -1,6 +1,6 @@
 ---
 import { getCollection, type CollectionEntry } from "astro:content";
-import type { Project } from "../../content/config";
+import type { Project } from "../../content.config";
 import PageLayout from "../../layouts/PageLayout.astro";
 import ContributorsMemberCard from "../../components/ContributorsMemberCard.astro";
 
@@ -9,14 +9,21 @@ const contributors = await getCollection("contributors");
 const PROJECTS: Record<string, { members: CollectionEntry<"contributors">[] }> =
   {};
 
+const isRelevantProject = (projectName: Project) =>
+  projectName === "fujoweb.dev" || projectName.startsWith("Volume ");
+
 contributors.forEach((member) => {
   for (const project of Object.keys(member.data.roles) as Project[]) {
-    if (!PROJECTS[project]) {
+    if (!PROJECTS[project] && isRelevantProject(project)) {
       PROJECTS[project] = {
         members: [] as CollectionEntry<"contributors">[],
       };
     }
-    if (member.data.roles[project] && member.data.roles[project].length > 0) {
+    if (
+      member.data.roles[project] &&
+      member.data.roles[project].length > 0 &&
+      isRelevantProject(project)
+    ) {
       PROJECTS[project].members.push(member);
     }
   }
@@ -42,10 +49,12 @@ const projectsArray = Object.keys(PROJECTS).map((proj) => ({
         const membersWithCard = project.members.filter(
           (member) =>
             member.data.roles[project.name]?.length !== 1 ||
-            member.data.roles[project.name]?.[0] !== "Beta Reader"
+            member.data.roles[project.name]?.[0]?.name !== "Beta Reader"
         );
         const betaReaders = project.members.filter((member) =>
-          member.data.roles[project.name]?.includes("Beta Reader")
+          member.data.roles[project.name]?.some(
+            (role) => role.name === "Beta Reader"
+          )
         );
 
         return (
@@ -56,7 +65,9 @@ const projectsArray = Object.keys(PROJECTS).map((proj) => ({
               id={project.url}
               checked={index === 0}
             />
-            <label for={project.url}>{project.name}</label>
+            <label for={project.url}>
+              {project.name === "fujoweb.dev" ? "Website" : project.name}
+            </label>
             <div class="tab-content" id={`content-${project.url}`}>
               {membersWithCard.map((memberEntry) => {
                 return (

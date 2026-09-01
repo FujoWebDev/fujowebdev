@@ -27,6 +27,7 @@ const memberEntry = await getEntry(
   "contributors",
   member as CollectionEntry<"contributors">["id"]
 );
+if (!memberEntry) return new Response(null, { status: 404 });
 ---
 
 <PageLayout pageTitle="The Fujoshi Guide to Web Development – Our contributors">

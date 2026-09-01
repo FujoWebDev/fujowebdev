@@ -1,12 +1,18 @@
+# ────────────────────────────────────────────────────────────
+# DO NOT EDIT — synced from FujoWebDev/contributors @ 41e1ae70e729
+# Source: contributors/spillingdown.yaml
+# Refresh: pnpm sync
+# ────────────────────────────────────────────────────────────
 name: spillingdown
 avatar: "./avatars/spillingdown.png"
+type: community
 roles:
   Volume 0 Kickstarter:
-    - artist
-    - role: character designer
+    - Artist
+    - role: Character Designer
       details: Terminal
   Volume 0:
-    - role: character designer
+    - role: Character Designer
       details: Terminal
 contacts:
   - https://mappapapa.neocities.org

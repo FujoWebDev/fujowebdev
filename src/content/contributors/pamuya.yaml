@@ -1,5 +1,11 @@
+# ────────────────────────────────────────────────────────────
+# DO NOT EDIT — synced from FujoWebDev/contributors @ 41e1ae70e729
+# Source: contributors/pamuya.yaml
+# Refresh: pnpm sync
+# ────────────────────────────────────────────────────────────
 name: Pamuya
 avatar: "./avatars/pamuya.png"
+type: community
 roles:
   Volume 0 Kickstarter:
     - Additional Research, Feedback, Development, and Assistance

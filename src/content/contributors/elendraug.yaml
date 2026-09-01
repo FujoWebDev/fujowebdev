@@ -1,15 +1,31 @@
+# ────────────────────────────────────────────────────────────
+# DO NOT EDIT — synced from FujoWebDev/contributors @ 41e1ae70e729
+# Source: contributors/elendraug.yaml
+# Refresh: pnpm sync
+# ────────────────────────────────────────────────────────────
 name: Elendraug
 avatar: "./avatars/elendraug.png"
+type:
+  - community
 roles:
   Volume 0 Kickstarter:
     - QA Testing
     - Additional Research, Feedback, Development, and Assistance
   Volume 0:
-    - Beta Reader  
-  Website:
-    - Data entry
+    - Beta Reader
   Volume 0 Issue 1:
     - Data Collection & Entry
     - Beta Reader
+  fujoweb.dev:
+    - Data Entry
+  Fandom Cookies:
+    - role: Extra
+      details: Alt Text
+    - Digital Item Pack Assembly
+    - Cookie Catcher Design
+    - Additional Research, Feedback, Development, and Assistance
+  AskFujo:
+    - role: General Help
+      details: Copy Help, Alt Text and Logistics Aid
 contacts:
   - https://elendraug.neocities.org

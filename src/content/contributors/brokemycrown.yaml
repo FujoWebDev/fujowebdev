@@ -1,17 +1,28 @@
+# ────────────────────────────────────────────────────────────
+# DO NOT EDIT — synced from FujoWebDev/contributors @ 41e1ae70e729
+# Source: contributors/brokemycrown.yaml
+# Refresh: pnpm sync
+# ────────────────────────────────────────────────────────────
 name: brokemycrown
 avatar: ./avatars/brokemycrown.jpg
+type:
+  - community
+  - contractor
 roles:
   Volume 0 Kickstarter:
-    - art director
+    - Art Director
     - Artist
-    - role: character designer
+    - role: Character Designer
       details: Git & GitHub
   Volume 0:
-    - role: character designer
+    - role: Character Designer
       details: Git & GitHub
     - role: Artist
       details: Full-body Git
-    - beta reader
+    - Beta Reader
+  AskFujo:
+    - role: Artist
+      details: Squad Games Colors
 contacts:
   - https://linktr.ee/reanimatedheart
   - https://www.patreon.com/reanimatedheartvn
