@@ -1,0 +1,102 @@
+---
+import type { GetStaticPaths } from "astro";
+import { type CollectionEntry, getCollection, getEntry } from "astro:content";
+import PageLayout from "../../layouts/PageLayout.astro";
+import ContributorsMemberCard from "../../components/ContributorsMemberCard.astro";
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const contributors = await getCollection("contributors");
+  return contributors.map((member, index) => {
+    return {
+      params: {
+        member: member.id,
+      },
+      props: {
+        next:
+          index < contributors.length - 1 ? contributors[index + 1].id : null,
+        previous: index > 0 ? contributors[index - 1].id : null,
+      },
+    };
+  });
+};
+
+const { member } = Astro.params;
+const { previous, next } = Astro.props;
+
+const memberEntry = await getEntry(
+  "contributors",
+  member as CollectionEntry<"contributors">["id"]
+);
+if (!memberEntry) return new Response(null, { status: 404 });
+---
+
+<PageLayout pageTitle="The Fujoshi Guide to Web Development – Our contributors">
+  <h1><a href="/contributors">Our contributors</a></h1>
+  <div>
+    <ContributorsMemberCard
+      transition:name="artist"
+      transition:animate="slide"
+      transition:persist
+      memberId={memberEntry.id}
+      name={memberEntry.data.name}
+      avatar={memberEntry.data.avatar}
+      roles={memberEntry.data.roles}
+      contacts={memberEntry.data.contacts}
+    />
+    <nav>
+      <a
+        class:list={{
+          disabled: !previous,
+        }}
+        href={`/contributors/${previous}`}>Previous</a
+      >
+      <a href="/contributors/">All</a>
+      <a
+        class:list={{
+          hidden: !next,
+        }}
+        href={`/contributors/${next}`}>Next</a
+      >
+    </nav>
+  </div>
+</PageLayout>
+<style>
+  img {
+    max-width: 150px;
+    align-self: center;
+  }
+  ul {
+    padding-left: 40px;
+  }
+  section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  h2 {
+    grid-column: span 2;
+  }
+  article {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  nav {
+    margin-top: 30px;
+    display: flex;
+    gap: 15px;
+    justify-content: space-evenly;
+    width: 100%;
+    max-width: 500px;
+  }
+  div {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .disabled {
+    opacity: 25%;
+    pointer-events: none;
+  }
+</style>

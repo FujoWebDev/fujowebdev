@@ -1,0 +1,16 @@
+# ────────────────────────────────────────────────────────────
+# DO NOT EDIT — synced from FujoWebDev/contributors @ 41e1ae70e729
+# Source: contributors/citro.yaml
+# Refresh: pnpm sync
+# ────────────────────────────────────────────────────────────
+name: Citro
+avatar: "./avatars/citro.webp"
+type: community
+roles:
+  Volume 0 Kickstarter:
+    - QA Testing
+    - Additional Research, Feedback, Development, and Assistance
+  Volume 0 Issue 1:
+    - Beta Reader
+contacts:
+  - https://blorbo.social/@citro

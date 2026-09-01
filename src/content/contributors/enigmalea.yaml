@@ -1,0 +1,36 @@
+# ────────────────────────────────────────────────────────────
+# DO NOT EDIT — synced from FujoWebDev/contributors @ 41e1ae70e729
+# Source: contributors/enigmalea.yaml
+# Refresh: pnpm sync
+# ────────────────────────────────────────────────────────────
+name: enigmalea
+avatar: "./avatars/enigmalea.png"
+type:
+  - community
+roles:
+  Volume 0 Kickstarter:
+    - Project Organizing
+    - Technical Writer
+    - Editor
+    - QA Testing
+  Volume 0:
+    - Project Organizing
+    - Technical Writer
+    - Editor
+    - Beta Wrangler
+  Volume 0 Issue 1:
+    - Technical Writer
+    - Beta Reading Coordinator
+    - Additional Coding
+  fujoweb.dev:
+    - Maintainer
+    - Coder
+    - Copy Writer
+  Fandom Cookies:
+    - Extra Hands (and Brains)
+contacts:
+  - https://enigmalea.quest
+  - url: https://bsky.app/profile/enigmalea.quest
+    icon: simple-icons:bluesky
+  - https://archiveofourown.org/users/enigmalea
+  - https://enigmalea.tumblr.com

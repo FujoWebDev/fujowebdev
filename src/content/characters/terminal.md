@@ -19,9 +19,14 @@ tropes:
     url: https://tvtropes.org/pmwiki/pmwiki.php/Main/EccentricMentor
   - name: Harem nanny
     url: https://tvtropes.org/pmwiki/pmwiki.php/Main/HaremNanny
-trivia: Also known as shell. Any resemblance to Revolver Ocelot is completely accidental.
+trivia:
+  Also known as shell. Any resemblance to Revolver Ocelot is completely
+  accidental.
 ---
 
-The most important member and live-in maid-pa of localhost HQ, Terminal is always ready to gently nudge beginners toward new adventures.
+The most important member and live-in maid-pa of localhost HQ, Terminal is
+always ready to gently nudge beginners toward new adventures.
 
-While some of his syntax might be dated, age gives no sign of slowing him down. Quick, powerful, and performant, his abilities are feared by beginners and revered by experts.
+While some of his syntax might be dated, age gives no sign of slowing him down.
+Quick, powerful, and performant, his abilities are feared by beginners and
+revered by experts.

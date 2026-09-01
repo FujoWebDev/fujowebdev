@@ -1,0 +1,207 @@
+---
+import type { ImageMetadata } from "astro";
+
+import { Icon } from "astro-icon/components";
+import type { CollectionEntry } from "astro:content";
+import type { Project } from "../content.config";
+import { isRelevantProject } from "../lib/utils";
+
+interface Props {
+  memberId: string;
+  name: string;
+  avatar: ImageMetadata;
+  roles: CollectionEntry<"contributors">["data"]["roles"];
+  project?: Project | undefined;
+  contacts: Array<{ url: string; icon?: string | null }>;
+}
+
+const { avatar, memberId, name, project, roles, contacts } = Astro.props;
+---
+
+<article>
+  <h2>
+    <img src={avatar.src} />
+    <a href={`/contributors/${memberId}`}>{name}</a>
+  </h2>
+  <h3>Roles</h3>
+  <ul class="projects">
+    {
+      project && isRelevantProject(project) ? (
+        <ul>
+          {roles[project].map((role) => (
+            <li>
+              <Icon name="fa6-solid:heart" class="icon" />
+              {role.details ? `${role.name} (${role.details})` : role.name}
+            </li>
+          ))}
+        </ul>
+      ) : (
+        Object.keys(roles).map(
+          // @ts-expect-error
+          (project: Project) =>
+            !!roles[project].length &&
+            isRelevantProject(project) && (
+              <li>
+                {project}:{" "}
+                <ul>
+                  {roles[project]?.map((role) => (
+                    <li>
+                      <Icon name="fa6-solid:heart" class="icon" />{" "}
+                      {typeof role == "string"
+                        ? role
+                        : `${role.name} ${role.details ? `(${role.details})` : ""}`}
+                    </li>
+                  ))}
+                </ul>
+              </li>
+            )
+        )
+      )
+    }
+  </ul>
+  <h3 class:list={{ hidden: contacts.length == 0 }}>Contacts</h3>
+  <ul class:list={{ hidden: contacts.length == 0 }} class="contacts">
+    {
+      contacts.map((contact) => (
+        <li>
+          <a href={contact.url}>
+            {contact.icon ? (
+              <>
+                <Icon name={contact.icon} />
+              </>
+            ) : (
+              <>
+                <Icon name={"lucide:home"} />
+              </>
+            )}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</article>
+<style>
+  .hidden {
+    display: none;
+  }
+  ul {
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  li {
+    position: relative;
+    margin-bottom: 3px;
+    list-style: none;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 5px;
+  }
+
+  .icon {
+    color: var(--fujo-pink);
+    margin-bottom: 0px;
+    margin-right: 0.3rem;
+    font-size: 1rem;
+    line-height: 1rem;
+    align-self: center;
+    flex-shrink: 0;
+    flex-grow: 0;
+  }
+
+  .contacts {
+    padding-left: 10px;
+    display: flex;
+    gap: 10px;
+    font-size: xx-large;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
+  .contacts a {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .projects > li {
+    flex-direction: column;
+    gap: 10px;
+    font-weight: 800;
+  }
+
+  .projects li {
+    text-transform: capitalize;
+  }
+
+  .projects > li > ul {
+    font-weight: normal;
+    gap: 5px;
+  }
+
+  .projects {
+    padding-left: 15px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  h2 a {
+    grid-column: span 2;
+    font-family: "freude", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    color: var(--fujo-light-blue);
+    font-size: 1.7rem;
+    text-shadow:
+      -1px -1px 0 var(--terminal-dark),
+      1px -1px 0 var(--terminal-dark),
+      -1px 1px 0 var(--terminal-dark),
+      1px 1px 0 var(--terminal-dark);
+    filter: drop-shadow(1px 1px 0px var(--terminal-dark));
+    text-decoration: none;
+  }
+
+  h2 a:hover {
+    color: var(--fujo-red);
+  }
+
+  h2 {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+
+  article {
+    display: flex;
+    flex-direction: column;
+    padding: 25px 30px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    row-gap: 10px;
+    box-shadow: 2px 2px 0px 0px var(--text-color-disabled);
+    background-color: white;
+    width: 100%;
+    max-width: 450px;
+  }
+
+  a {
+    color: var(--fujo-red);
+    transition: 100ms;
+  }
+
+  a:hover {
+    color: var(--fujo-pink);
+  }
+
+  img {
+    border-radius: 16px;
+    width: 50px;
+    margin-bottom: 5px;
+    border: 1px solid var(--terminal-dark);
+  }
+</style>

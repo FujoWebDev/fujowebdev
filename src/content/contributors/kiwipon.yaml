@@ -1,0 +1,18 @@
+# ────────────────────────────────────────────────────────────
+# DO NOT EDIT — synced from FujoWebDev/contributors @ 41e1ae70e729
+# Source: contributors/kiwipon.yaml
+# Refresh: pnpm sync
+# ────────────────────────────────────────────────────────────
+name: kiwipon
+avatar: "./avatars/kiwipon.png"
+type: community
+roles:
+  Volume 0 Kickstarter:
+    - Artist
+  Volume 0 Issue 1:
+    - role: Artist
+      details: We Can Do It!
+contacts:
+  - https://twitter.com/kiwi_pon
+  - https://www.instagram.com/kiwipon
+  - https://www.patriciaviarts.com

@@ -7,27 +7,36 @@
     "build": "astro check && astro build",
     "dev": "astro dev",
     "preview": "astro preview",
-    "start": "astro dev"
+    "start": "astro dev",
+    "lint": "oxlint",
+    "lint:fix": "oxlint --fix",
+    "format": "oxfmt",
+    "format:check": "oxfmt --check"
   },
   "dependencies": {
-    "@astrojs/check": "^0.9.4",
+    "@astrojs/check": "^0.9.10",
+    "@fujocoded/zod-transform-socials": "^0.1.1",
     "@iconify-json/fa6-brands": "^1.2.5",
     "@iconify-json/fa6-solid": "^1.1.20",
     "@iconify-json/logos": "^1.1.42",
     "@iconify-json/lucide": "^1.1.177",
     "@iconify-json/pixelarticons": "^1.1.10",
     "@iconify-json/simple-icons": "^1.1.96",
-    "astro": "^4.15.12",
-    "astro-icon": "^1.1.0",
+    "astro": "^6.4.8",
+    "astro-icon": "^1.2.0",
     "marked": "^12.0.1",
-    "typescript": "^5.6.2"
+    "typescript": "^5.6.2",
+    "zod": "^4.5.4"
   },
   "devDependencies": {
+    "oxfmt": "^0.66.0",
+    "oxlint": "^1.81.0",
+    "oxlint-tsgolint": "^7.0.2001",
     "prettier": "^3.2.5",
     "prettier-plugin-astro": "^0.14.1",
     "social-links": "^1.14.0"
   },
   "engines": {
-    "node": ">=20.0.0"
+    "node": ">=22.12.0"
   }
 }

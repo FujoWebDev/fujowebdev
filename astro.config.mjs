@@ -1,6 +1,5 @@
-import { defineConfig } from "astro/config";
-
 import icon from "astro-icon";
+import { defineConfig } from "astro/config";
 
 // https://astro.build/config
 export default defineConfig({
@@ -10,6 +9,10 @@ export default defineConfig({
       destination: "https://www.essentialrandomness.com/streams",
       status: 307,
     },
-    "/team/codeargent": "/team/argent",
+    "/contributors/codeargent": "/contributors/argent",
+    "/team": "/contributors",
+    "/team/codeargent": "/contributors/argent",
+    "/team/[member]": "/contributors/[member]",
+    "/team/[project]": "/contributors/[project]",
   },
 });
