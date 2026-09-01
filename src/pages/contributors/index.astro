@@ -3,14 +3,12 @@ import { getCollection, type CollectionEntry } from "astro:content";
 import type { Project } from "../../content.config";
 import PageLayout from "../../layouts/PageLayout.astro";
 import ContributorsMemberCard from "../../components/ContributorsMemberCard.astro";
+import { isRelevantProject } from "../../lib/utils";
 
 const contributors = await getCollection("contributors");
 
 const PROJECTS: Record<string, { members: CollectionEntry<"contributors">[] }> =
   {};
-
-const isRelevantProject = (projectName: Project) =>
-  projectName === "fujoweb.dev" || projectName.startsWith("Volume ");
 
 contributors.forEach((member) => {
   for (const project of Object.keys(member.data.roles) as Project[]) {

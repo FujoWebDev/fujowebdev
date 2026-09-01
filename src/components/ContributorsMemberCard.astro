@@ -4,6 +4,7 @@ import type { ImageMetadata } from "astro";
 import { Icon } from "astro-icon/components";
 import type { CollectionEntry } from "astro:content";
 import type { Project } from "../content.config";
+import { isRelevantProject } from "../lib/utils";
 
 interface Props {
   memberId: string;
@@ -15,9 +16,6 @@ interface Props {
 }
 
 const { avatar, memberId, name, project, roles, contacts } = Astro.props;
-
-const isRelevantProject = (projectName: Project) =>
-  projectName === "fujoweb.dev" || projectName.startsWith("Volume ");
 ---
 
 <article>
@@ -41,7 +39,8 @@ const isRelevantProject = (projectName: Project) =>
         Object.keys(roles).map(
           // @ts-expect-error
           (project: Project) =>
-            !!roles[project].length && (
+            !!roles[project].length &&
+            isRelevantProject(project) && (
               <li>
                 {project}:{" "}
                 <ul>
