@@ -7,13 +7,19 @@ import Socials from "../components/Socials.astro";
 interface Props {
   pageTitle?: string;
   pageDescription?: string;
+  pageImage?: string;
   multiLineHeader?: boolean;
+  hideHeaderLogo?: boolean;
+  mainWidth?: string;
 }
 
 const {
   multiLineHeader,
+  hideHeaderLogo,
+  mainWidth,
   pageTitle = "The Fujoshi Guide to Web Development – Fully funded on Kickstarter",
   pageDescription,
+  pageImage,
 } = Astro.props;
 ---
 
@@ -22,7 +28,7 @@ const {
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
-    <OgTags description={pageDescription} title={pageTitle} />
+    <OgTags description={pageDescription} title={pageTitle} image={pageImage} />
     <link rel="stylesheet" href="https://use.typekit.net/exd6spk.css" />
     <ClientRouter />
     <style is:global>
@@ -33,6 +39,18 @@ const {
         padding: 0;
         /* font family here because otherwise inputs don't inherit */
         font-family: "nunito", sans-serif;
+      }
+
+      .visually-hidden {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
       }
 
       body {
@@ -53,7 +71,8 @@ const {
         flex-direction: column;
         align-items: center;
         padding-block: 20px;
-        padding-inline: 15px;
+        --page-gutter: 15px;
+        padding-inline: var(--page-gutter);
         overflow-x: hidden;
       }
 
@@ -167,7 +186,7 @@ const {
       data-domain="fujoweb.dev"
       src="https://plausible.io/js/script.js"></script>
   </head>
-  <body>
+  <body style={mainWidth ? `--main-width: ${mainWidth}` : undefined}>
     <div class="learn-site-banner">
       <div class="banner-text">
         <span class="longer-text"
@@ -177,7 +196,7 @@ const {
         >, now in beta!
       </div>
     </div>
-    <Header multiLine={multiLineHeader} />
+    <Header multiLine={multiLineHeader} showLogo={!hideHeaderLogo} />
     <main>
       <slot />
       <Socials />

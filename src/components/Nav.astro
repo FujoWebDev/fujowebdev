@@ -18,6 +18,9 @@ const url = Astro.url.pathname;
     <li class:list={{ current: url.startsWith("/contributors") }}>
       <a href="/contributors">Contributors</a>
     </li>
+    <li class:list={{ current: url.startsWith("/roadmap") }}>
+      <a href="/roadmap">Roadmap</a>
+    </li>
     <li>
       <a
         href="https://www.kickstarter.com/projects/essential-randomness/the-fujoshi-guide-to-web-development/posts"
@@ -43,7 +46,7 @@ const url = Astro.url.pathname;
     align-items: center;
   }
 
-  @media (max-width: 650px) {
+  @media (max-width: 768px) {
     ul {
       flex-direction: column;
     }

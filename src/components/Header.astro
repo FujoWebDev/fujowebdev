@@ -1,26 +1,22 @@
 ---
 import Nav from "./Nav.astro";
+import SiteLogo from "./SiteLogo.astro";
 
 interface Props {
   multiLine?: boolean;
+  showLogo?: boolean;
 }
 
-const { multiLine } = Astro.props;
+const { showLogo = true, ...props } = Astro.props;
 ---
 
 <header
   class:list={{
-    "single-line": !multiLine,
+    "single-line": !props.multiLine,
   }}
 >
   <Nav />
-  <a href="/">
-    <img
-      class="logo"
-      src="/images/bobatan-logo.png"
-      alt="The logo for The Fujoshi Guide to Web Development. The graphic is aqua, orange, and pink text surrounded by a lavender bubble. Pink hearts bubble up from the word ‘web’ in the title. The word ‘to’ is framed by a terminal. On the left side of the title is a stylized computer screen showing an image of Boba-tan, the BobaBoard Mascot, wearing a raccoon kigurumi, glasses, and waving in greeting."
-    />
-  </a>
+  {showLogo && <SiteLogo />}
 </header>
 
 <style>
@@ -37,12 +33,7 @@ const { multiLine } = Astro.props;
     flex-wrap: wrap;
     justify-content: center;
   }
-  .logo {
-    max-width: 80%;
-    display: block;
-    margin: 0 auto;
-  }
-  .single-line .logo {
+  .single-line :global(.logo) {
     width: 400px;
     height: auto;
   }

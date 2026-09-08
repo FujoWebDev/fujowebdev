@@ -73,11 +73,13 @@ const { name, likes, dislikes, tropes, trivia, imageSrc } = Astro.props;
 </article>
 
 <script>
-  const buttons = document.querySelectorAll("button.more");
-  buttons.forEach((button) => {
-    button.addEventListener("click", () => {
-      const article = button.closest("article");
-      article?.classList.add("show-all");
+  document.addEventListener("astro:page-load", () => {
+    const buttons = document.querySelectorAll("button.more");
+    buttons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const article = button.closest("article");
+        article?.classList.add("show-all");
+      });
     });
   });
 </script>

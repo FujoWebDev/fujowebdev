@@ -2,17 +2,20 @@
 const themeColor = "#c29fc9";
 
 const url = "https://fujoweb.dev";
-const image = "https://fujoweb.dev/images/og-card.png";
 
 interface Props {
   description?: string;
   title?: string;
+  image?: string;
 }
 
 const {
   title = "The Fujoshi Guide to Web Development — Fully Funded on Kickstarter",
   description = "The Fujoshi Guide to Web Development is an upcoming series of instructional zines about coding featuring anthropomorphizations of programming languages and concepts.",
+  image: imagePath = "/images/og-card.png",
 } = Astro.props;
+
+const image = new URL(imagePath, url).href;
 ---
 
 <meta property="og:locale" content="en_US" />
