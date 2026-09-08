@@ -1,0 +1,8 @@
+order: 290
+view: terminal
+branch: physical-rewards
+lane: right
+mergeToMain: true
+kind: upcoming
+heading: Physical rewards distribution
+commits: []

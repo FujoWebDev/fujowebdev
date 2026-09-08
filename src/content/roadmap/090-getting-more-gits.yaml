@@ -1,0 +1,15 @@
+order: 90
+view: browser
+branch: character-designs
+lane: left 
+mergeToMain: true
+kind: done
+heading: Getting more Gits
+url: file:///extra-characters
+body: >-
+  How do you fill more volumes? With more Gits, of course! With preparations
+  for Issue 2 on the horizon, we start expanding our "panthe(r)on" of Git-based characters.
+commits:
+  - message: Designed GitLab
+  - message: Designed Gitea
+  - message: Designed Forgejo

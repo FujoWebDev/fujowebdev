@@ -1,0 +1,17 @@
+order: 160
+view: browser
+branch: sale
+lane: left
+kind: done
+mergeToMain: true
+heading: Issue 1 Limited Sale
+body: >-
+  Issue 1 is out, but only for backers...until we bring out the preview 
+  to our first con for its first, exclusive pre-sale! After it swiftly outsells 
+  every paddle and tote on the table (yes, even those emblazoned with "yaoi"),
+  we make pre-sale at special events a regular part of our presence.
+url: https://store.fujocoded.com/
+commits:
+  - message: Sell preview printouts at our first con
+  - message: Add secret unlisted direct-link items
+  - message: Sell digital preview at online events

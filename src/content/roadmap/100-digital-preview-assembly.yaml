@@ -1,0 +1,22 @@
+order: 100
+view: terminal
+branch: issue-1
+lane: right
+kind: done
+heading: Digital Preview Assembly
+body: >-
+  It's go time! Last round of revisions to catch pesky typos and other tiny
+  inconsistencies, plus helping our callout boxes (and terminals) survive page
+  breaks...featuring a few textual tweaks to avoid ugly page gaps. This is when
+  the lore pages get designed, and our back cover is born. One thought carries us
+  forward: everything we did here will carry over to Issue 2!
+commits:
+  - hash: 4c7a152
+    type: fix(copy)
+    message: corrected final typos and inconsistencies 
+  - hash: 8e30f6b
+    type: feat(layout)
+    message: finalized preview styles and international layouts
+  - hash: 1bd594e
+    type: fix(pdf)
+    message: resolved PDF conversion issues

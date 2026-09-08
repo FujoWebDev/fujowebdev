@@ -1,0 +1,21 @@
+order: 150
+view: terminal
+branch: issue-2
+lane: right
+kind: done
+heading: Issue 2 (Beta 1)
+body: >-
+  Back at it again with our favorite assembly of Betas (outside of fanfictions,
+  at least)! With the process now worked out, our beta coordinators swiftly
+  gather them in a not-so-secret group chat lair to uncover frustrations and
+  ensure everything is smooth—even when the content isn't.
+commits:
+  - hash: 2d8f4b9
+    type: feat(betas)
+    message: recruited Issue 2 beta readers
+  - hash: a61e703
+    type: feat(process)
+    message: assembled readers in a dedicated group chat
+  - hash: 74c2fd8
+    type: docs(feedback)
+    message: aggregated feedback into beta report

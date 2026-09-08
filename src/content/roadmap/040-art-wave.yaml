@@ -1,0 +1,17 @@
+order: 40
+view: browser
+branch: art-and-code
+lane: left
+kind: done
+heading: Art Wave
+mergeToMain: true
+body: >-
+  With the concept set, we get to commission more art: clothes for HTML, a cover
+  for the zine, and—at the center of our scenario—some choice artisanal sketches
+  by our lead... _writer._ We'll bring in the real professionals once we're
+  closer to final print!
+url: file:///dressup.html
+commits:
+  - message: Scenario art locked-in jokes
+  - message: Commissioned HTML's clothes
+  - message: Created cover art concept

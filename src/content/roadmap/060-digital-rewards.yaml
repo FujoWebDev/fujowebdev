@@ -1,0 +1,53 @@
+order: 60
+view: release
+branch: rewards
+mergeToMain: true
+kind: done
+heading: Digital rewards
+body: >-
+  <p>Now shipping: our exclusive digital pack! Featuring: wallpapers of our characters
+  in every size we could think of, a printable HTML paper doll, a pile
+  of Boba-tan emoji, website goodies (like a corner buddy you can
+  drop into your own site), behind-the-scenes pitch decks, character notes, and
+  yes!—a nostalgic, git-alicious 88×31 badge.</p>
+callToAction:
+  title: Where do I find these?
+  text: >-
+    Alongside your exclusive badge in your backer rewards, or by [backing FujoCoded
+    on Patreon](https://www.patreon.com/fujocoded) for some behind-the-scenes
+    content. Not there? Write us at <a
+    href="mailto:contacts@fujocoded.com">contacts@fujocoded.com</a> or DM us on
+    Kickstarter!
+tag: v1.0-digital-rewards
+assets:
+  - name: Wallpapers/
+    meta: 18 sets · 5 sizes each
+    contents:
+      - name: all-characters/
+        meta: digital ensemble
+      - name: characters-git, -html, -css/
+        meta: for those with a favorite
+      - name: localhost-trio, browserland-trio/
+        meta: nothing like a good OT3
+      - name: Background Patterns/
+        meta: hearts, ducks & nyan gits
+  - name: Behind the Scenes/
+    meta: how the guide got made
+    contents:
+      - name: Initial Pitch.pdf
+        meta: where it all started
+      - name: Worldbuilding Doc.pdf
+      - name: Character Notes/
+        meta: 6+ PDFs · git, html, terminal & co
+  - name: Website Goodies & More/
+    meta: decorate your own corner
+    collapsed: true
+    contents:
+      - name: Shimeji-Corner Buddy/
+        meta: drop-in JS website buddy
+      - name: Paper Doll/
+        meta: Dress up HTML...on paper! · PDF
+      - name: Emoji Set/
+        meta: 30+ Boba-tan reactions · PNG
+  - name: git_website_badge_88x31.gif
+    meta: exclusive badge

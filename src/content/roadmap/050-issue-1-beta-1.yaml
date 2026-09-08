@@ -1,0 +1,21 @@
+order: 50
+view: terminal
+branch: issue-1
+lane: right
+kind: done
+heading: Issue 1 (Beta 1)
+body: >-
+  The zine's first review round, featuring our _ethically-sourced_ Git newcomers. Feedback is
+  critical at this point: everything is still subject to change if that's what our
+  glorious (and generous) beta readers ask for! Their verdict? _Fun, approachable,
+  “like a legit textbook”_.
+commits:
+  - hash: f41c8e2
+    type: feat(content)
+    message: assembled first zine draft
+  - hash: 9d270b5
+    type: test(content)
+    message: recruited beta readers and ran feedback round
+  - hash: 31f9a04
+    type: fix(structure)
+    message: split Volume 0 into multiple issues

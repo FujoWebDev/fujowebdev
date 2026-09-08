@@ -1,0 +1,22 @@
+order: 170
+view: terminal
+branch: issue-2
+lane: right
+kind: done
+heading: Issue 2 Restructuring
+body: >-
+  Much like with Issue 1, our beta readers raved about Issue 2. But unlike
+  Issue 1, their feedback showed a "_sure, I was confused at times, but
+  that's just me_" undercurrent. Not in this zine! Rejecting the easy
+  "*it's not your zine, it's me*" explanation, we poke and prod
+  at issue 2's structure until it's tamed.
+commits:
+  - hash: 2d8f4b9
+    type: docs(feedback)
+    message: processed Beta 1 feedback
+  - hash: a61e703
+    type: fix(structure)
+    message: rearranged, cut, and re-rearranged zine content 
+  - hash: 74c2fd8
+    type: refactor(chapters)
+    message: finalized the improved outline and chapter structure

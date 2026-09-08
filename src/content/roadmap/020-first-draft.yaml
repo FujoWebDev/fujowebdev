@@ -1,0 +1,21 @@
+order: 20
+view: terminal
+branch: issue-1
+lane: right
+kind: done
+heading: First Draft
+body: >-
+  Time to, as we say, "`git` working"! Here, we dove deep into outlines,
+  explanations, surrounding content... then scrapped it all, reworking this
+  foundational-but-malleable material into a hands-on learning adventure (that
+  is, a Yaoi-tastic™ dress-up game).
+commits:
+  - hash: c72f091
+    type: docs(outline)
+    message: reworked structure towards hands-on learning
+  - hash: a3f9d2c
+    type: feat(content)
+    message: drafted first two chapters
+  - hash: 18b3e40
+    type: feat(lore)
+    message: developed Git + HTML/CSS/ARIA character dynamics

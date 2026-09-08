@@ -1,0 +1,22 @@
+order: 120
+view: terminal
+branch: issue-2
+lane: right
+kind: done
+heading: Issue 2 1st Draft
+body: >-
+  As Issue 1 gets its round of praise and feedback, we charge ahead with issue
+  2! This issue is a step up in complexity, adding topics like branches, remote,
+  and merges...and, even more scary, *rebases*! But where there's a will, there's
+  a way—and that way (as we know) is hot fictional characters and the websites that
+  celebrate them.
+commits:
+  - hash: 2d8f4b9
+    type: feat(content)
+    message: completed Issue 2 first draft
+  - hash: a61e703
+    type: feat(story)
+    message: devised another engaging, kinda wild teaching scenario
+  - hash: 74c2fd8
+    type: fix(structure)
+    message: incorporated lessons from Issue 1 beta feedback

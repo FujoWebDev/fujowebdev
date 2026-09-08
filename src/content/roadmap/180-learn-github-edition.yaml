@@ -1,0 +1,17 @@
+order: 180
+view: editor
+branch: learn-git
+lane: left
+kind: in-progress
+mergeToMain: true
+heading: learn@ GitHub edition
+body: >-
+  Not everything lives between two covers—and some of the content cut from our 
+  restructured Issue 2, sure didn't need to! Instead, it gets a roomier
+  home on learn@, where anyone can read it and find it...*useful*.
+file: learn.astro
+commits:
+  - message: Wrote "Connecting to GitHub via CLI"
+  - message: Wrote "Connecting to GitHub with SSH"
+  - pending: true
+    message: Final typos and content review

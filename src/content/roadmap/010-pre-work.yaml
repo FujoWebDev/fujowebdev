@@ -1,0 +1,22 @@
+order: 10
+view: terminal
+branch: pre-work
+lane: left
+mergeToMain: true
+kind: done
+heading: Pre-work
+body: >-
+  The often-unseen work of figuring out _the work_: locking in concepts,
+  mapping out tasks and blockers, and tallying up our funding
+  so we know how much we have available. And did we mention...creating this
+  very website?
+commits:
+  - hash: c72f091
+    type: feat(site)
+    message: launched fujoweb.dev [live on stream](https://www.youtube.com/playlist?list=PLhXpCwgI-5FIo4KHBNSsrGi78pLECCe7Z)
+  - hash: 18b3e40
+    type: docs(plan)
+    message: mapped out the project plan
+  - hash: a3f9d2c
+    type: chore(budget)
+    message: created costs spreadsheet

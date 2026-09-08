@@ -1,0 +1,18 @@
+order: 130
+view: browser
+branch: sexyman-shrine
+lane: left
+kind: done
+heading: Boba-tan's Sexyman Shrine
+mergeToMain: true
+body: >-
+  To fully *commit* to the bit, our yaoi-brained protagonist 
+  must first be given her own blorbo-filled website. What 
+  better way to invite people to learn than to invite them to 
+  play around with a real, 00s-web inspired *character shrine*,
+  featuring our very own Funblr Sexyman?
+url: file:///sexyman-shrine
+commits:
+  - message: built shrine layout
+  - message: added lore sections
+  - message: sprinkled small site challenges

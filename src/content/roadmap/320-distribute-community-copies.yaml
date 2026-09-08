@@ -1,0 +1,8 @@
+order: 320
+view: terminal
+branch: sale-all
+lane: right
+mergeToMain: true
+kind: upcoming
+heading: Distribute community copies
+commits: []

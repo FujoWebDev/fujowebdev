@@ -1,0 +1,16 @@
+order: 30
+view: editor
+branch: art-and-code
+lane: left
+kind: done
+heading: Zine Maker
+body: >-
+  To make a zine (that is really a book), a developer must first code their own zine
+  maker. This powerful tool (that is really an Astro website) lets us use our web
+  skills while writing, then turns our HTML, CSS, and Markdown into multi-format
+  zines when shipping!
+file: zine-maker.html
+commits:
+  - message: built an Astro-based zine maker
+  - message: added browser zine preview
+  - message: prototyped printable zine(s) export

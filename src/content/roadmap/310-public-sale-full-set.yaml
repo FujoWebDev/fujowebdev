@@ -1,0 +1,8 @@
+order: 310
+view: terminal
+branch: sale-all
+lane: left
+mergeToMain: true
+kind: upcoming
+heading: "Public Sale: Full Set"
+commits: []

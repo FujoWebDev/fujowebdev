@@ -1,0 +1,22 @@
+order: 190
+view: terminal
+branch: issue-2
+lane: right
+kind: in-progress
+heading: Issue 2 (Pre)²view
+body: >-
+  It's time to put our work back into readers' hands—and this time, we go
+  *almost*-straight to our backers! Our (pre)²view turns a slice of the 
+  newly-restructured Issue 2 into a public Beta: enough material to show off 
+  the zine restructure(which we're so proud of!), get real feedback on the
+  new flow, and give everyone a fun new scenario to play with right away.
+commits:
+  - pending: true
+    type: feat(content)
+    message: finalized rewritten existing chapters
+  - pending: true
+    type: fix(copy)
+    message: completed informal typo and feedback pass
+  - pending: true
+    type: fix(zine)
+    message: smoothed out another zine's software kinks

@@ -1,0 +1,18 @@
+order: 70
+view: editor
+branch: learn-site
+lane: left 
+kind: done
+heading: Launched learn@fujoweb.dev
+mergeToMain: true
+body: >-
+  Our home for [free FujoGuide material](https://learn.fujoweb.dev) is born! Our
+  first zine beta revealed an important constraint: we made learning Git fun,
+  but figuring out a Terminal...still not quite! So, instead of putting these
+  fundamental skills in a zine, we built a free learning site where everyone can
+  pick them up.
+file: learn.astro
+commits:
+  - message: Deployed Astro Starlight site
+  - message: Fundraised for more guides
+  - message: Wrote guide to the Terminal

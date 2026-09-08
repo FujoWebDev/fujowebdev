@@ -1,0 +1,9 @@
+order: 200
+view: editor
+branch: zine-builder
+lane: left
+kind: upcoming
+mergeToMain: true
+heading: Upgrade zine maker
+file: issue-2.astro
+commits: []

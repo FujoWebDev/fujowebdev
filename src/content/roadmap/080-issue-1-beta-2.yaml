@@ -1,0 +1,21 @@
+order: 80
+view: terminal
+branch: issue-1
+lane: right
+kind: done
+heading: Issue 1 (Beta 2)
+body: >-
+  Precious feedback in hand, our production machine smoothly turns. This time, our betas
+  get a rubric to guide their feedback—and bond over passionate arguments on
+  comma placement (it's how you know they're having fun)! In the end,
+  there's no need for an extra round.
+commits:
+  - hash: b84e6d1
+    type: feat(process)
+    message: created structured beta round process
+  - hash: 2fa09c7
+    type: test(content)
+    message: gathered fresh feedback from returning and new betas
+  - hash: d6138be
+    type: fix(details)
+    message: handed comma-level disputes to neutral editor

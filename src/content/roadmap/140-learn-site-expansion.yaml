@@ -1,0 +1,15 @@
+order: 140
+view: editor
+branch: learn-git
+lane: left
+kind: done
+heading: Learn Site Expansion
+body: >-
+  Our free learning resources grows beyond the terminal: not only we add 
+  sections for JavaScript and NodeJS, but *for the very first time* we hire community 
+  contributors to do so!
+file: learn.astro
+commits:
+  - message: Hired community contributors for writing
+  - message: Experimented with writing process
+  - message: Added new sections to learn@

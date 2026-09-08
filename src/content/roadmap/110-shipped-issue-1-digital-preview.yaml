@@ -1,0 +1,47 @@
+order: 110
+view: release
+branch: issue-1
+mergeToMain: true
+kind: done
+heading: Shipped issue 1 digital preview
+body: >-
+  <p>After a lot of work, our backers finally get to hold the zine in their
+  hands! The zip folder is *heavy*, but chock-full of goods: printable
+  zines come foldable like a real zine booklet, or as half/full-page PDFs
+  that look as great on screens as they do on paper. Not to mention, everything
+  is available in both A4 and Letter, to be enjoyed all over the
+  world!</p>
+tag: v1.0-issue-1
+callToAction:
+  title: Where do I find these?
+  text: >-
+    Look for the folder in your backer rewards, or for the delivery email if you
+    bought it at a con. Not there? Write us at <a
+    href="mailto:contacts@fujocoded.com">contacts@fujocoded.com</a> or DM us on
+    Kickstarter! Want to know when it's publicly on sale? TODO: signup for our waiting list!
+assets:
+  - name: FujoGuide-Vol0-Issue1-Git.pdf
+    meta: 16 MB · 119 pages
+  - name: printables.zip
+    meta: 18 PDFs · Letter & A4
+    contents:
+      - name: git-full-Letter.pdf
+        meta: 92 pages
+      - name: git-full-HalfLetter.pdf
+        meta: half sheet
+      - name: git-full-HalfLetter-foldable.pdf
+        meta: zine fold
+      - name: git-main-Letter.pdf
+        meta: main only · 61 pages
+      - name: git-extras-Letter.pdf
+        meta: extras only · 28 pages
+      - name: A4 (Rest of the World)/
+        meta: the same nine, in A4 & A5
+  - name: exercise-files.zip
+    meta: 3 lookbooks · 44 MB
+    contents:
+      - name: html-lookbook.zip
+      - name: html-lookbook-with-history.zip
+      - name: html-lookbook-with-catfight.zip
+  - name: exclusive-badge.gif
+    meta: 88×31

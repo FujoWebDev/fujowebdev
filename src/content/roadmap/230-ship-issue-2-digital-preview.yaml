@@ -1,0 +1,7 @@
+order: 230
+view: release
+branch: issue-2
+mergeToMain: true
+kind: upcoming
+heading: Ship Issue 2 digital preview
+tag: v0.9-issue-2-preview
