@@ -1,0 +1,161 @@
+---
+import type { GetStaticPaths } from "astro";
+import { getCollection } from "astro:content";
+import type { Project } from "../../content.config";
+import PageLayout from "../../layouts/PageLayout.astro";
+import ContributorsMemberCard from "../../components/ContributorsMemberCard.astro";
+import { toUrlSlug } from "../../lib/slugs";
+
+export const getStaticPaths = (async () => {
+  const contributors = await getCollection("contributors");
+  const projects = new Set<Project>();
+
+  contributors.forEach((member) => {
+    for (const project of Object.keys(member.data.roles) as Project[]) {
+      projects.add(project);
+    }
+  });
+
+  return [
+    ...contributors.map((member, index) => ({
+      params: { slug: toUrlSlug(member.id) },
+      props: {
+        type: "member" as const,
+        entry: member,
+        previous: index > 0 ? toUrlSlug(contributors[index - 1].id) : null,
+        next:
+          index < contributors.length - 1
+            ? toUrlSlug(contributors[index + 1].id)
+            : null,
+      },
+    })),
+    ...[...projects].map((project) => ({
+      params: { slug: toUrlSlug(project) },
+      props: {
+        type: "project" as const,
+        entry: project,
+      },
+    })),
+  ];
+}) satisfies GetStaticPaths;
+
+const pageEntry = Astro.props;
+const contributors = await getCollection("contributors");
+
+const page =
+  pageEntry.type === "member"
+    ? {
+        type: "member" as const,
+        entry: pageEntry.entry,
+        previous: pageEntry.previous,
+        next: pageEntry.next,
+      }
+    : {
+        type: "project" as const,
+        project: pageEntry.entry,
+        memberEntries: contributors.filter(
+          ({ data }) => data.roles[pageEntry.entry].length > 0
+        ),
+      };
+---
+
+<PageLayout pageTitle="The Fujoshi Guide to Web Development – Our contributors">
+  <h1><a href="/contributors">Our contributors</a></h1>
+  {
+    page.type === "member" ? (
+      <div>
+        <ContributorsMemberCard
+          transition:name="artist"
+          transition:animate="slide"
+          transition:persist
+          memberId={page.entry.id}
+          name={page.entry.data.name}
+          avatar={page.entry.data.avatar}
+          roles={page.entry.data.roles}
+          contacts={page.entry.data.contacts}
+        />
+        <nav>
+          <a
+            class:list={{
+              disabled: !page.previous,
+            }}
+            href={`/contributors/${page.previous}`}
+          >
+            Previous
+          </a>
+          <a href="/contributors/">All</a>
+          <a
+            class:list={{
+              hidden: !page.next,
+            }}
+            href={`/contributors/${page.next}`}
+          >
+            Next
+          </a>
+        </nav>
+      </div>
+    ) : (
+      <>
+        <h2>{page.project}</h2>
+        <div>
+          {page.memberEntries.map((memberEntry) => (
+            <ContributorsMemberCard
+              transition:name="artist"
+              transition:animate="slide"
+              transition:persist
+              memberId={memberEntry.id}
+              name={memberEntry.data.name}
+              avatar={memberEntry.data.avatar}
+              roles={memberEntry.data.roles}
+              project={page.project}
+              contacts={memberEntry.data.contacts}
+            />
+          ))}
+        </div>
+      </>
+    )
+  }
+</PageLayout>
+<style>
+  img {
+    max-width: 150px;
+    align-self: center;
+  }
+  ul {
+    padding-left: 40px;
+  }
+  section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  h2 {
+    grid-column: span 2;
+  }
+  article {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  nav {
+    margin-top: 30px;
+    display: flex;
+    gap: 15px;
+    justify-content: space-evenly;
+    width: 100%;
+    max-width: 500px;
+  }
+  div {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .disabled {
+    opacity: 25%;
+    pointer-events: none;
+  }
+  .hidden {
+    visibility: hidden;
+  }
+</style>

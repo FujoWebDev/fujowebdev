@@ -3,6 +3,7 @@ import { getCollection, type CollectionEntry } from "astro:content";
 import type { Project } from "../../content.config";
 import PageLayout from "../../layouts/PageLayout.astro";
 import ContributorsMemberCard from "../../components/ContributorsMemberCard.astro";
+import { toUrlSlug } from "../../lib/slugs";
 import { isRelevantProject } from "../../lib/utils";
 
 const contributors = await getCollection("contributors");
@@ -29,7 +30,7 @@ contributors.forEach((member) => {
 
 const projectsArray = Object.keys(PROJECTS).map((proj) => ({
   name: proj as Project,
-  url: proj.replace(/\s/g, "-").toLowerCase(),
+  url: toUrlSlug(proj),
   members: PROJECTS[proj].members,
 }));
 ---
@@ -37,13 +38,13 @@ const projectsArray = Object.keys(PROJECTS).map((proj) => ({
 <PageLayout pageTitle="The Fujoshi Guide to Web Development – Our contributors">
   <h1><a href="/contributors">Our contributors</a></h1>
   <div class="description">
-    Whether for one single adventure or as part of our continued efforts, these
-    are the people whose hard work makes FujoGuide possible.
+    Whether for one adventure or throughout the whole journey, these are the
+    people who made (and make) FujoGuide possible.
   </div>
   <div class="tabs">
     {
       projectsArray.map((project, index) => {
-        // Exclude from members with card people that have exclusively done beta reading
+        // Give beta readers their special section
         const membersWithCard = project.members.filter(
           (member) =>
             member.data.roles[project.name]?.length !== 1 ||

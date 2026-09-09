@@ -4,6 +4,7 @@ import type { ImageMetadata } from "astro";
 import { Icon } from "astro-icon/components";
 import type { CollectionEntry } from "astro:content";
 import type { Project } from "../content.config";
+import { toUrlSlug } from "../lib/slugs";
 import { isRelevantProject } from "../lib/utils";
 
 interface Props {
@@ -21,7 +22,7 @@ const { avatar, memberId, name, project, roles, contacts } = Astro.props;
 <article>
   <h2>
     <img src={avatar.src} />
-    <a href={`/contributors/${memberId}`}>{name}</a>
+    <a href={`/contributors/${toUrlSlug(memberId)}`}>{name}</a>
   </h2>
   <h3>Roles</h3>
   <ul class="projects">

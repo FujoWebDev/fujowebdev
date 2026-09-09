@@ -12,7 +12,7 @@ export default defineConfig({
     "/contributors/codeargent": "/contributors/argent",
     "/team": "/contributors",
     "/team/codeargent": "/contributors/argent",
-    "/team/[member]": "/contributors/[member]",
-    "/team/[project]": "/contributors/[project]",
+    "/team/website": "/contributors/fujoweb.dev",
+    "/team/[slug]": "/contributors/[slug]",
   },
 });
