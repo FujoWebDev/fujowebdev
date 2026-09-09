@@ -1,0 +1,210 @@
+---
+import type { TimelineItem } from "./timeline.ts";
+import { planTimeline, timelineRows } from "./timeline.ts";
+import { assignCorridors } from "./layout.ts";
+import type { RailConfig } from "./mount.ts";
+import BranchRow from "./BranchRow.astro";
+import SpineRow from "./SpineRow.astro";
+
+// The default slot receives a TimelineRow. Optional marker, decoration, and
+// label slots receive the same row; header is rendered once above the rows.
+// Customize inherited --timeline-spine/left/right/current/background colors
+// and --timeline-lane-gap without requiring a site stylesheet.
+interface Props {
+  items: readonly TimelineItem[];
+}
+const rows = timelineRows(Astro.props.items);
+const plan = planTimeline(rows.map((row) => row.item));
+const corridors = assignCorridors(plan);
+const railConfig = {
+  plan,
+  geometry: { leftLanes: corridors.leftCount, bend: 69 },
+  state: Object.fromEntries(
+    rows.map((row) => [
+      String(row.item.order),
+      {
+        taper: row.taper,
+        progress: row.item.progress,
+      },
+    ])
+  ),
+} satisfies RailConfig;
+const railConfigJson = JSON.stringify(railConfig).replace(/</g, "\\u003c");
+const rendered = await Promise.all(
+  rows.map(async (row) => ({
+    ...row,
+    content: await Astro.slots.render("default", [row]),
+    marker: await Astro.slots.render("marker", [row]),
+    decoration: await Astro.slots.render("decoration", [row]),
+    label: await Astro.slots.render("label", [row]),
+  }))
+);
+---
+
+<div class="timeline-container">
+  <div
+    class="timeline-graph"
+    style={`--rail-lanes-left:${corridors.leftCount};--rail-lanes-right:${corridors.rightCount}`}
+    data-rail-root
+  >
+    <div class="rail-column" aria-hidden="true">
+      <svg
+        class="rail-overlay"
+        data-rail-overlay
+        xmlns="http://www.w3.org/2000/svg"></svg>
+    </div>
+    <script
+      is:inline
+      type="application/json"
+      data-rail-plan
+      set:html={railConfigJson}
+    />
+    <slot name="header" />
+    {
+      rendered.map((row) =>
+        row.item.placement === "main" ? (
+          <SpineRow row={row} />
+        ) : (
+          <BranchRow row={row} />
+        )
+      )
+    }
+  </div>
+</div>
+<script>
+  import { mountTimeline } from "./mount.ts";
+
+  let mounted: (() => void)[] = [];
+  let installed = false;
+
+  function teardown(): void {
+    for (const stop of mounted) {
+      stop();
+    }
+    mounted = [];
+  }
+
+  function remount(): void {
+    teardown();
+    document
+      .querySelectorAll<HTMLElement>("[data-rail-root]")
+      .forEach((root) => {
+        const stop = mountTimeline(root);
+        if (stop) {
+          mounted.push(stop);
+        }
+      });
+  }
+
+  if (!installed) {
+    installed = true;
+    document.addEventListener("astro:page-load", remount);
+    document.addEventListener("astro:before-swap", teardown);
+  }
+  remount();
+</script>
+<style>
+  .timeline-container {
+    container: timeline / inline-size;
+    width: 100%;
+    min-width: 0;
+  }
+  .timeline-graph {
+    --rail-spine: var(--timeline-spine, #28303b);
+    --rail-lane-left: var(--timeline-left, #a94045);
+    --rail-lane-right: var(--timeline-right, #6860a8);
+    --rail-lane-dim: #4f6f6a;
+
+    --head-ink: var(--timeline-current, #5056a8);
+
+    --rail-mode: split;
+    --rail-lane-gap: var(--timeline-lane-gap, 30px);
+    --rail-spine-margin: 18px;
+    --rail-w: calc(
+      var(--rail-spine-margin) * 2 + var(--rail-lane-gap) *
+        (var(--rail-lanes-left) + var(--rail-lanes-right))
+    );
+    --spine-x: calc(
+      var(--rail-spine-margin) + var(--rail-lane-gap) * var(--rail-lanes-left)
+    );
+    --start-spine-offset: calc(var(--spine-x) - var(--rail-w) / 2);
+
+    position: relative;
+
+    overflow: clip;
+    overflow-clip-margin: 12px;
+    width: 100%;
+    max-width: 1160px;
+    margin-inline: auto;
+    color: inherit;
+    font-family: inherit;
+  }
+  .rail-column {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    z-index: 0;
+    width: var(--rail-w);
+    margin-left: calc(var(--rail-w) / -2);
+    pointer-events: none;
+  }
+  .rail-overlay {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+  .rail-overlay :global(.rail) {
+    fill: none;
+    stroke-width: 3;
+    stroke-linecap: round;
+    vector-effect: non-scaling-stroke;
+  }
+  .rail-overlay :global(.rail-spine) {
+    stroke: var(--rail-spine);
+    stroke-width: 3.5;
+    opacity: var(--taper, 1);
+  }
+  .rail-overlay :global(.rail-spine.future) {
+    stroke-dasharray: 1 7;
+  }
+  .rail-overlay :global(.rail-lane) {
+    stroke: var(--rail-lane-dim);
+    stroke-dasharray: 5 4;
+    opacity: var(--taper, 1);
+  }
+  .rail-overlay :global(.rail-lane.lane-left) {
+    stroke: var(--rail-lane-left);
+  }
+  .rail-overlay :global(.rail-lane.lane-right) {
+    stroke: var(--rail-lane-right);
+  }
+  .rail-overlay :global(.rail-lane.finished) {
+    stroke-dasharray: 5 4;
+  }
+  .rail-overlay :global(.rail-lane.future) {
+    stroke-dasharray: 1 7;
+  }
+  /* Two readable card columns plus the rail need 930px of available space. */
+  @container timeline (max-width: 930px) {
+    .timeline-graph {
+      --rail-mode: stacked;
+
+      max-width: calc(var(--rail-w) + 600px);
+    }
+    .rail-column {
+      left: 0;
+      margin-left: 0;
+    }
+  }
+  @container timeline (max-width: 738px) {
+    .timeline-graph {
+      --rail-lane-gap: 18px;
+      --rail-spine-margin: 12px;
+
+      /* Include the page gutter in the clip without creating scrollable overflow. */
+      overflow: clip;
+      overflow-clip-margin: var(--page-gutter, 15px);
+    }
+  }
+</style>

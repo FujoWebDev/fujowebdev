@@ -1,0 +1,398 @@
+---
+import { Icon } from "astro-icon/components";
+import type { RoadmapContent } from "../../../content/config.ts";
+import StatusStamp from "../visuals/StatusStamp.astro";
+
+interface Props {
+  milestone: Extract<RoadmapContent, { view: "terminal" }> & { anchor: string };
+}
+
+const { anchor, branch, kind, heading, body, commits } = Astro.props.milestone;
+
+const typeColors = ["red", "teal", "purple"] as const;
+---
+
+<section id={anchor} class:list={["terminal", kind]} title={`${branch}/`}>
+  <div class="titlebar">
+    <span class="terminal-icon" aria-hidden="true">
+      <Icon name="roadmap/terminal" size={22} is:inline />
+    </span>
+    <a
+      class="branch-title"
+      href={`#${anchor}`}
+      aria-label={`Link to this milestone: ${heading}`}
+    >
+      <span class="branch-label">git:(</span><span>{branch}</span><span
+        class="branch-label">)</span
+      >
+    </a>
+    {kind === "done" && <StatusStamp label="merged" renderer="terminal" />}
+    {kind === "in-progress" && <StatusStamp label="wip" renderer="terminal" />}
+  </div>
+  <div class="body">
+    <h2 class="heading">
+      {
+        heading.split("²").map((part, i) => (
+          <>
+            {i > 0 && <span class="sup">²</span>}
+            {part}
+          </>
+        ))
+      }
+    </h2>
+    {body && <p class="body-copy" set:html={body} />}
+    <ul class="log">
+      {
+        commits.map((commit, commitIndex) => (
+          <li class:list={["commit", { pending: commit.pending }]}>
+            <span class="graph-node" aria-hidden="true">
+              {commit.pending ? (
+                <span class="node-pending" />
+              ) : (
+                <Icon name="roadmap/commit" />
+              )}
+            </span>
+            <span class="hash">
+              {commit.pending ? "·····" : commit.hash?.slice(0, 5)}
+            </span>
+            <span class="message">
+              <strong
+                class:list={[
+                  "type",
+                  typeColors[commitIndex % typeColors.length],
+                ]}
+              >
+                {commit.type}:
+              </strong>{" "}
+              <Fragment set:html={commit.message} />
+            </span>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style is:global>
+  @font-face {
+    font-family: "Monaspace Neon";
+    font-style: normal;
+    font-weight: 200 800;
+    font-stretch: 100 100;
+    font-display: swap;
+    src: url("/fonts/MonaspaceNeonVarVF.woff2") format("woff2-variations");
+  }
+</style>
+
+<style>
+  .terminal {
+    --term-teal-dark: #14967c;
+    --term-red: #e05a57;
+    --term-purple: #6a6fc4;
+    --term-muted: #615b7d;
+    --term-ink: #322f40;
+    --term-surface: #fdf9f0;
+    --term-mono: "Monaspace Neon", ui-monospace, "SF Mono", Menlo, Consolas,
+      monospace;
+
+    --term-space-tight: 5px;
+    --term-space-row: 8px;
+    --term-space-group: 16px;
+    --term-space-inset: 18px;
+
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    color: var(--terminal-dark);
+    background: var(--term-surface);
+    border: 2px solid var(--terminal-dark);
+    border-radius: 7px;
+    box-shadow: 4px 4px 0 var(--terminal-dark);
+  }
+
+  .titlebar {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 6px 13px;
+    border-bottom: 2px solid var(--terminal-dark);
+  }
+
+  .terminal-icon {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+  }
+
+  .terminal-icon :global(.glyph-shape),
+  .terminal-icon :global(.glyph-arrow) {
+    stroke-width: 1.6;
+  }
+
+  .branch-title {
+    display: flex;
+    color: inherit;
+    text-decoration: none;
+    min-width: 0;
+    overflow: hidden;
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 0.005em;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .branch-label {
+    color: var(--term-muted);
+  }
+
+  .terminal.done {
+    --term-surface: #f6f5fa;
+
+    overflow: visible;
+  }
+
+  .terminal.done .titlebar {
+    padding-right: 112px;
+    border-radius: 5px 5px 0 0;
+    background: #bdb7dc;
+  }
+
+  .terminal.done .branch-title {
+    color: #2b1f52;
+  }
+
+  .terminal.done .branch-label {
+    color: #5a4f93;
+  }
+
+  .terminal.done .terminal-icon {
+    color: #2b1f52;
+  }
+
+  .terminal.done :global(.glyph-shape) {
+    fill: currentColor;
+    fill-opacity: 0.1;
+    stroke-width: 1.5;
+  }
+
+  .terminal.done :global(.glyph-arrow) {
+    opacity: 0.8;
+    stroke: var(--term-surface);
+    stroke-width: 1.5;
+  }
+
+  /* Both stamps hang past the top edge, so those panes can't clip. */
+  .terminal.in-progress {
+    overflow: visible;
+  }
+
+  .terminal.in-progress .titlebar {
+    padding-right: 112px;
+    border-radius: 5px 5px 0 0;
+    background: rgba(255, 209, 102, 0.4);
+  }
+
+  .terminal.upcoming {
+    --term-surface: #f7f5ef;
+
+    border: 1.5px dashed #5e5a6e;
+    box-shadow: none;
+  }
+
+  .terminal.upcoming .titlebar {
+    background: rgba(94, 90, 110, 0.06);
+    border-bottom: 1.5px dashed #5e5a6e;
+  }
+
+  .terminal.upcoming .terminal-icon {
+    opacity: 0.6;
+    stroke-dasharray: 2 2.5;
+  }
+
+  .terminal.upcoming .body {
+    opacity: 0.86;
+  }
+
+  .terminal.upcoming .commit.pending {
+    opacity: 1;
+  }
+
+  .titlebar,
+  .hash,
+  .type,
+  .graph-node,
+  .body-copy,
+  .body-copy :global(*),
+  .message,
+  .message :global(*) {
+    font-family: var(--term-mono);
+    font-variation-settings:
+      "wght" 400,
+      "wdth" 100,
+      "slnt" 0;
+  }
+
+  .terminal h2 {
+    font-family: var(--term-mono);
+  }
+
+  .body {
+    color: var(--term-ink);
+    padding: var(--term-space-group) var(--term-space-inset)
+      var(--term-space-inset);
+  }
+
+  .heading {
+    margin: 0;
+    color: var(--term-teal-dark);
+    filter: none;
+    font-family: "nunito", sans-serif;
+    font-size: 1.2rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+    text-shadow: none;
+    text-wrap: balance;
+  }
+
+  /* The superscript glyph carries wide sidebearings; pull its neighbours in. */
+  .sup {
+    margin-inline: -0.08em -0.06em;
+  }
+
+  .body-copy {
+    max-width: 64ch;
+    margin-top: var(--term-space-tight);
+    color: var(--term-muted);
+    font-size: 0.84rem;
+    line-height: 1.55;
+  }
+
+  .log {
+    position: relative;
+    max-width: 70ch;
+    display: flex;
+    flex-direction: column;
+    gap: var(--term-space-row);
+    margin-top: var(--term-space-group);
+    padding: 0;
+  }
+
+  .commit:not(:last-child)::before {
+    position: absolute;
+    /* node centre down to the next node's centre, gap included */
+    top: 0.75em;
+    bottom: calc(-1 * (var(--term-space-row) + 0.75em));
+    left: 8.5px;
+    width: 1px;
+    background: repeating-linear-gradient(
+      to bottom,
+      var(--term-purple) 0 2px,
+      transparent 2px 4.5px
+    );
+    content: "";
+  }
+
+  .commit {
+    position: relative;
+    display: grid;
+    grid-template-columns: 18px auto 1fr;
+    align-items: baseline;
+    gap: var(--term-space-row) 12px;
+    margin: 0;
+    font-size: 0.8rem;
+    line-height: 1.5;
+    list-style: none;
+  }
+
+  .commit.pending {
+    opacity: 0.55;
+  }
+
+  .graph-node {
+    position: relative;
+    z-index: 1;
+    /* one line box tall and top-aligned, so the glyph sits on the first
+       line of the message without depending on svg baselines */
+    align-self: start;
+    display: grid;
+    place-items: center;
+    height: 1.5em;
+    color: var(--term-teal-dark);
+  }
+
+  /* masks the connector behind the glyph only, not the whole row */
+  .graph-node::before {
+    position: absolute;
+    z-index: -1;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: var(--term-surface);
+    content: "";
+  }
+
+  .graph-node :global(svg) {
+    width: 13px;
+    height: 13px;
+  }
+
+  .graph-node :global(svg circle) {
+    fill: var(--term-surface);
+  }
+
+  .node-pending {
+    width: 9px;
+    height: 9px;
+    border: 1.5px dashed currentColor;
+    border-radius: 50%;
+  }
+
+  .hash {
+    color: color-mix(in oklab, var(--term-muted) 70%, transparent);
+    font-size: 0.8rem;
+  }
+
+  .type {
+    font-weight: 700;
+  }
+
+  .type.red {
+    color: var(--term-red);
+  }
+
+  .type.teal {
+    color: var(--term-teal-dark);
+  }
+
+  .type.purple {
+    color: var(--term-purple);
+  }
+
+  @container roadmap-panel (max-width: 400px) {
+    .terminal {
+      --term-space-inset: 14px;
+      --term-space-group: 13px;
+    }
+
+    .titlebar {
+      padding-inline: 11px;
+    }
+
+    .hash {
+      display: none;
+    }
+
+    .commit {
+      grid-template-columns: 18px 1fr;
+    }
+  }
+
+  .branch-title:hover,
+  .branch-title:focus-visible {
+    color: var(--fujo-pink);
+    text-decoration: 1px underline wavy;
+    text-underline-offset: 3px;
+  }
+</style>

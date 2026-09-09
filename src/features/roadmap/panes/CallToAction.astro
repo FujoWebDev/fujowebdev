@@ -1,0 +1,64 @@
+---
+import { Icon } from "astro-icon/components";
+
+interface Props {
+  /** Short label above the text, e.g. "where to find it". */
+  title: string;
+  /** Markdown: what the reader should do or where the thing lives (links welcome). */
+  text: string;
+}
+
+const { title, text } = Astro.props;
+---
+
+<aside class="call-to-action">
+  <p class="label">
+    <Icon name="roadmap/head-arrow" class="hand" size={16} aria-hidden="true" />
+    <span>{title}</span>
+  </p>
+  <p class="text" set:html={text} />
+</aside>
+
+<style>
+  .call-to-action {
+    --cta-muted: #615b7d;
+
+    margin-top: 14px;
+    padding: 10px 12px 11px;
+    border: 2px dotted var(--terminal-dark);
+    border-radius: 6px;
+    background: #fff6e2;
+    font-family: inherit;
+    text-align: left;
+  }
+
+  .label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin: 0 0 4px;
+    color: var(--terminal-dark);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .hand {
+    flex-shrink: 0;
+  }
+
+  .text {
+    margin: 0;
+    color: var(--cta-muted);
+    font-size: 0.86rem;
+    line-height: 1.45;
+  }
+
+  .text :global(a) {
+    color: inherit;
+    font-weight: 700;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 2px;
+  }
+</style>

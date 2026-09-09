@@ -1,0 +1,395 @@
+---
+import Sparkles, {
+  LOGO_PALETTE,
+  type SparkleConfig,
+} from "../../components/Sparkles.astro";
+import { Icon } from "astro-icon/components";
+import BranchingTimeline from "../../components/branching-timeline/BranchingTimeline.astro";
+import type {
+  TimelineItem,
+  TimelineRow,
+} from "../../components/branching-timeline/timeline.ts";
+import type { RoadmapContent } from "../../content/config.ts";
+import RoadmapHeader from "./RoadmapHeader.astro";
+import MilestonePane from "./panes/MilestonePane.astro";
+import Burst from "./visuals/Burst.astro";
+
+interface Props {
+  milestones: (RoadmapContent & { anchor: string })[];
+  title: string;
+  intro: string;
+}
+const { milestones, title, intro } = Astro.props;
+const items: TimelineItem[] = milestones.map((milestone) => ({
+  order: milestone.order,
+  branch: milestone.branch,
+  placement: milestone.view === "release" ? "main" : milestone.lane,
+  merge: milestone.mergeToMain,
+  progress: milestone.kind === "in-progress" ? "current" : milestone.kind,
+}));
+const byOrder = new Map(
+  milestones.map((milestone) => [milestone.order, milestone])
+);
+function milestoneFor(row: TimelineRow): RoadmapContent & { anchor: string } {
+  const milestone = byOrder.get(row.item.order);
+  if (!milestone) {
+    throw new Error(`Missing roadmap content for ${row.item.order}`);
+  }
+  return milestone;
+}
+
+const still = { delay: "0s", dur: "0s", driftDur: "0s", driftDelay: "0s" };
+const releaseConfetti: SparkleConfig[] = (
+  [
+    ["-6%", "-5%", "star", 5.2],
+    ["7%", "-14%", "heart", 4.2],
+    ["22%", "-8%", "star", 3.4],
+    ["37%", "-15%", "heart", 4.8],
+    ["53%", "-9%", "star", 3.6],
+    ["68%", "-10%", "heart", 5],
+    ["84%", "-8%", "star", 4.4],
+    ["97%", "-10%", "heart", 3.6],
+    ["105%", "3%", "star", 5],
+    ["-7%", "9%", "heart", 4.6],
+    ["104%", "22%", "heart", 3.4],
+    ["-6%", "34%", "star", 3.8],
+    ["106%", "44%", "star", 4.4],
+    ["-6%", "58%", "heart", 5],
+    ["105%", "66%", "heart", 3.6],
+    ["-5%", "82%", "star", 4.2],
+    ["106%", "88%", "star", 4.8],
+    ["-7%", "102%", "heart", 3.8],
+    ["12%", "110%", "star", 4.6],
+    ["31%", "104%", "heart", 3.4],
+    ["76%", "112%", "star", 5],
+    ["69%", "104%", "heart", 4],
+    ["88%", "111%", "star", 4.6],
+    ["104%", "102%", "heart", 3.6],
+  ] as const
+).map(([left, top, motif, size]) => ({
+  left,
+  top,
+  motif,
+  size: `${size}px`,
+  ...still,
+}));
+---
+
+<div class="fujo-roadmap">
+  <BranchingTimeline items={items}>
+    <Fragment slot="header">
+      <RoadmapHeader title={title} intro={intro} />
+    </Fragment>
+    {
+      (row: TimelineRow) => (
+        <div id={row.isCurrent ? "current" : undefined}>
+          <MilestonePane
+            milestone={milestoneFor(row)}
+            isCurrent={row.isCurrent}
+          />
+        </div>
+      )
+    }
+    <fragment slot="decoration">
+      {
+        (row: TimelineRow) => (
+          <>
+            {!row.future && <Burst class="ship-burst" />}
+            <Sparkles
+              class="ship-confetti"
+              sparkles={releaseConfetti}
+              palette={LOGO_PALETTE}
+              sizeMultiplier={3}
+              animated={false}
+              inline={false}
+              fill
+            />
+          </>
+        )
+      }
+    </fragment>
+    <fragment slot="label">
+      {
+        (row: TimelineRow) =>
+          row.isCurrent && (
+            <a class="head-text ship-head" href="#current">
+              <>
+                <span class="head-stamp">
+                  <span class="head-stamp-label">HEAD</span>
+                </span>
+                <span class="head-here">(we're here)</span>
+              </>
+            </a>
+          )
+      }
+    </fragment>
+    <fragment slot="marker">
+      {
+        (row: TimelineRow) => (
+          <>
+            {((row.item.placement === "main" && !row.future) ||
+              ((row.nodeKind === "glyph" || row.nodeKind === "head") &&
+                row.onSpine)) && <Icon name="roadmap/commit" />}
+            {row.isCurrent && row.item.placement !== "main" && (
+              <>
+                <a
+                  class="head-node-link"
+                  href="#current"
+                  aria-label="Current commit"
+                />
+                <span
+                  class:list={[
+                    "head-callout",
+                    row.item.placement === "right" ? "side-left" : "side-right",
+                  ]}
+                  data-timeline-callout
+                >
+                  <a class="head-text" href="#current">
+                    <span class="head-stamp">
+                      <span class="head-stamp-label">HEAD</span>
+                    </span>
+                    <span class="head-here">(we're here)</span>
+                  </a>
+                  <span class="head-arrow">
+                    <Icon
+                      name="roadmap/head-arrow"
+                      width={52}
+                      height={52}
+                      aria-hidden="true"
+                    />
+                  </span>
+                </span>
+              </>
+            )}
+          </>
+        )
+      }
+    </fragment>
+  </BranchingTimeline>
+</div>
+<style is:global>
+  .fujo-roadmap {
+    --timeline-spine: var(--terminal-dark);
+    --timeline-left: var(--fujo-red);
+    --timeline-right: var(--fujo-purple);
+    --timeline-background: var(--fujo-cream);
+    color: var(--text-color-base);
+    font-family: "nunito", sans-serif;
+    width: 100%;
+  }
+  .fujo-roadmap .window {
+    container: roadmap-panel / inline-size;
+  }
+  .fujo-roadmap .head-callout {
+    --timeline-callout-clearance: 150px;
+  }
+  .fujo-roadmap .row.has-head > .cell {
+    padding-block: 36px;
+  }
+  .fujo-roadmap /* Keep the card clear of the HEAD rings. */
+  .row.has-head > .cell-right {
+    padding-inline-start: 26px;
+  }
+  .fujo-roadmap .row.has-head > .cell-left {
+    padding-inline-end: 26px;
+  }
+  .fujo-roadmap .head-callout {
+    --head-arrow-centre: 28px;
+
+    position: absolute;
+    top: 50%;
+    z-index: 3;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    transform: translateY(calc(-1 * var(--head-arrow-centre)));
+    color: var(--head-ink);
+  }
+  .fujo-roadmap /* Clear the dashed outer ring with room to breathe. */
+  .head-callout.side-left {
+    right: calc(100% + var(--mark-x, 13px) + 6px);
+  }
+  .fujo-roadmap .head-callout.side-right {
+    left: calc(100% + var(--rail-w) - var(--mark-x, 13px) + 6px);
+    flex-direction: row-reverse;
+  }
+  .fujo-roadmap .head-callout.side-right .head-arrow {
+    transform: scaleX(-1);
+  }
+  .fujo-roadmap .head-text {
+    color: var(--head-ink);
+    font-weight: inherit;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    /* Negative delay: trails the hand by a quarter phase but starts in motion. */
+    animation: roadmap-head-stamp-bob 1.8s ease-in-out -0.45s infinite;
+  }
+  .fujo-roadmap .head-text:hover {
+    color: var(--head-ink);
+    text-decoration: none;
+  }
+  .fujo-roadmap .head-node-link {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+  }
+  @keyframes roadmap-head-stamp-bob {
+    0%,
+    100% {
+      translate: 0 -2px;
+    }
+    50% {
+      translate: 0 2px;
+    }
+  }
+  .fujo-roadmap .head-stamp {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    /* Freude sits high in its box; extra top padding centres it optically. */
+    padding: 12px 22px 10px;
+    border: 3px solid var(--head-ink);
+    border-radius: 14px;
+    background: var(--fujo-cream);
+    outline: 2px solid var(--head-ink);
+    outline-offset: -7px;
+    box-shadow: 4px 4px 0 var(--head-ink);
+    color: var(--head-ink);
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+  .fujo-roadmap .head-stamp-label {
+    font-family: "freude", "nunito", sans-serif;
+    font-weight: 400;
+  }
+  .fujo-roadmap .head-here {
+    margin-block: 2px;
+    color: var(--head-ink);
+    font-family: "freude", "nunito", sans-serif;
+    font-size: 0.95rem;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+  }
+  .fujo-roadmap .head-arrow {
+    display: flex;
+    flex-shrink: 0;
+    /* Inherited into the icon's <use> instance; fills the hand with page cream. */
+    fill: var(--fujo-cream);
+    margin-top: calc(var(--head-arrow-centre) - 21px);
+    /* `translate` instead of `transform`: side-right flips the hand with scaleX(-1). */
+    animation: roadmap-head-bob 1.8s ease-in-out infinite;
+  }
+  @keyframes roadmap-head-bob {
+    0%,
+    100% {
+      translate: 0 -3px;
+    }
+    50% {
+      translate: 0 3px;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .head-arrow,
+    .head-text {
+      animation: none;
+    }
+  }
+  .fujo-roadmap .ship-head {
+    position: relative;
+    z-index: 3;
+    width: fit-content;
+    margin: 0 auto 52px;
+    transform: translateX(var(--start-spine-offset));
+  }
+  .fujo-roadmap .spine-window {
+    position: relative;
+    z-index: 2;
+    background: var(--fujo-cream);
+    transform: rotate(-1.6deg);
+  }
+  .fujo-roadmap .spine-window .release:not(.queued) {
+    border-width: 3px;
+    box-shadow: 7px 7px 0 var(--terminal-dark);
+  }
+  .fujo-roadmap .spine-window .release .heading {
+    font-size: 2.1rem;
+  }
+  .fujo-roadmap .spine-card-wrap .ship-burst {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    z-index: 1;
+    width: 230px;
+    height: 230px;
+    margin-top: -115px;
+    margin-left: -115px;
+  }
+  .fujo-roadmap .spine-card-wrap .ship-confetti {
+    position: absolute;
+    inset: -16px;
+    z-index: 0;
+  }
+  .fujo-roadmap /* Queued releases get the same confetti,
+.fujo-roadmap just not yet in colour. */
+  .spine-card-wrap.future .ship-confetti {
+    filter: grayscale(1);
+    opacity: 0.45;
+  }
+  /* Two readable card columns plus the rail need 930px of available space. */
+  @container timeline (max-width: 930px) {
+    .fujo-roadmap .ship-head {
+      transform: none;
+    }
+    .fujo-roadmap .spine-pin,
+    .fujo-roadmap .spine-card-wrap .ship-burst {
+      left: var(--spine-pin-x);
+    }
+    .fujo-roadmap .spine-card-wrap .ship-burst {
+      width: 170px;
+      height: 170px;
+      margin-top: -85px;
+      margin-left: -85px;
+    }
+    .fujo-roadmap .row.has-head .window {
+      margin-top: 96px;
+    }
+    .fujo-roadmap #current {
+      /* Keep the callout above the stacked card in view when following its link. */
+      scroll-margin-top: calc(2rem + 96px);
+    }
+    .fujo-roadmap .head-callout,
+    .fujo-roadmap .head-callout.side-right {
+      top: calc(53px - var(--mark-y, 13px));
+      right: auto;
+      left: calc(var(--rail-w) + 19px - var(--mark-x, 13px));
+      flex-direction: row;
+      align-items: center;
+      gap: 12px;
+      transform: none;
+    }
+    .fujo-roadmap .head-callout .head-arrow,
+    .fujo-roadmap .head-callout.side-right .head-arrow {
+      margin-top: 0;
+      transform: rotate(90deg);
+    }
+  }
+  /* Below 450px, give cards the full row instead of reserving a rail column. */
+  @container timeline (max-width: 450px) {
+    .fujo-roadmap .spine-window .release .heading {
+      font-size: 1.7rem;
+    }
+    .fujo-roadmap .spine-card-wrap .ship-confetti {
+      inset: -12px;
+    }
+  }
+</style>

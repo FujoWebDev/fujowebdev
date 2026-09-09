@@ -1,0 +1,80 @@
+---
+import { getCollection } from "astro:content";
+import PageLayout from "../layouts/PageLayout.astro";
+import SalesSignup from "../components/SalesSignup.astro";
+import RoadmapGraph from "../features/roadmap/RoadmapGraph.astro";
+import slugify from "slugify";
+
+const entries = await getCollection("roadmap");
+const anchors = entries.map((entry) => slugify(entry.id));
+const milestones = entries.map(({ data }, index) => ({
+  ...data,
+  anchor: anchors[index],
+}));
+---
+
+<PageLayout
+  multiLineHeader
+  hideHeaderLogo
+  mainWidth="1200px"
+  pageTitle="Roadmap - The Fujoshi Guide to Web Development"
+  pageDescription="Where each issue of The Fujoshi Guide to Web Development stands, git log style."
+  pageImage={"/images/roadmap.png"}
+>
+  <RoadmapGraph
+    milestones={milestones}
+    title="The Roadmap"
+    intro="From our Kickstarter, to your digital (and physical) inboxes, discover where FujoGuide is currently at and where it's going!"
+  />
+
+  <div class="contact-container">
+    <section class="contact-card" id="sales-signup">
+      <h2>Want your own copy?</h2>
+      <p>
+        <strong>Want to be there when each of these commits lands?</strong> Follow
+        along on <a
+          href="https://www.kickstarter.com/projects/essential-randomness/the-fujoshi-guide-to-web-development/posts"
+          >Kickstarter updates</a
+        > or check out <a href="/volume-0">Volume 0</a> for the full details on each
+        issue.
+      </p>
+      <SalesSignup tag="roadmap-page" />
+    </section>
+  </div>
+</PageLayout>
+
+<style>
+  .contact-container {
+    container: roadmap-contact / inline-size;
+    width: 100%;
+    max-width: 700px;
+  }
+
+  .contact-card {
+    width: 100%;
+    max-width: 700px;
+    padding: 20px 35px;
+    border: 2px solid var(--terminal-dark);
+    border-radius: 16px;
+    background-color: white;
+    box-shadow: 6px 6px 0 0 var(--fujo-red);
+  }
+
+  .contact-card h2 {
+    font-size: 2.2rem;
+  }
+
+  .contact-card > p {
+    text-wrap: pretty;
+  }
+
+  @container roadmap-contact (max-width: 450px) {
+    .contact-card {
+      padding: 16px 20px;
+    }
+
+    .contact-card h2 {
+      font-size: 1.8rem;
+    }
+  }
+</style>

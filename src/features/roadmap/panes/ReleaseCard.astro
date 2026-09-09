@@ -1,0 +1,420 @@
+---
+import { Icon } from "astro-icon/components";
+import type { RoadmapContent } from "../../../content/config.ts";
+import CallToAction from "./CallToAction.astro";
+
+interface Props {
+  milestone: Extract<RoadmapContent, { view: "release" }> & { anchor: string };
+}
+
+const {
+  anchor,
+  kind,
+  tag,
+  heading,
+  body,
+  callToAction,
+  assets = [],
+} = Astro.props.milestone;
+
+const isShipped = kind === "done";
+const isBuilding = kind === "in-progress";
+const hasAssets = isShipped && assets.length > 0;
+
+let stateLabel = "not yet released";
+if (isShipped) {
+  stateLabel = "released";
+} else if (isBuilding) {
+  stateLabel = "in progress";
+}
+---
+
+<section
+  id={anchor}
+  class:list={[
+    "release",
+    { building: isBuilding, queued: !isShipped && !isBuilding },
+  ]}
+  aria-label={`${heading}, ${stateLabel}`}
+>
+  {
+    tag && (
+      <span class="tag" aria-hidden="true">
+        {tag}
+      </span>
+    )
+  }
+
+  <h3 class="heading">
+    <a
+      class="heading-link"
+      href={`#${anchor}`}
+      aria-label={`Link to this milestone: ${heading}`}
+    >
+      {heading}
+    </a>
+  </h3>
+  {body && <p class="body-copy" set:html={body} />}
+
+  {
+    hasAssets ? (
+      <div class="shelf">
+        {assets.map((asset) =>
+          asset.contents && asset.contents.length > 0 ? (
+            <details class="bundle" open={!asset.collapsed}>
+              <summary
+                class="row summary-row"
+                aria-label={`${asset.name}, a bundle of ${asset.contents.length} files${asset.meta ? `, ${asset.meta}` : ""}`}
+              >
+                <Icon
+                  name="roadmap/folder-download"
+                  class="row-icon"
+                  size={18}
+                  aria-hidden="true"
+                />
+                <span class="row-name">{asset.name}</span>
+                {asset.meta && <span class="row-meta">{asset.meta}</span>}
+                <Icon
+                  name="roadmap/chevron"
+                  class="chevron"
+                  size={12}
+                  aria-hidden="true"
+                />
+              </summary>
+              <div class="drawer">
+                <ul
+                  class="drawer-list"
+                  aria-label={`Files inside ${asset.name}`}
+                >
+                  {asset.contents.map((file) => (
+                    <li class="drawer-row">
+                      <span class="row-name">{file.name}</span>
+                      <span class="leader" aria-hidden="true" />
+                      {file.meta && <span class="row-meta">{file.meta}</span>}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </details>
+          ) : (
+            <div
+              class="row"
+              role="button"
+              aria-disabled="true"
+              aria-label={`${asset.name}${asset.meta ? `, ${asset.meta}` : ""}`}
+            >
+              <Icon
+                name="roadmap/download"
+                class="row-icon"
+                size={18}
+                aria-hidden="true"
+              />
+              <span class="row-name">{asset.name}</span>
+              {asset.meta && <span class="row-meta">{asset.meta}</span>}
+            </div>
+          )
+        )}
+      </div>
+    ) : (
+      <p class:list={["asset-pending", { building: isBuilding }]}>
+        {isBuilding ? "building the release…" : "not yet released"}
+      </p>
+    )
+  }
+
+  {
+    isShipped && callToAction && (
+      <CallToAction title={callToAction.title} text={callToAction.text} />
+    )
+  }
+</section>
+
+<style>
+  .release {
+    --rel-teal-dark: #14967c;
+    --rel-gold: #ffd166;
+    --rel-muted: #8d87aa;
+    --rel-surface: #fdf9f0;
+    --rel-grey-frame: #5e5a6e;
+    --rel-drawer-bg: #f1ebe0;
+    --rel-mono: "Cascadia Code", ui-monospace, Menlo, Consolas, monospace;
+
+    position: relative;
+    width: 100%;
+    padding: 18px 18px 18px;
+    color: var(--terminal-dark);
+    background: var(--rel-surface);
+    border: 2px solid var(--terminal-dark);
+    border-radius: 7px;
+    box-shadow: 4px 4px 0 var(--terminal-dark);
+    font-family: "nunito", sans-serif;
+  }
+
+  .release.building {
+    background: #fffaf0;
+    border-left-width: 6px;
+    border-left-color: var(--rel-gold);
+  }
+
+  .release.queued {
+    background: #f7f5ef;
+    border: 1.5px dashed var(--rel-grey-frame);
+    box-shadow: none;
+    opacity: 0.9;
+  }
+
+  .tag {
+    display: inline-block;
+    padding: 2px 9px 3px;
+    border: 1.5px solid var(--terminal-dark);
+    border-radius: 4px;
+    background: var(--rel-gold);
+    color: var(--terminal-dark);
+    font-family: var(--rel-mono);
+    font-size: 0.76rem;
+    font-weight: 700;
+  }
+
+  .release.building .tag {
+    background: repeating-linear-gradient(
+      -45deg,
+      var(--rel-gold) 0 7px,
+      #ffe6a8 7px 14px
+    );
+  }
+
+  .release.queued .tag {
+    background: transparent;
+    border-style: dashed;
+    border-color: var(--rel-grey-frame);
+    color: var(--rel-muted);
+  }
+
+  /* The global `* { font-family }` reset hits this anchor too, so the heading's
+     display face has to be inherited back explicitly. */
+  .heading-link {
+    font-family: inherit;
+    color: inherit;
+    font-weight: inherit;
+    text-decoration: none;
+  }
+
+  .heading {
+    margin: 8px 0 0;
+    color: var(--terminal-dark);
+    font-family: "freude", "nunito", sans-serif;
+    font-size: 1.7rem;
+    font-weight: 400;
+    line-height: 1.1;
+    text-shadow: none;
+    filter: none;
+  }
+
+  .release.queued .heading {
+    color: #6f6985;
+  }
+
+  .body-copy {
+    margin: 6px 0 16px;
+    color: var(--rel-muted);
+    font-size: 0.92rem;
+    line-height: 1.4;
+  }
+
+  .shelf {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-family: var(--rel-mono);
+    font-size: 0.86rem;
+  }
+
+  .row {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 9px 12px;
+    border: 2px solid var(--terminal-dark);
+    border-radius: 5px;
+    background: var(--fujo-light-blue);
+    box-shadow: 2px 2px 0 var(--terminal-dark);
+  }
+
+  .summary-row {
+    cursor: pointer;
+    transition:
+      transform 0.12s ease-out,
+      box-shadow 0.12s ease-out;
+  }
+
+  .summary-row:hover {
+    transform: translate(-1px, -1px);
+    box-shadow: 3px 3px 0 var(--terminal-dark);
+  }
+
+  .summary-row:active {
+    transform: translate(2px, 2px);
+    box-shadow: 0 0 0 var(--terminal-dark);
+  }
+
+  .row-icon {
+    flex-shrink: 0;
+    color: var(--rel-teal-dark);
+  }
+
+  .row-name {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    font-weight: 700;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .row-meta {
+    flex-shrink: 0;
+    color: var(--rel-muted);
+    font-size: 0.8rem;
+  }
+
+  .asset-pending {
+    margin: 0;
+    padding: 10px 12px;
+    border: 1.5px dashed var(--rel-grey-frame);
+    border-radius: 5px;
+    color: var(--rel-muted);
+    font-family: var(--rel-mono);
+    font-size: 0.82rem;
+    text-align: center;
+  }
+
+  .asset-pending.building {
+    border-style: solid;
+    border-color: var(--terminal-dark);
+    background: var(--rel-gold);
+    color: var(--terminal-dark);
+    font-weight: 700;
+  }
+
+  .bundle {
+    display: block;
+    border: 2px solid var(--terminal-dark);
+    border-radius: 5px;
+    background: var(--fujo-light-blue);
+    box-shadow: 2px 2px 0 var(--terminal-dark);
+    overflow: hidden;
+    transition:
+      transform 0.12s ease-out,
+      box-shadow 0.12s ease-out;
+  }
+
+  .bundle:hover {
+    transform: translate(-1px, -1px);
+    box-shadow: 3px 3px 0 var(--terminal-dark);
+  }
+
+  .bundle .row {
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    transform: none;
+  }
+
+  .bundle summary {
+    list-style: none;
+  }
+
+  .bundle summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .summary-row:focus-visible {
+    outline: 2px solid var(--terminal-dark);
+    outline-offset: -2px;
+  }
+
+  .chevron {
+    flex-shrink: 0;
+    margin-left: 2px;
+    color: var(--rel-muted);
+    transition: transform 0.15s ease-out;
+  }
+
+  .bundle[open] .chevron {
+    transform: rotate(90deg);
+  }
+
+  .drawer {
+    padding: 9px 13px 11px;
+    border-top: 2px solid var(--terminal-dark);
+    background: var(--rel-drawer-bg);
+  }
+
+  .drawer-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .drawer-row {
+    display: flex;
+    align-items: baseline;
+    gap: 7px;
+    margin: 0;
+    padding: 0;
+    line-height: 1.4;
+    cursor: default;
+  }
+
+  .leader {
+    flex: 1;
+    min-width: 10px;
+    margin-bottom: 3px;
+    border-bottom: 1.5px dotted rgba(87, 83, 106, 0.32);
+  }
+
+  .drawer-row .row-name {
+    flex: 0 1 auto;
+    color: #57536a;
+    font-weight: 500;
+    font-size: 0.94em;
+  }
+
+  .drawer-row .row-meta {
+    color: #79748f;
+    font-size: 0.74rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .row,
+    .bundle,
+    .chevron {
+      transition: none;
+    }
+  }
+
+  @container roadmap-panel (max-width: 330px) {
+    .row,
+    .drawer-row {
+      gap: 6px;
+    }
+
+    .row-meta {
+      font-size: 0.72rem;
+    }
+
+    .drawer {
+      padding-inline: 10px;
+    }
+  }
+
+  .heading-link:hover,
+  .heading-link:focus-visible {
+    color: var(--fujo-pink);
+    text-decoration: 1px underline wavy;
+    text-underline-offset: 3px;
+  }
+</style>

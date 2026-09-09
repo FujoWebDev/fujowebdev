@@ -1,0 +1,250 @@
+---
+import type { TimelineRow } from "./timeline.ts";
+
+interface Props {
+  row: TimelineRow & {
+    content: string;
+    marker: string;
+    decoration: string;
+    label: string;
+  };
+}
+
+const { row } = Astro.props;
+const { item, isCurrent, future, taper, onSpine, nodeKind } = row;
+const side = item.placement;
+---
+
+<div
+  class:list={[
+    "row",
+    { "before-spine": row.beforeSpine, "has-head": isCurrent },
+  ]}
+  style={`--taper:${taper}`}
+  data-branch={item.branch}
+  data-order={item.order}
+  data-side={side}
+>
+  <div class:list={["cell", "cell-left", { empty: side !== "left" }]}>
+    {
+      side === "left" && (
+        <div class="window" data-timeline-card={item.order}>
+          <Fragment set:html={row.content} />
+        </div>
+      )
+    }
+  </div>
+  <div class="cell cell-rail" data-rail-cell={item.order}>
+    <span
+      class:list={["node", nodeKind, `lane-${side}`, { "on-spine": onSpine }]}
+      data-rail-mark={`${item.order}:${item.merge ? "merge" : "milestone"}`}
+      aria-hidden={row.marker ? undefined : "true"}
+    >
+      <Fragment set:html={row.marker} />
+    </span>
+    {
+      item.merge && (
+        <span
+          class:list={["node", "lane-dot", `lane-${side}`, { future }]}
+          data-rail-mark={`${item.order}:milestone`}
+          aria-hidden="true"
+        />
+      )
+    }
+  </div>
+  <div class:list={["cell", "cell-right", { empty: side !== "right" }]}>
+    {
+      side === "right" && (
+        <div class="window" data-timeline-card={item.order}>
+          <Fragment set:html={row.content} />
+        </div>
+      )
+    }
+  </div>
+</div>
+
+<style>
+  .row {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) var(--rail-w) minmax(0, 1fr);
+    align-items: stretch;
+    column-gap: 0;
+  }
+  .cell {
+    min-width: 0;
+  }
+  .cell-left {
+    justify-self: end;
+    width: 100%;
+    max-width: 480px;
+    padding-block: 12px;
+  }
+  .cell-right {
+    justify-self: start;
+    width: 100%;
+    max-width: 480px;
+    padding-block: 12px;
+  }
+  .row > .cell-left:not(.empty),
+  .row > .cell-right:not(.empty) {
+    margin-top: calc(-1 * var(--column-overlap, 0px));
+  }
+  .window {
+    position: relative;
+    width: 100%;
+  }
+  .cell-rail {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .node {
+    box-sizing: border-box;
+    position: absolute;
+    top: var(--mark-y, 50%);
+    left: var(--mark-x, 50%);
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--timeline-background, #fff);
+    transform: translate(-50%, -50%);
+  }
+  .node.lane-dot,
+  .node.dot {
+    width: 14px;
+    height: 14px;
+    border: 2.5px solid var(--rail-lane-dim);
+  }
+  .node.dot {
+    border-color: var(--rail-spine);
+  }
+  .node.lane-dot.lane-left,
+  .node.dot.lane-left {
+    border-color: var(--rail-lane-left);
+  }
+  .node.lane-dot.lane-right,
+  .node.dot.lane-right {
+    border-color: var(--rail-lane-right);
+  }
+  .node.lane-dot.future,
+  .node.dot-outline {
+    width: 12px;
+    height: 12px;
+    background: transparent;
+    border: 1.5px dashed rgba(70, 66, 88, 0.55);
+  }
+  .node.lane-dot.future {
+    border-color: rgba(194, 159, 201, 0.7);
+  }
+  .node.lane-dot.lane-left.future,
+  .node.dot-outline.lane-left {
+    border-color: rgba(255, 121, 118, 0.7);
+  }
+  .node.dot-outline.lane-right {
+    border-color: rgba(194, 159, 201, 0.7);
+  }
+  .node.glyph {
+    width: 30px;
+    height: 30px;
+    padding: 5px;
+    color: var(--rail-spine);
+    border: 2.5px solid var(--rail-spine);
+    box-shadow: 2px 2px 0 var(--rail-spine);
+  }
+  .node.glyph :global(svg) {
+    width: 100%;
+    height: 100%;
+  }
+  .node.glyph-outline {
+    width: 26px;
+    height: 26px;
+    background: transparent;
+    border: 1.5px dashed rgba(20, 107, 83, 0.55);
+  }
+  .node.head {
+    width: min(26px, calc(var(--rail-lane-gap) - 4px));
+    height: min(26px, calc(var(--rail-lane-gap) - 4px));
+    background: var(--timeline-background, #fff);
+    border: 3px solid var(--head-ink);
+    color: var(--head-ink);
+  }
+  .node.head::before,
+  .node.head::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    box-sizing: border-box;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+  .node.head::before {
+    width: calc(100% + 12px);
+    height: calc(100% + 12px);
+    border: 3px solid var(--head-ink);
+    opacity: 0.7;
+  }
+  .node.head::after {
+    width: min(calc(100% + 24px), calc(var(--rail-lane-gap) * 2 - 10px));
+    height: min(calc(100% + 24px), calc(var(--rail-lane-gap) * 2 - 10px));
+    border: 3px dashed var(--head-ink);
+    opacity: 0.55;
+  }
+  .node.head.on-spine {
+    border-color: var(--rail-spine);
+    color: var(--rail-spine);
+  }
+  .node.head :global(svg) {
+    width: 78%;
+    height: 78%;
+  }
+  .row.before-spine .cell {
+    padding-bottom: 52px;
+  }
+  /* Two readable card columns plus the timeline need 930px of available space. */
+  @container timeline (max-width: 930px) {
+    .row {
+      grid-template-columns: var(--rail-w) minmax(0, 1fr);
+    }
+    .cell-rail {
+      grid-column: 1;
+      grid-row: 1;
+    }
+    .cell-left,
+    .cell-right {
+      grid-column: 2;
+      grid-row: 1;
+      justify-self: start;
+      max-width: 600px;
+
+      margin-top: 0 !important;
+      padding-block: 10px;
+      padding-inline: 0;
+    }
+    .cell.empty {
+      display: none;
+    }
+  }
+  /* Below 450px, give cards the full row instead of reserving a timeline column. */
+  @container timeline (max-width: 450px) {
+    .row {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .cell-left,
+    .cell-right {
+      position: relative;
+      grid-column: 1;
+      max-width: none;
+      padding-block: 8px;
+    }
+    .cell-left > .window,
+    .cell-right > .window {
+      z-index: 3;
+    }
+  }
+</style>

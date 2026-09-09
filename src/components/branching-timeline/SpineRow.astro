@@ -1,0 +1,131 @@
+---
+import type { TimelineRow } from "./timeline.ts";
+
+interface Props {
+  row: TimelineRow & {
+    content: string;
+    marker: string;
+    decoration: string;
+    label: string;
+  };
+}
+
+const { row } = Astro.props;
+const { item, future, taper } = row;
+---
+
+<div
+  class="spine-row"
+  data-branch={item.branch}
+  data-order={item.order}
+  style={`--taper:${taper}`}
+>
+  <Fragment set:html={row.label} />
+  <div class:list={["spine-card-wrap", { future }]}>
+    <Fragment set:html={row.decoration} />
+    <span
+      class:list={["spine-pin", { future }]}
+      data-spine-pin={item.order}
+      aria-hidden="true"
+    >
+      <Fragment set:html={row.marker} />
+    </span>
+    <div class="window spine-window" data-timeline-card={item.order}>
+      <Fragment set:html={row.content} />
+    </div>
+  </div>
+</div>
+
+<style>
+  .spine-row {
+    position: relative;
+    padding-block: 64px;
+  }
+  .spine-card-wrap {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    transform: translateX(var(--start-spine-offset));
+
+    max-width: 560px;
+    margin-inline: auto;
+  }
+  .spine-pin {
+    box-sizing: border-box;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    z-index: 4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 58px;
+    height: 58px;
+    padding: 9px;
+    border-radius: 50%;
+    background: var(--timeline-background, #fff);
+    transform: translate(-50%, -50%);
+  }
+  .spine-pin :global(svg) {
+    width: 100%;
+    height: 100%;
+  }
+  .spine-pin:not(.future) {
+    color: var(--rail-spine);
+    border: 4px solid var(--rail-spine);
+    box-shadow: 4px 4px 0 var(--rail-spine);
+  }
+  .spine-pin.future {
+    width: 36px;
+    height: 36px;
+    background: transparent;
+    border: 2px dashed rgba(20, 107, 83, 0.55);
+  }
+  .window {
+    position: relative;
+    width: 100%;
+  }
+  /* Two readable card columns plus the timeline need 930px of available space. */
+  @container timeline (max-width: 930px) {
+    .spine-pin {
+      left: var(--spine-pin-x);
+    }
+    .spine-row {
+      padding-block: 76px 72px;
+    }
+    .spine-card-wrap {
+      --spine-pin-x: 14px;
+
+      width: auto;
+      max-width: 600px;
+      margin-inline: calc(var(--spine-x) - var(--spine-pin-x)) 24px;
+      transform: none;
+    }
+  }
+  @container timeline (max-width: 738px) {
+    .spine-card-wrap {
+      --spine-pin-x: calc(var(--spine-x) - 6px);
+
+      max-width: none;
+      margin-inline: calc(var(--spine-x) - var(--spine-pin-x)) 8px;
+    }
+  }
+  /* Below 450px, give cards the full row instead of reserving a timeline column. */
+  @container timeline (max-width: 450px) {
+    .spine-card-wrap {
+      --spine-pin-x: var(--spine-x);
+
+      /* Keep room for the rotated corners and shadow inside the viewport. */
+      margin-inline: 0 10px;
+    }
+    .spine-pin {
+      width: 44px;
+      height: 44px;
+      padding: 7px;
+    }
+    .spine-pin.future {
+      width: 34px;
+      height: 34px;
+    }
+  }
+</style>

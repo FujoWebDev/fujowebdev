@@ -1,0 +1,80 @@
+---
+import Sparkles from "../../../components/Sparkles.astro";
+
+interface Props {
+  label: "live" | "merged" | "wip";
+  renderer: "browser" | "editor" | "terminal";
+}
+
+const { label, renderer } = Astro.props;
+---
+
+<span
+  class:list={["stamp", renderer, { wip: label === "wip" }]}
+  aria-hidden="true"
+>
+  <Sparkles preset="seal" sizeMultiplier={3} inline={false} fill />
+  <span class="stamp-label">{label}</span>
+</span>
+
+<style>
+  .stamp {
+    --stamp-ink: #5056a8;
+
+    position: absolute;
+    top: -12px;
+    right: 10px;
+    z-index: 3;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 84px;
+    padding: 5px 12px 6px;
+    border: 3px solid var(--stamp-ink);
+    border-radius: 12px;
+    outline: 2px solid var(--stamp-ink);
+    outline-offset: -6px;
+    color: var(--stamp-ink);
+    font-size: 0.86rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    line-height: 1;
+    text-transform: uppercase;
+    transform: rotate(-5deg);
+  }
+
+  .stamp.wip {
+    --stamp-ink: #b8850a;
+  }
+
+  .stamp-label {
+    font-family: "freude", "nunito", sans-serif;
+    font-weight: 400;
+    transform: translate(1px, 1px) scale(1.05);
+  }
+
+  .terminal {
+    background: var(--term-surface);
+  }
+
+  .editor {
+    background: var(--ed-surface);
+  }
+
+  .browser {
+    min-width: 84px;
+    width: auto;
+    background: var(--bp-surface);
+    letter-spacing: 0.05em;
+  }
+
+  .browser .stamp-label {
+    transform: translate(1px, -1px) scale(1.05);
+  }
+
+  @container roadmap-panel (max-width: 400px) {
+    .browser {
+      right: 6px;
+    }
+  }
+</style>

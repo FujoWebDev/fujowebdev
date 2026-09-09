@@ -1,0 +1,103 @@
+---
+import { LOGO_TEAL } from "../../../components/Sparkles.astro";
+
+type BurstTone = "ink" | "coral" | "blue" | "purple";
+
+const rays: {
+  rotate: number;
+  path: string;
+  dash: string | undefined;
+  dots: { centreX: number; centreY: number; radius: number }[];
+  tone: BurstTone;
+  long: boolean;
+}[] = Array.from({ length: 12 }, (_unused, spoke) => {
+  const long = spoke % 2 === 0;
+  const tone = (["ink", "coral", "blue", "purple"] as const)[spoke % 4];
+  const inner = 33;
+  const jitter = long ? [0, 4, -2, 3, -3, 2] : [2, -2, 3, 0, -1, 2];
+  const tip = (long ? 53 : 43) + jitter[Math.floor(spoke / 2)];
+  const dotR = 4;
+  const stemEnd = long ? tip - dotR : tip;
+  const stemLen = stemEnd - inner;
+
+  let dash: string | undefined;
+  if (long && tone === "ink") {
+    dash = `1 ${((stemLen - 3) / 2).toFixed(2)}`;
+  }
+  if (!long && tone === "purple") {
+    dash = `2 ${(stemLen - 4).toFixed(2)}`;
+  }
+  return {
+    rotate: spoke * 30 - 75,
+    path: `M${inner} 0H${stemEnd}`,
+    dash,
+    dots: long ? [{ centreX: tip, centreY: 0, radius: dotR }] : [],
+    tone,
+    long,
+  };
+});
+
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<svg
+  class:list={["burst", className]}
+  viewBox="-70 -70 140 140"
+  aria-hidden="true"
+  style={`--burst-blue: ${LOGO_TEAL}`}
+>
+  {
+    rays.map((ray) => (
+      <g
+        class:list={["ray", `tone-${ray.tone}`, ray.long ? "long" : "short"]}
+        transform={`rotate(${ray.rotate})`}
+      >
+        <path d={ray.path} stroke-dasharray={ray.dash} />
+        {ray.dots.map((dot) => (
+          <circle cx={dot.centreX} cy={dot.centreY} r={dot.radius} />
+        ))}
+      </g>
+    ))
+  }
+</svg>
+
+<style>
+  .burst {
+    pointer-events: none;
+  }
+
+  .ray {
+    fill: none;
+    stroke-width: 4;
+    stroke-linecap: round;
+  }
+
+  .ray.short {
+    stroke-width: 2.6;
+  }
+
+  .ray circle {
+    fill: var(--fujo-cream);
+    stroke-width: 2.6;
+  }
+
+  .ray.tone-ink {
+    stroke: var(--rail-spine);
+  }
+
+  .ray.tone-coral {
+    stroke: var(--rail-lane-left);
+  }
+
+  .ray.tone-purple {
+    stroke: var(--rail-lane-right);
+  }
+
+  .ray.tone-blue {
+    stroke: var(--burst-blue);
+  }
+</style>

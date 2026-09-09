@@ -1,0 +1,26 @@
+---
+import type { RoadmapContent } from "../../../content/config.ts";
+import BrowserPane from "./BrowserPane.astro";
+import EditorPane from "./EditorPane.astro";
+import ReleaseCard from "./ReleaseCard.astro";
+import Terminal from "./Terminal.astro";
+
+interface Props {
+  milestone: RoadmapContent & { anchor: string };
+  isCurrent: boolean;
+}
+
+const { milestone, isCurrent } = Astro.props;
+---
+
+{
+  milestone.view === "release" ? (
+    <ReleaseCard milestone={milestone} />
+  ) : milestone.view === "browser" ? (
+    <BrowserPane milestone={milestone} />
+  ) : milestone.view === "editor" ? (
+    <EditorPane isCurrent={isCurrent} milestone={milestone} />
+  ) : (
+    <Terminal milestone={milestone} />
+  )
+}

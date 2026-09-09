@@ -1,0 +1,455 @@
+---
+import { Icon } from "astro-icon/components";
+import type { RoadmapContent } from "../../../content/config.ts";
+import StatusStamp from "../visuals/StatusStamp.astro";
+
+interface Props {
+  milestone: Extract<RoadmapContent, { view: "editor" }> & { anchor: string };
+  isCurrent: boolean;
+}
+
+const { isCurrent } = Astro.props;
+const { anchor, file, kind, heading, body, commits } = Astro.props.milestone;
+---
+
+<section
+  id={anchor}
+  class:list={[
+    "editor-pane",
+    kind,
+    { current: isCurrent, pending: kind === "upcoming" },
+  ]}
+>
+  <div class="frame">
+    <div class="activity" aria-hidden="true">
+      <span class="a-icon active"><Icon name="roadmap/files" /></span>
+      <span class="a-icon"><Icon name="roadmap/search" /></span>
+      <span class="a-icon"><Icon name="roadmap/git-branch" /></span>
+      <span class="a-icon"><Icon name="roadmap/extensions" /></span>
+    </div>
+
+    <div class="main">
+      <div class="tabs">
+        <a
+          class="tab active"
+          href={`#${anchor}`}
+          aria-label={`Link to this milestone: ${heading}`}
+        >
+          <span class="tab-dot" aria-hidden="true"></span>
+          {file}
+          {
+            isCurrent && (
+              <span class="unsaved" aria-hidden="true">
+                ●
+              </span>
+            )
+          }
+        </a>
+        <span class="tab ghost">notes.md</span>
+        {kind === "done" && <StatusStamp label="merged" renderer="editor" />}
+        {
+          kind === "in-progress" && (
+            <StatusStamp label="wip" renderer="editor" />
+          )
+        }
+      </div>
+
+      <div class="editor">
+        <p class="src-line">
+          <span class="tok marker" aria-hidden="true">##</span>{" "}
+          <span class="heading">{heading}</span>
+        </p>
+        {
+          body && (
+            <p class="src-line body-line">
+              <span class="body-copy" set:html={body} />
+            </p>
+          )
+        }
+
+        {
+          commits.length > 0 && (
+            <>
+              <p class="src-line hr" aria-hidden="true">
+                <span class="tok marker">---</span>
+              </p>
+              <ul role="list" class="log">
+                {commits.map((commit) => (
+                  <li class:list={["commit", { pending: commit.pending }]}>
+                    <span class="visually-hidden">
+                      {commit.pending ? "Pending: " : "Done: "}
+                    </span>
+                    <span class="box" aria-hidden="true">
+                      {commit.pending ? "- [ ]" : "- [x]"}
+                    </span>{" "}
+                    <Fragment set:html={commit.message} />
+                  </li>
+                ))}
+              </ul>
+            </>
+          )
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .editor-pane {
+    --ed-teal: #45d4a4;
+    --ed-teal-dark: #14967c;
+    --ed-red: #e05a57;
+    --ed-purple: #6a6fc4;
+    --ed-muted: #8d87aa;
+    --ed-surface: #fdf9f0;
+    --ed-gold: #ffd166;
+    --ed-grey-frame: #5e5a6e;
+
+    --ed-indigo: color-mix(in srgb, var(--ed-purple) 78%, black);
+
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    overflow: hidden;
+    color: var(--terminal-dark);
+    background: var(--ed-indigo);
+    border: 2px solid var(--terminal-dark);
+    border-radius: 7px;
+    box-shadow: 4px 4px 0 var(--terminal-dark);
+  }
+
+  .editor-pane,
+  .editor-pane * {
+    font-family: "Cascadia Code", ui-monospace, "SF Mono", Menlo, Consolas,
+      monospace;
+  }
+
+  .editor-pane.current {
+    box-shadow: 6px 6px 0 var(--terminal-dark);
+  }
+
+  .editor-pane.pending {
+    --ed-surface: #f7f5ef;
+
+    background: var(--ed-surface);
+    background-clip: padding-box;
+    border: 1.5px dashed var(--ed-grey-frame);
+    box-shadow: none;
+  }
+
+  .editor-pane.pending .activity,
+  .editor-pane.pending .tabs {
+    background: rgba(94, 90, 110, 0.06);
+  }
+
+  .editor-pane.pending .main {
+    border-left: 1.5px dashed var(--ed-grey-frame);
+  }
+
+  .editor-pane.pending .tabs {
+    border-bottom: 1.5px dashed var(--ed-grey-frame);
+  }
+
+  .editor-pane.pending .tab {
+    border-right: 1.5px dashed var(--ed-grey-frame);
+  }
+
+  .editor-pane.pending .a-icon {
+    color: var(--ed-muted);
+  }
+
+  .editor-pane.pending .editor {
+    opacity: 0.86;
+  }
+
+  .editor-pane.pending .commit.pending {
+    opacity: 1;
+  }
+
+  .editor-pane.done .tab-dot {
+    background: var(--ed-teal);
+  }
+
+  .editor-pane.done .a-icon.active {
+    color: var(--ed-teal);
+  }
+
+  .editor-pane.in-progress .tab-dot {
+    background: var(--ed-gold);
+  }
+
+  .editor-pane.in-progress .activity {
+    background: color-mix(in srgb, var(--ed-gold) 40%, var(--ed-surface));
+    border-radius: 5px 0 0 5px;
+  }
+
+  .editor-pane.in-progress .a-icon {
+    color: var(--ed-grey-frame);
+  }
+
+  .editor-pane.in-progress .a-icon.active {
+    color: var(--terminal-dark);
+  }
+
+  .editor-pane.pending .tab-dot {
+    background: var(--ed-muted);
+  }
+
+  .editor-pane.pending .a-icon.active {
+    color: var(--ed-muted);
+  }
+
+  .frame {
+    display: flex;
+    align-items: stretch;
+  }
+
+  .activity {
+    display: flex;
+    flex-shrink: 0;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    width: 34px;
+    padding: 12px 0;
+  }
+
+  .a-icon {
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    color: rgba(255, 255, 255, 0.55);
+  }
+
+  .a-icon.active::before {
+    position: absolute;
+    left: -3px;
+    width: 2.5px;
+    height: 20px;
+    border-radius: 2px;
+    background: currentColor;
+    content: "";
+  }
+
+  .a-icon :global(svg) {
+    width: 17px;
+    height: 17px;
+  }
+
+  .main {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    min-width: 0;
+    border-left: 2px solid var(--terminal-dark);
+  }
+
+  .tabs {
+    display: flex;
+    align-items: stretch;
+    min-width: 0;
+    border-bottom: 2px solid var(--terminal-dark);
+    background: #ece0c8;
+  }
+
+  .tab {
+    display: flex;
+    flex-shrink: 1;
+    align-items: center;
+    gap: 6px;
+    min-width: 0;
+    padding: 6px 12px 7px;
+    border-right: 2px solid var(--terminal-dark);
+    overflow: hidden;
+    font-size: 0.76rem;
+    font-weight: 700;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .tab.active {
+    flex-shrink: 3;
+    color: inherit;
+    text-decoration: none;
+    background: var(--ed-surface);
+    margin-bottom: -2px;
+    padding-bottom: 9px;
+  }
+
+  .tab.ghost {
+    color: var(--ed-muted);
+    font-weight: 400;
+    opacity: 0.7;
+  }
+
+  .tab-dot {
+    flex-shrink: 0;
+    width: 8px;
+    height: 8px;
+    border: 1.5px solid var(--terminal-dark);
+    border-radius: 2px;
+  }
+
+  .unsaved {
+    color: var(--fujo-red);
+    font-size: 0.7rem;
+  }
+
+  /* Same seal as Terminal's "merged" stamp, so the panes read as one set.
+     The stamp hangs past the top edge, so the pane can't clip; round the
+     inner corners by hand since the section no longer does it for us. */
+  .editor-pane.done,
+  .editor-pane.in-progress {
+    overflow: visible;
+  }
+
+  .editor-pane.done .tabs,
+  .editor-pane.in-progress .tabs {
+    padding-right: 104px;
+    border-top-right-radius: 5px;
+  }
+
+  .editor-pane.done .editor,
+  .editor-pane.in-progress .editor {
+    border-bottom-right-radius: 5px;
+  }
+
+  .editor {
+    flex: 1;
+    min-width: 0;
+    padding: 14px 16px 16px;
+    background: var(--ed-surface);
+  }
+
+  /* Markdown-style hanging indent: wrapped lines sit 2 spaces in, the way a
+     soft-wrapped list item or comment looks in a real editor. */
+  .src-line {
+    padding-left: 2ch;
+    text-indent: -2ch;
+  }
+
+  .src-line {
+    margin: 0 0 6px;
+    line-height: 1.35;
+  }
+
+  .src-line.hr {
+    margin-top: 4px;
+  }
+
+  /* No leading marker on this line, so it doesn't need the hanging indent. */
+  .body-line {
+    padding-left: 0;
+    text-indent: 0;
+  }
+
+  .src-line,
+  .heading,
+  .body-copy,
+  .commit {
+    font-size: 0.86rem;
+    line-height: 1.35;
+  }
+
+  .tok.marker {
+    color: var(--ed-muted);
+  }
+
+  /* Links read as Markdown source: bracketed text, brackets in the comment
+     grey the other syntax markers use. The "/ ''" gives the pseudo-element
+     empty alt text so screen readers don't announce the brackets. */
+  .src-line :global(a),
+  .log :global(a) {
+    color: var(--ed-purple);
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .src-line :global(a)::before,
+  .log :global(a)::before {
+    color: var(--ed-muted);
+    content: "[" / "";
+  }
+
+  .src-line :global(a)::after,
+  .log :global(a)::after {
+    color: var(--ed-muted);
+    content: "]" / "";
+  }
+
+  .src-line :global(a):hover,
+  .log :global(a):hover {
+    color: var(--fujo-pink);
+    text-decoration: 1px underline wavy;
+    text-underline-offset: 2px;
+  }
+
+  .src-line:first-child .tok.marker {
+    color: color-mix(in oklab, var(--ed-teal-dark) 55%, var(--ed-muted));
+    font-size: 1rem;
+  }
+
+  .heading {
+    color: var(--ed-teal-dark);
+    filter: none;
+    font-size: 1rem;
+    font-weight: 700;
+    text-shadow: none;
+  }
+
+  .editor-pane.current .heading {
+    color: #b8850a;
+  }
+
+  .log {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    margin: 4px 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  /* Reads like real Markdown: "- [x]" then exactly one space. */
+  .commit {
+    display: block;
+    margin: 0;
+    padding-left: 6ch;
+    text-indent: -6ch;
+  }
+
+  .commit.pending {
+    opacity: 0.55;
+  }
+
+  .box {
+    color: var(--ed-teal-dark);
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .commit.pending .box {
+    color: var(--ed-muted);
+  }
+
+  @container roadmap-panel (max-width: 360px) {
+    .activity {
+      width: 28px;
+    }
+
+    .editor {
+      padding-inline: 12px;
+    }
+  }
+
+  .tab.active:hover,
+  .tab.active:focus-visible {
+    color: var(--fujo-pink);
+    text-decoration: 1px underline wavy;
+    text-underline-offset: 3px;
+  }
+</style>

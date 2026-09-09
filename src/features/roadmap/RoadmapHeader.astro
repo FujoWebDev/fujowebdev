@@ -1,0 +1,392 @@
+---
+import { Icon } from "astro-icon/components";
+import Sparkles, {
+  LOGO_PALETTE,
+  type SparkleConfig,
+} from "../../components/Sparkles.astro";
+import SiteLogo from "../../components/SiteLogo.astro";
+import Burst from "./visuals/Burst.astro";
+
+interface Props {
+  title: string;
+  intro: string;
+}
+
+const { title, intro } = Astro.props;
+
+const originField = {
+  side: 520,
+  top: 104,
+  bottom: 560,
+  node: 52,
+};
+const fieldWidth = originField.node + originField.side * 2;
+const fieldHeight = originField.node + originField.top + originField.bottom;
+const nodeCentreX = originField.side + originField.node / 2;
+const nodeCentreY = originField.top + originField.node / 2;
+const promptBox = {
+  left: nodeCentreX + 74,
+  right: nodeCentreX + 486,
+  top: nodeCentreY - 44,
+  bottom: nodeCentreY + 40,
+};
+const motifs = [
+  "star",
+  "heart",
+  "branch",
+  "star",
+  "heart",
+  "branch-side",
+  "star",
+  "heart",
+  "branch-arrow",
+] as const;
+const still = { delay: "0s", dur: "0s", driftDur: "0s", driftDelay: "0s" };
+
+function seededRandom(seed: number): () => number {
+  return () => {
+    seed = (seed + 0x6d2b79f5) | 0;
+    let state = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+    state = (state + Math.imul(state ^ (state >>> 7), 61 | state)) ^ state;
+    return ((state ^ (state >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+const originConfetti: SparkleConfig[] = (() => {
+  const random = seededRandom(0x9e3779b9);
+  const sparkles: SparkleConfig[] = [];
+  let attempts = 0;
+
+  while (sparkles.length < 36 && attempts < 1200) {
+    attempts++;
+    const sparkleIndex = sparkles.length;
+    const side = sparkleIndex % 2 === 0 ? 1 : -1;
+    const posX = nodeCentreX + side * (62 + random() ** 0.72 * 466);
+    const posY =
+      nodeCentreY - 82 + random() ** 1.7 * (fieldHeight - nodeCentreY + 62);
+    const offsetX = posX - nodeCentreX;
+    const offsetY = posY - nodeCentreY;
+
+    if (offsetX * offsetX + offsetY * offsetY < 76 * 76) {
+      continue;
+    }
+    if (
+      posX > promptBox.left &&
+      posX < promptBox.right &&
+      posY > promptBox.top &&
+      posY < promptBox.bottom
+    ) {
+      continue;
+    }
+
+    const motif = motifs[sparkleIndex % motifs.length];
+    const isGlyph = motif !== "star" && motif !== "heart";
+    sparkles.push({
+      left: `${+((posX / fieldWidth) * 100).toFixed(2)}%`,
+      top: `${+((posY / fieldHeight) * 100).toFixed(2)}%`,
+      motif,
+      size: isGlyph
+        ? `${+(4.4 + random() * 2).toFixed(1)}px`
+        : `${+(2.6 + random() * 3.2).toFixed(1)}px`,
+      ...still,
+    });
+  }
+
+  return sparkles;
+})();
+---
+
+<div
+  class="start-row"
+  style={`--origin-side-default:${originField.side}px;--origin-top-default:${originField.top}px;--origin-bottom-default:${originField.bottom}px`}
+>
+  <div class="origin-field" aria-hidden="true">
+    <Sparkles
+      sparkles={originConfetti}
+      palette={LOGO_PALETTE}
+      sizeMultiplier={3}
+      animated={false}
+      inline={false}
+      fill
+    />
+  </div>
+  <div class="start-mark">
+    <Burst class="start-burst" />
+    <span class="start-node" aria-hidden="true">
+      <Icon name="roadmap/commit" />
+    </span>
+  </div>
+  <p class="start-log">
+    <span class="start-cmd">
+      <span class="start-prompt" aria-hidden="true">$</span>{" "}
+      git init fujoguide
+    </span>
+  </p>
+</div>
+<div class="masthead-row">
+  <div class="masthead-plate">
+    <SiteLogo />
+    <div class="masthead-box">
+      <h1 class="masthead-title">{title}</h1>
+      <p class="masthead-blurb">{intro}</p>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+  .fujo-roadmap .start-row {
+    --origin-side: var(--origin-side-default);
+    --origin-top: var(--origin-top-default);
+    --origin-bottom: var(--origin-bottom-default);
+
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 64px;
+    padding-top: 24px;
+  }
+  .fujo-roadmap .start-row::after {
+    position: absolute;
+    top: 76px;
+    bottom: 0;
+    left: 50%;
+    width: 3.5px;
+    background: var(--rail-spine);
+    content: "";
+    transform: translateX(calc(-50% + var(--start-spine-offset, 0px)));
+  }
+  .fujo-roadmap .start-mark {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    width: 52px;
+    height: 52px;
+    align-items: center;
+    justify-content: center;
+    transform: translateX(var(--start-spine-offset, 0px));
+  }
+  .fujo-roadmap .start-mark .start-burst {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 148px;
+    height: 148px;
+    margin-top: -74px;
+    margin-left: -74px;
+  }
+  .fujo-roadmap .origin-field {
+    position: absolute;
+    top: calc(var(--origin-node-top, 24px) - var(--origin-top));
+    left: calc(50% + var(--start-spine-offset, 0px));
+    z-index: 0;
+    width: calc(var(--origin-side) * 2 + 52px);
+    height: calc(var(--origin-top) + var(--origin-bottom) + 52px);
+    margin-left: calc((var(--origin-side) + 26px) * -1);
+    pointer-events: none;
+  }
+  .fujo-roadmap .start-node {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    width: 52px;
+    height: 52px;
+    align-items: center;
+    justify-content: center;
+    padding: 7px;
+    border: 3.5px solid var(--rail-spine);
+    border-radius: 50%;
+    background: var(--fujo-cream);
+    box-shadow: 3px 3px 0 var(--terminal-dark);
+    color: var(--rail-spine);
+  }
+  .fujo-roadmap .start-node svg {
+    width: 100%;
+    height: 100%;
+  }
+  .fujo-roadmap .start-log {
+    position: absolute;
+    z-index: 2;
+    top: 40px;
+    left: calc(50% + 28px + var(--start-spine-offset, 0px));
+    scale: 0.73;
+    display: flex;
+    max-width: min(40ch, calc(50% - 130px));
+    flex-direction: column;
+    gap: 5px;
+    font-family: "Cascadia Code", ui-monospace, "SF Mono", Menlo, Consolas,
+      monospace;
+    text-wrap: pretty;
+  }
+  .fujo-roadmap .start-cmd {
+    font-family: inherit;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45em;
+    align-self: flex-start;
+    padding: 7px 14px 8px 12px;
+    border: 2px solid var(--rail-spine);
+    border-radius: 10px 8px 9px 7px / 8px 9px 7px 10px;
+    background: #e3dfe8;
+    color: var(--rail-spine);
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+  }
+  .fujo-roadmap .start-cmd::after {
+    content: "";
+    width: 0.55em;
+    height: 1.05em;
+    margin-left: 0.1em;
+    background: var(--rail-spine);
+    animation: roadmap-cursor 1.6s steps(2, jump-none) infinite;
+  }
+  @keyframes roadmap-cursor {
+    to {
+      opacity: 0;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .start-cmd::after {
+      animation: none;
+    }
+  }
+  .fujo-roadmap .start-prompt {
+    font-family: inherit;
+    color: #0a8f57;
+  }
+  .fujo-roadmap .masthead-row {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    padding-block: 16px 48px;
+  }
+  .fujo-roadmap .masthead-row::after {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    z-index: 0;
+    width: 3.5px;
+    background: var(--rail-spine);
+    content: "";
+    transform: translateX(calc(-50% + var(--start-spine-offset, 0px)));
+  }
+  .fujo-roadmap .masthead-plate {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 620px;
+    justify-content: center;
+  }
+  .fujo-roadmap .masthead-plate .logo {
+    --logo-outline: 1px;
+
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    filter: drop-shadow(var(--logo-outline) 0 0 var(--terminal-dark))
+      drop-shadow(calc(-1 * var(--logo-outline)) 0 0 var(--terminal-dark))
+      drop-shadow(0 var(--logo-outline) 0 var(--terminal-dark))
+      drop-shadow(0 calc(-1 * var(--logo-outline)) 0 var(--terminal-dark))
+      drop-shadow(4px 4px 0px var(--terminal-dark));
+  }
+  .fujo-roadmap .masthead-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    max-width: 520px;
+    margin-top: 14px;
+    padding: 14px 24px 16px;
+    border: 2px solid var(--terminal-dark);
+    border-radius: 14px;
+    background: white;
+    box-shadow: 4px 4px 0 var(--fujo-red);
+    text-align: center;
+  }
+  .fujo-roadmap .masthead-title {
+    margin: 0;
+    color: var(--terminal-dark);
+    font-family: "freude", "nunito", sans-serif;
+    font-size: 1.9rem;
+    letter-spacing: 0.04em;
+    line-height: 1;
+    text-shadow: none;
+    filter: none;
+  }
+  .fujo-roadmap .masthead-blurb {
+    margin: 0;
+    color: var(--terminal-dark);
+    font-size: 0.95rem;
+    line-height: 1.45;
+    text-wrap: pretty;
+  }
+  @container timeline (max-width: 930px) {
+    .fujo-roadmap .start-row {
+      --origin-side: 120px;
+      --origin-top: 60px;
+      --origin-bottom: 200px;
+
+      justify-content: flex-start;
+      align-items: center;
+      gap: 14px;
+      min-height: 0;
+      padding-top: 24px;
+      padding-bottom: 6px;
+    }
+    .fujo-roadmap .start-row::after,
+    .fujo-roadmap .masthead-row::after {
+      left: var(--spine-x);
+      transform: translateX(-50%);
+    }
+    .fujo-roadmap .start-mark {
+      margin-left: calc(var(--spine-x) - 26px);
+      transform: none;
+    }
+    .fujo-roadmap .origin-field {
+      left: var(--spine-x);
+    }
+    .fujo-roadmap .start-log {
+      position: static;
+      max-width: none;
+      scale: none;
+      flex: 1 1 0;
+      min-width: 0;
+    }
+    .fujo-roadmap .start-cmd {
+      padding: 5px 11px 6px 9px;
+      font-size: 0.92rem;
+    }
+    .fujo-roadmap .masthead-row {
+      padding-left: var(--rail-w);
+      padding-block: 8px 36px;
+    }
+    .fujo-roadmap .masthead-box {
+      padding: 12px 18px 14px;
+    }
+    .fujo-roadmap .masthead-title {
+      font-size: 1.6rem;
+    }
+  }
+  @container timeline (max-width: 738px) {
+    .fujo-roadmap .masthead-row {
+      padding-left: calc(var(--rail-w) - 6px);
+    }
+    .fujo-roadmap .start-mark .start-burst {
+      width: 112px;
+      height: 112px;
+      margin-top: -56px;
+      margin-left: -56px;
+    }
+  }
+  @container timeline (max-width: 450px) {
+    .fujo-roadmap .masthead-title {
+      font-size: 1.4rem;
+    }
+  }
+</style>

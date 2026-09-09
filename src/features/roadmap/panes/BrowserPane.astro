@@ -1,0 +1,362 @@
+---
+import type { RoadmapContent } from "../../../content/config.ts";
+import { Icon } from "astro-icon/components";
+import StatusStamp from "../visuals/StatusStamp.astro";
+
+interface Props {
+  milestone: Extract<RoadmapContent, { view: "browser" }> & { anchor: string };
+}
+
+const { anchor, url, kind, heading, body, commits } = Astro.props.milestone;
+
+const allDone =
+  commits.length > 0 && commits.every((commit) => !commit.pending);
+---
+
+<section id={anchor} class:list={["browser-pane", kind]}>
+  <div class="chrome">
+    <span class="navs" aria-hidden="true">
+      <i class="nav"
+        ><Icon name="roadmap/reload" is:inline aria-hidden="true" /></i
+      >
+      <i class="nav"
+        ><Icon name="roadmap/home" is:inline aria-hidden="true" /></i
+      >
+    </span>
+    <a
+      class="address"
+      href={`#${anchor}`}
+      aria-label={`Link to this milestone: ${heading}`}
+    >
+      <i class:list={["bookmark", { filled: allDone }]}>
+        <Icon
+          name={allDone ? "roadmap/star-filled" : "roadmap/star-outline"}
+          aria-hidden="true"
+        />
+      </i>
+      <span class="url-text">{url}</span>
+    </a>
+  </div>
+
+  {
+    (kind === "done" || kind === "in-progress") && (
+      <StatusStamp
+        label={kind === "in-progress" ? "wip" : "live"}
+        renderer="browser"
+      />
+    )
+  }
+
+  <div class="body">
+    <div class="page">
+      <div class="column">
+        <h3 class="heading">{heading}</h3>
+        {body && <p class="body-copy" set:html={body} />}
+        {
+          commits.length > 0 && (
+            <ul role="list" class="log">
+              {commits.map((commit) => (
+                <li class:list={["item", { pending: commit.pending }]}>
+                  <span class="mark" aria-hidden="true">
+                    {commit.pending ? "" : "✓"}
+                  </span>
+                  <span class="visually-hidden">
+                    {commit.pending ? "Pending: " : "Done: "}
+                  </span>
+                  <span class="msg">
+                    <Fragment set:html={commit.message} />
+                  </span>
+                </li>
+              ))}
+            </ul>
+          )
+        }
+      </div>
+    </div>
+    <div class="scrollbar" aria-hidden="true">
+      <div class="thumb"></div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .browser-pane {
+    --bp-teal-dark: #14967c;
+    --bp-muted: #8d87aa;
+    --bp-surface: #fdf9f0;
+    --bp-grey-frame: #5e5a6e;
+    --bp-band: #fbebe3;
+
+    position: relative;
+    width: 100%;
+    color: var(--terminal-dark);
+    background: var(--bp-surface);
+    border: 2px solid var(--terminal-dark);
+
+    border-radius: 9px 7px 8px 6px / 7px 9px 6px 8px;
+    box-shadow: 4px 4px 0 var(--terminal-dark);
+    font-family: "nunito", sans-serif;
+  }
+
+  .browser-pane.done .chrome,
+  .browser-pane.in-progress .chrome {
+    background: #f99694;
+  }
+
+  .browser-pane.upcoming {
+    --bp-surface: #f7f5ef;
+    --bp-band: #f3f2f5;
+
+    border: 1.5px dashed var(--bp-grey-frame);
+    box-shadow: none;
+  }
+
+  .browser-pane.upcoming .chrome {
+    background: rgba(94, 90, 110, 0.06);
+    border-bottom: 1.5px dashed var(--bp-grey-frame);
+  }
+
+  .browser-pane.upcoming .body {
+    filter: grayscale(0.9);
+  }
+
+  .browser-pane.upcoming .body {
+    opacity: 0.88;
+    border-radius: 0 0 6.5px 4.5px / 0 0 4.5px 6.5px;
+  }
+
+  .browser-pane.upcoming .item.pending {
+    opacity: 1;
+  }
+
+  .chrome {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 10px;
+    border-bottom: 2px solid var(--terminal-dark);
+
+    border-radius: 7px 5px 0 0 / 5px 7px 0 0;
+  }
+
+  .navs {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    border: 1.5px solid var(--terminal-dark);
+    border-radius: 8px 7px 8px 7px / 7px 8px 7px 8px;
+    background: var(--bp-surface);
+    color: var(--terminal-dark);
+  }
+
+  .nav :global(svg) {
+    width: 18px;
+    height: 18px;
+  }
+
+  .nav :global(path) {
+    stroke: currentColor;
+    stroke-width: 0.6;
+  }
+
+  .browser-pane.upcoming .nav {
+    border-color: var(--bp-grey-frame);
+    color: var(--bp-muted);
+  }
+
+  .address {
+    display: flex;
+    color: inherit;
+    font-weight: inherit;
+    text-decoration: none;
+    align-items: center;
+    gap: 6px;
+    min-width: 0;
+    flex: 1;
+    padding: 0 10px 1px;
+    border: 1.5px solid var(--terminal-dark);
+    border-radius: 999px;
+    background: var(--bp-surface);
+    line-height: 1.4;
+  }
+
+  .url-text {
+    overflow: hidden;
+    flex: 1;
+    color: var(--terminal-dark);
+    font-family: "freude", "nunito", sans-serif;
+    font-size: 0.9rem;
+    font-weight: 400;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .bookmark {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    margin-left: -3px;
+    color: var(--bp-muted);
+  }
+
+  .bookmark :global(svg) {
+    width: 22px;
+    height: 22px;
+  }
+
+  .bookmark.filled {
+    color: #e0a21a;
+  }
+
+  .browser-pane.upcoming .bookmark {
+    color: var(--bp-muted);
+  }
+
+  .browser-pane.upcoming .address {
+    border-color: var(--bp-grey-frame);
+    border-style: dashed;
+    background: rgba(94, 90, 110, 0.06);
+  }
+
+  .browser-pane.upcoming .url-text {
+    color: var(--bp-muted);
+  }
+
+  /* Like a real site: a white content column on a tinted body, with the page
+     background showing through as side gutters. */
+  .body {
+    position: relative;
+    display: flex;
+    align-items: stretch;
+    padding: 0 7px 0 0;
+    background: var(--bp-band);
+    /* Keep the body and page backgrounds inside the frame's curved bottom edge. */
+    border-radius: 0 0 6px 4px / 0 0 4px 6px;
+    overflow: clip;
+  }
+
+  .page {
+    min-width: 0;
+    flex: 0 1 325px;
+    margin-inline: auto;
+    padding: 26px 30px 18px;
+    background: #fff;
+  }
+
+  .browser-pane.done .page,
+  .browser-pane.in-progress .page {
+    padding-top: 18px;
+  }
+
+  /* The pane reads as a rendered website, and websites set their text in a
+     measure-capped column rather than edge to edge. Centring it also gives the
+     checklist a left edge shared with the heading. */
+  .column {
+    max-width: 265px;
+    margin-inline: auto;
+  }
+
+  .scrollbar {
+    flex-shrink: 0;
+    width: 7px;
+    margin: 7px 0 7px 7px;
+    border-radius: 5px 4px 5px 4px;
+    background: rgba(70, 66, 88, 0.06);
+  }
+
+  .thumb {
+    width: 100%;
+    height: 42%;
+    margin-top: 7%;
+    border-radius: 4px 5px 4px 5px;
+    background: rgba(70, 66, 88, 0.14);
+  }
+
+  .heading {
+    margin: 0;
+    color: var(--bp-teal-dark);
+    filter: none;
+    font-size: 1.2rem;
+    font-weight: 700;
+    text-shadow: none;
+  }
+
+  .browser-pane.in-progress .heading {
+    color: #b8850a;
+  }
+
+  .browser-pane.upcoming .heading {
+    color: var(--bp-muted);
+  }
+
+  .body-copy {
+    margin-top: 8px;
+    font-size: 0.9rem;
+  }
+
+  /* These are status marks, not controls; the visually hidden text carries
+     the same state for assistive technology. */
+  .log {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    margin: 14px 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  /* Flex, not inline: wrapped text hangs beside the checkbox instead of
+     sliding back under it. */
+  .item {
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    font-size: 0.88rem;
+    line-height: 1.4;
+  }
+
+  .item.pending {
+    opacity: 0.6;
+  }
+
+  .mark {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 15px;
+    height: 15px;
+    border: 1px solid var(--bp-muted);
+    border-radius: 2px;
+    color: var(--bp-teal-dark);
+    font: inherit;
+    font-weight: 700;
+    margin: calc((1lh - 15px) / 2 - 1px) 9px 0 0;
+  }
+
+  .msg {
+    color: var(--terminal-dark);
+  }
+
+  @container roadmap-panel (max-width: 400px) {
+    .page {
+      padding-inline: 18px;
+    }
+  }
+
+  .address:hover,
+  .address:focus-visible {
+    color: var(--fujo-pink);
+    text-decoration: 1px underline wavy;
+    text-underline-offset: 3px;
+  }
+</style>
