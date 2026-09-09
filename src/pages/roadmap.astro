@@ -1,7 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import PageLayout from "../layouts/PageLayout.astro";
-import SalesSignup from "../components/SalesSignup.astro";
+import SalesSignupDialog from "../components/SalesSignupDialog.astro";
 import RoadmapGraph from "../features/roadmap/RoadmapGraph.astro";
 import slugify from "slugify";
 
@@ -28,7 +28,7 @@ const milestones = entries.map(({ data }, index) => ({
   />
 
   <div class="contact-container">
-    <section class="contact-card" id="sales-signup">
+    <section class="contact-card" id="roadmap-contact">
       <h2>Want your own copy?</h2>
       <p>
         <strong>Want to be there when each of these commits lands?</strong> Follow
@@ -38,9 +38,12 @@ const milestones = entries.map(({ data }, index) => ({
         > or check out <a href="/volume-0">Volume 0</a> for the full details on each
         issue.
       </p>
-      <SalesSignup tag="roadmap-page" />
+      <button class="signup-button" type="button" data-open-sales-signup>
+        Join the waiting list
+      </button>
     </section>
   </div>
+  <SalesSignupDialog />
 </PageLayout>
 
 <style>
@@ -66,6 +69,28 @@ const milestones = entries.map(({ data }, index) => ({
 
   .contact-card > p {
     text-wrap: pretty;
+  }
+
+  .signup-button {
+    min-height: 44px;
+    margin-top: 20px;
+    padding: 8px 18px;
+    border: 2px solid var(--terminal-dark);
+    border-radius: 10px;
+    background: var(--terminal-dark);
+    color: white;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .signup-button:hover {
+    background: var(--fujo-red);
+  }
+
+  .signup-button:focus-visible {
+    outline: 2px solid var(--fujo-red);
+    outline-offset: 3px;
   }
 
   @container roadmap-contact (max-width: 450px) {

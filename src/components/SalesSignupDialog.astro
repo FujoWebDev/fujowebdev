@@ -1,0 +1,106 @@
+---
+import SalesSignup from "./SalesSignup.astro";
+---
+
+<dialog id="sales-signup" aria-labelledby="sales-signup-title">
+  <div class="dialog-card">
+    <button class="close" type="button" aria-label="Close waiting list signup">
+      <span aria-hidden="true">×</span>
+    </button>
+    <h2 id="sales-signup-title">Let me know when it’s out!</h2>
+    <SalesSignup tag="roadmap-page" />
+  </div>
+</dialog>
+
+<script>
+  const dialog = document.querySelector<HTMLDialogElement>("#sales-signup");
+  const closeButton = dialog?.querySelector<HTMLButtonElement>(".close");
+  let trigger: HTMLElement | null = null;
+
+  const openDialog = (event: Event) => {
+    event.preventDefault();
+    trigger = event.currentTarget as HTMLElement;
+    dialog?.showModal();
+    dialog?.querySelector<HTMLInputElement>('input[type="email"]')?.focus();
+  };
+
+  document
+    .querySelectorAll<HTMLElement>('[href="#sales-signup"], [data-open-sales-signup]')
+    .forEach((element) => element.addEventListener("click", openDialog));
+
+  closeButton?.addEventListener("click", () => dialog?.close());
+  dialog?.addEventListener("click", (event) => {
+    if (event.target === dialog) dialog.close();
+  });
+  dialog?.addEventListener("close", () => trigger?.focus());
+</script>
+
+<style>
+  dialog {
+    width: min(550px, calc(100% - 30px));
+    max-height: calc(100dvh - 30px);
+    margin: auto;
+    padding: 0;
+    overflow: visible;
+    color: var(--text-color-base);
+    border: 0;
+    border-radius: 16px;
+    background: transparent;
+    overscroll-behavior: contain;
+  }
+
+  dialog::backdrop {
+    background: rgb(70 66 88 / 72%);
+  }
+
+  .dialog-card {
+    position: relative;
+    padding: 28px 35px 32px;
+    border: 2px solid var(--terminal-dark);
+    border-radius: 16px;
+    background: white;
+    box-shadow: 6px 6px 0 0 var(--fujo-red);
+  }
+
+  h2 {
+    padding-right: 36px;
+    font-size: 2.2rem;
+  }
+
+  .close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: grid;
+    width: 44px;
+    height: 44px;
+    place-items: center;
+    border: 2px solid transparent;
+    border-radius: 50%;
+    background: transparent;
+    color: var(--terminal-dark);
+    font-size: 2rem;
+    line-height: 1;
+    cursor: pointer;
+  }
+
+  .close:hover {
+    color: var(--fujo-red);
+  }
+
+  .close:focus-visible {
+    border-color: currentColor;
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+  }
+
+  @media (max-width: 450px) {
+    .dialog-card {
+      padding: 24px 20px 28px;
+    }
+
+    h2 {
+      font-size: 1.8rem;
+    }
+  }
+</style>

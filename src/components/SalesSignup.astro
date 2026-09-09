@@ -1,25 +1,61 @@
 ---
+interface Props {
+  tag: string;
+}
+
+import Socials from "./Socials.astro";
+
 const { tag } = Astro.props;
+const emailId = `sales-signup-email-${tag}`;
+const newsletterTarget = `fujocoded-newsletter-${tag}`;
 ---
 
-<div class="signup">
-  <p>Sign up here to be notified when the guide is available for purchase:</p>
+<div class="signup" data-newsletter-option>
+  <p class="signup-description">
+    Get an email when FujoGuide is available to buy.
+  </p>
+  <label class="newsletter-option">
+    <input type="checkbox" data-newsletter-opt-in />
+    <span>Keep me posted on all FujoCoded projects, including FujoGuide.</span>
+  </label>
+  <label class="email-label" for={emailId}>Email address</label>
   <form
+    data-guide-signup
     action={`https://buttondown.com/api/emails/embed-subscribe/fujoguide`}
     method="post"
     target="popupwindow"
-    onsubmit={`"window.open('https://buttondown.com/fujoguide', 'popupwindow')"`}
+    onsubmit="window.open('https://buttondown.com/fujoguide', 'popupwindow')"
   >
     <input
+      id={emailId}
       type="email"
       name="email"
       required
+      autocomplete="email"
       placeholder="boba-tan@fujocoded.com"
-      aria-label="Email"
     />
-    <input type="submit" value="sign up" />
+    <input type="submit" value="Notify me" />
     <input type="hidden" value={tag} name="tag" />
   </form>
+  <div class="signup-links">
+    <p>
+      Learn more at <a href="https://fujocoded.com">FujoCoded</a> and follow us online:
+    </p>
+    <Socials />
+  </div>
+  <form
+    hidden
+    data-newsletter-signup
+    action="https://buttondown.email/api/emails/embed-subscribe/fujocoded"
+    method="post"
+    target={newsletterTarget}
+  >
+    <input type="email" name="email" required />
+  </form>
+  <iframe
+    hidden
+    name={newsletterTarget}
+    title="FujoCoded newsletter subscription response"></iframe>
   <div class="thank-you">
     Your email has been added to our list. We look forward to sharing <em
       >The Fujoshi Guide to Web Development
@@ -27,15 +63,45 @@ const { tag } = Astro.props;
   </div>
 </div>
 
+<script>
+  document
+    .querySelectorAll<HTMLElement>(".signup[data-newsletter-option]")
+    .forEach((signup) => {
+      const guideForm = signup.querySelector<HTMLFormElement>(
+        "[data-guide-signup]"
+      );
+      const guideEmail = guideForm?.querySelector<HTMLInputElement>(
+        'input[type="email"]'
+      );
+      const optIn = signup.querySelector<HTMLInputElement>(
+        "[data-newsletter-opt-in]"
+      );
+      const newsletterForm = signup.querySelector<HTMLFormElement>(
+        "[data-newsletter-signup]"
+      );
+      const newsletterEmail = newsletterForm?.querySelector<HTMLInputElement>(
+        'input[type="email"]'
+      );
+
+      guideForm?.addEventListener("submit", () => {
+        if (!optIn?.checked || !guideEmail?.validity.valid || !newsletterEmail)
+          return;
+        newsletterEmail.value = guideEmail.value;
+        newsletterForm?.requestSubmit();
+      });
+    });
+</script>
+
 <style>
   .signup:not(.success) .thank-you {
     display: none;
   }
   .signup.success form,
-  .signup.success p {
+  .signup.success label,
+  .signup.success .signup-description {
     display: none;
   }
-  form {
+  [data-guide-signup] {
     display: flex;
     width: 100%;
     max-width: 350px;
@@ -44,11 +110,46 @@ const { tag } = Astro.props;
     --radius: 10px;
     font-size: 1em;
   }
+  label {
+    display: block;
+    line-height: 1.4;
+  }
+  .newsletter-option {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-top: 16px;
+    cursor: pointer;
+  }
+  .email-label {
+    margin-top: 16px;
+    font-weight: 700;
+  }
+  [data-newsletter-option] [data-guide-signup] {
+    margin-top: 6px;
+  }
+  .newsletter-option input {
+    flex: 0 0 auto;
+    width: 22px;
+    height: 22px;
+    margin-top: 1px;
+    accent-color: var(--fujo-red);
+  }
+  .signup-links {
+    margin-top: 24px;
+    text-align: center;
+  }
+  .signup-links p {
+    margin: 0;
+  }
+  .signup-links :global(ul) {
+    margin: 12px auto 0;
+  }
   input {
     height: 43px;
     font-family: sans-serif;
   }
-  form:has(:focus) :where(input, button) {
+  [data-guide-signup]:has(:focus) input[type="email"] {
     --form-color: var(--fujo-red);
   }
   input[type="email"] {
