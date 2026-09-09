@@ -1,7 +1,13 @@
 ---
 const themeColor = "#c29fc9";
 
-const url = "https://fujoweb.dev";
+const url = import.meta.env.DEV ? Astro.url.origin : Astro.site?.origin;
+
+if (!url) {
+  throw new Error(
+    "OgTags requires the site URL to be configured in astro.config.mjs"
+  );
+}
 
 interface Props {
   description?: string;
@@ -10,9 +16,9 @@ interface Props {
 }
 
 const {
-  title = "The Fujoshi Guide to Web Development — Fully Funded on Kickstarter",
-  description = "The Fujoshi Guide to Web Development is an upcoming series of instructional zines about coding featuring anthropomorphizations of programming languages and concepts.",
-  image: imagePath = "/images/og-card.png",
+  title = "The Fujoshi Guide to Web Development — Build the Web You want!",
+  description = "Learn web development with our approachable coding zines, featuring your (next) favorite fictional characters. For fandom & beyond!",
+  image: imagePath = "/images/og-cards/og-card.png",
 } = Astro.props;
 
 const image = new URL(imagePath, url).href;
