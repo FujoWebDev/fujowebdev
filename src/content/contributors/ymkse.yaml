@@ -1,0 +1,34 @@
+# ────────────────────────────────────────────────────────────
+# DO NOT EDIT — synced from FujoWebDev/contributors @ 41e1ae70e729
+# Source: contributors/ymkse.yaml
+# Refresh: pnpm sync
+# ────────────────────────────────────────────────────────────
+name: ymkse
+avatar: "./avatars/ymkse.jpg"
+type:
+  - community
+  - contractor
+roles:
+  Volume 0 Kickstarter:
+    - Artist
+    - role: Character Designer
+      details: HTML & CSS
+  Volume 0:
+    - role: Character Designer
+      details: HTML & CSS
+  Volume 0 Issue 1:
+    - role: Artist
+      details: Cover & HTML Maid
+  Fandom Cookies:
+    - role: Artist
+      details: Boba Prophet, Cookie Run(away), Cookie-xplosion
+    - Art Direction
+  AskFujo:
+    - role: Artist
+      details: Anon Icons and Character Reveal Art
+contacts:
+  - https://bsky.app/profile/ymkse.bsky.social
+  - https://twitter.com/ymkse_art
+  - https://ymkse.carrd.co/
+  - https://ymkse.tumblr.com/
+  - https://ko-fi.com/emi_ymkse

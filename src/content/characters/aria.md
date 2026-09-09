@@ -19,9 +19,14 @@ tropes:
     url: https://tvtropes.org/pmwiki/pmwiki.php/Main/LargeHam
   - name: Translator buddy
     url: https://tvtropes.org/pmwiki/pmwiki.php/Main/TranslatorBuddy
-trivia: While his full name is WAI-ARIA, most refer to him simply as ARIA. Incidentally, it means "air" in Italian.
+trivia:
+  While his full name is WAI-ARIA, most refer to him simply as ARIA.
+  Incidentally, it means "air" in Italian.
 ---
 
-Born to a rich family, ARIA's life was upended when he was sent to work among Browserland's plebs. Smitten by HTML and his work ethic, he's now his most loyal colleague, and a cup ramen connoisseur.
+Born to a rich family, ARIA's life was upended when he was sent to work among
+Browserland's plebs. Smitten by HTML and his work ethic, he's now his most loyal
+colleague, and a cup ramen connoisseur.
 
-His constant talking and his intuitive empathy make him the spokesperson of the HTML/CSS/ARIA trio. His generous allowance also bankrolls their adventures.
+His constant talking and his intuitive empathy make him the spokesperson of the
+HTML/CSS/ARIA trio. His generous allowance also bankrolls their adventures.

@@ -5,12 +5,12 @@ interface Props {
   multiLine?: boolean;
 }
 
-const props = Astro.props;
+const { multiLine } = Astro.props;
 ---
 
 <header
   class:list={{
-    "single-line": !props.multiLine,
+    "single-line": !multiLine,
   }}
 >
   <Nav />

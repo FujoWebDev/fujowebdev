@@ -19,9 +19,14 @@ tropes:
     url: https://tvtropes.org/pmwiki/pmwiki.php/Main/ThePrimaDonna
   - name: Angel/Devil Ship
     url: https://tvtropes.org/pmwiki/pmwiki.php/Main/AngelDevilShipping
-trivia: Git (the technology) will officially be 18 on April 7th, 2023. This equals `10010` years old in programming years.
+trivia:
+  Git (the technology) will officially be 18 on April 7th, 2023. This equals
+  `10010` years old in programming years.
 ---
 
-`Localhost HQ`’s resident catboy is as cute as he is changeable. Kind and sweet on the surface, his friendly demeanor can easily turn catty when provoked out of strangers’ sight.
+`Localhost HQ`’s resident catboy is as cute as he is changeable. Kind and sweet
+on the surface, his friendly demeanor can easily turn catty when provoked out of
+strangers’ sight.
 
-Despite his moodiness, Git's photographic memory makes him a powerful ally to those who learn how to tame him.
+Despite his moodiness, Git's photographic memory makes him a powerful ally to
+those who learn how to tame him.

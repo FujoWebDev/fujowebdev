@@ -75,7 +75,7 @@ const { name, likes, dislikes, tropes, trivia, imageSrc } = Astro.props;
 <script>
   const buttons = document.querySelectorAll("button.more");
   buttons.forEach((button) => {
-    button.addEventListener("click", (e) => {
+    button.addEventListener("click", () => {
       const article = button.closest("article");
       article?.classList.add("show-all");
     });

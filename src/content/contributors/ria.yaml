@@ -1,0 +1,25 @@
+# ────────────────────────────────────────────────────────────
+# DO NOT EDIT — synced from FujoWebDev/contributors @ 41e1ae70e729
+# Source: contributors/ria.yaml
+# Refresh: pnpm sync
+# ────────────────────────────────────────────────────────────
+name: ria
+avatar: ./avatars/riazaia.png
+type:
+  - community
+  - contractor
+roles:
+  Volume 0:
+    - Additional Coding
+  Volume 0 Issue 1:
+    - Additional Coding
+  Fandom Cookies:
+    - role: Programming
+      details: General Coding
+    - Digital Item Pack Assembly
+  AskFujo:
+    - role: General Help
+      details: Copy Help, Alt Text and Logistics Aid
+contacts:
+  - https://github.com/riazaia
+  - https://bsky.app/profile/riazaia.bsky.social

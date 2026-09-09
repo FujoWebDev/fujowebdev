@@ -1,0 +1,53 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["typescript", "unicorn", "oxc"],
+  "options": {
+    "typeAware": true
+  },
+  "categories": {
+    "correctness": "error",
+    "nursery": "off",
+    "style": "off",
+    "perf": "off",
+    "pedantic": "off",
+    "restriction": "off",
+    "suspicious": "warn"
+  },
+  "rules": {
+    "id-length": [
+      "error",
+      {
+        "min": 3,
+        "exceptions": []
+      }
+    ],
+    "no-console": [
+      "warn",
+      {
+        "allow": ["info", "error", "warn"]
+      }
+    ],
+    "typescript/consistent-type-imports": [
+      "warn",
+      {
+        "disallowTypeAnnotations": true,
+        "fixStyle": "separate-type-imports",
+        "prefer": "type-imports"
+      }
+    ],
+    "typescript/no-base-to-string": "warn",
+    "prefer-const": "error",
+    "no-else-return": "warn",
+    "prefer-template": "warn",
+    "prefer-destructuring": "warn",
+    "no-useless-catch": "warn",
+    "unicorn/no-array-sort": "warn",
+    "unicorn/prefer-logical-operator-over-ternary": "warn",
+    "unicorn/throw-new-error": "warn",
+    "typescript/no-inferrable-types": "warn",
+    "typescript/consistent-type-exports": "warn"
+  },
+  "env": {
+    "builtin": true
+  }
+}

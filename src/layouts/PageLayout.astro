@@ -1,6 +1,6 @@
 ---
 import Header from "../components/Header.astro";
-import { ViewTransitions } from "astro:transitions";
+import { ClientRouter } from "astro:transitions";
 import OgTags from "../components/OgTags.astro";
 import Socials from "../components/Socials.astro";
 
@@ -24,7 +24,7 @@ const {
     <meta name="generator" content={Astro.generator} />
     <OgTags description={pageDescription} title={pageTitle} />
     <link rel="stylesheet" href="https://use.typekit.net/exd6spk.css" />
-    <ViewTransitions />
+    <ClientRouter />
     <style is:global>
       /* Handmade reset */
       * {
