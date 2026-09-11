@@ -1,24 +1,23 @@
 ---
 interface Props {
   tag: string;
+  /** Skip the FujoCoded link + social row, e.g. when the page footer already shows it. */
+  hideLinks?: boolean;
 }
 
 import Socials from "./Socials.astro";
 
-const { tag } = Astro.props;
+const { tag, hideLinks = false } = Astro.props;
 const emailId = `sales-signup-email-${tag}`;
+const descriptionId = `sales-signup-description-${tag}`;
 const newsletterTarget = `fujocoded-newsletter-${tag}`;
 ---
 
 <div class="signup" data-newsletter-option>
-  <p class="signup-description">
-    Get an email when FujoGuide is available to buy.
+  <p id={descriptionId} class="signup-description">
+    Join the FujoGuide waiting list and we’ll email you when it’s available to
+    buy.
   </p>
-  <label class="newsletter-option">
-    <input type="checkbox" data-newsletter-opt-in />
-    <span>Keep me posted on all FujoCoded projects, including FujoGuide.</span>
-  </label>
-  <label class="email-label" for={emailId}>Email address</label>
   <form
     data-guide-signup
     action={`https://buttondown.com/api/emails/embed-subscribe/fujoguide`}
@@ -26,27 +25,40 @@ const newsletterTarget = `fujocoded-newsletter-${tag}`;
     target="popupwindow"
     onsubmit="window.open('https://buttondown.com/fujoguide', 'popupwindow')"
   >
-    <input
-      id={emailId}
-      type="email"
-      name="email"
-      required
-      autocomplete="email"
-      placeholder="boba-tan@fujocoded.com"
-    />
-    <input type="submit" value="Notify me" />
+    <label class="email-field" for={emailId}>
+      <span class="email-label">Email address</span>
+      <input
+        id={emailId}
+        type="email"
+        name="email"
+        required
+        autocomplete="email"
+        aria-describedby={descriptionId}
+        placeholder="boba-tan@fujocoded.com"
+      />
+    </label>
+    <label class="newsletter-option">
+      <input type="checkbox" data-newsletter-opt-in />
+      <span>Also send me updates about other FujoCoded projects.</span>
+    </label>
+    <button type="submit">Join the waiting list</button>
     <input type="hidden" value={tag} name="tag" />
   </form>
-  <div class="signup-links">
-    <p>
-      Learn more at <a href="https://fujocoded.com">FujoCoded</a> and follow us online:
-    </p>
-    <Socials />
-  </div>
+  {
+    !hideLinks && (
+      <div class="signup-links">
+        <p>
+          <a href="https://fujocoded.com">Visit FujoCoded</a> and follow us
+          online.
+        </p>
+        <Socials socialsOnly />
+      </div>
+    )
+  }
   <form
     hidden
     data-newsletter-signup
-    action="https://buttondown.email/api/emails/embed-subscribe/fujocoded"
+    action="https://buttondown.com/api/emails/embed-subscribe/fujocoded"
     method="post"
     target={newsletterTarget}
   >
@@ -56,11 +68,6 @@ const newsletterTarget = `fujocoded-newsletter-${tag}`;
     hidden
     name={newsletterTarget}
     title="FujoCoded newsletter subscription response"></iframe>
-  <div class="thank-you">
-    Your email has been added to our list. We look forward to sharing <em
-      >The Fujoshi Guide to Web Development
-    </em> with you!
-  </div>
 </div>
 
 <script>
@@ -93,40 +100,44 @@ const newsletterTarget = `fujocoded-newsletter-${tag}`;
 </script>
 
 <style>
-  .signup:not(.success) .thank-you {
-    display: none;
-  }
-  .signup.success form,
-  .signup.success label,
-  .signup.success .signup-description {
-    display: none;
-  }
   [data-guide-signup] {
-    display: flex;
-    width: 100%;
-    max-width: 350px;
-    margin: 20px auto;
+    display: grid;
+    gap: var(--signup-form-gap);
+    width: min(100%, var(--signup-form-measure));
+    margin-block: var(--signup-copy-to-form) 0;
+    margin-inline: auto;
+    text-align: left;
     --form-color: var(--terminal-dark);
     --radius: 10px;
     font-size: 1em;
+  }
+  .signup-description {
+    margin: 0;
+  }
+  .signup {
+    container-type: inline-size;
+    --signup-copy-to-form: 20px;
+    --signup-form-gap: 16px;
+    --signup-form-measure: 32rem;
+    --signup-form-to-follow-up: 32px;
+    --signup-follow-up-gap: 12px;
   }
   label {
     display: block;
     line-height: 1.4;
   }
+  .email-field {
+    display: grid;
+    gap: 8px;
+  }
   .newsletter-option {
     display: flex;
     align-items: flex-start;
     gap: 10px;
-    margin-top: 16px;
     cursor: pointer;
   }
   .email-label {
-    margin-top: 16px;
     font-weight: 700;
-  }
-  [data-newsletter-option] [data-guide-signup] {
-    margin-top: 6px;
   }
   .newsletter-option input {
     flex: 0 0 auto;
@@ -136,44 +147,76 @@ const newsletterTarget = `fujocoded-newsletter-${tag}`;
     accent-color: var(--fujo-red);
   }
   .signup-links {
-    margin-top: 24px;
+    width: min(100%, var(--signup-form-measure));
+    margin-inline: auto;
+    margin-top: var(--signup-form-to-follow-up);
     text-align: center;
   }
   .signup-links p {
     margin: 0;
   }
-  .signup-links :global(ul) {
-    margin: 12px auto 0;
+  .signup-links a {
+    color: var(--terminal-dark);
+    text-decoration-color: var(--fujo-red);
+    text-decoration-thickness: 2px;
   }
-  input {
+  .signup-links a:hover {
+    background: var(--fujo-light-blue);
+  }
+  .signup-links :global(ul) {
+    margin: var(--signup-follow-up-gap) auto 0;
+  }
+  input,
+  button {
     height: 43px;
     font-family: sans-serif;
   }
-  [data-guide-signup]:has(:focus) input[type="email"] {
+  .email-field:focus-within input[type="email"] {
     --form-color: var(--fujo-red);
   }
   input[type="email"] {
     width: 100%;
     padding: 7px 15px;
-    border-radius: var(--radius) 0 0 var(--radius);
+    border-radius: var(--radius);
     border: 2px solid var(--form-color);
-    border-right: 0;
     font-size: 15px;
     background-color: var(--fujo-cream);
   }
-  input:focus-within {
+  input:focus,
+  button:focus {
     outline: none;
   }
-  input[type="submit"] {
-    width: 150px;
-    border-radius: 0 var(--radius) var(--radius) 0;
+  button {
+    width: 100%;
+    min-height: 48px;
+    padding-inline: 18px;
+    border-radius: var(--radius);
     border: 2px solid var(--form-color);
     background-color: var(--form-color);
     color: white;
     font-weight: bold;
     font-size: 15px;
   }
-  input[type="submit"]:hover {
+  button:hover {
     cursor: pointer;
+  }
+  button:hover,
+  button:focus-visible {
+    --form-color: var(--fujo-red);
+  }
+  button:focus-visible {
+    outline: 2px solid var(--fujo-red);
+    outline-offset: 3px;
+  }
+
+  @container (max-width: 23rem) {
+    [data-guide-signup] {
+      --signup-copy-to-form: 16px;
+      --signup-form-gap: 14px;
+    }
+    .signup-links {
+      --signup-form-to-follow-up: 28px;
+      --signup-follow-up-gap: 8px;
+    }
   }
 </style>

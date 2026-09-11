@@ -1,7 +1,6 @@
 ---
 import PageLayout from "../layouts/PageLayout.astro";
 import SalesSignup from "../components/SalesSignup.astro";
-import { Icon } from "astro-icon/components";
 ---
 
 <PageLayout multiLineHeader>
@@ -64,18 +63,8 @@ import { Icon } from "astro-icon/components";
   </section>
   <section class="contact-card" id="sales-signup">
     <h2>Want your own copy?</h2>
-    <SalesSignup tag="main-page" />
+    <SalesSignup tag="main-page" hideLinks />
   </section>
-  <a
-    class="call-to-action"
-    href="https://www.kickstarter.com/projects/essential-randomness/the-fujoshi-guide-to-web-development"
-    >Funded &amp; delivered! See our original pitch on
-    <Icon
-      name="logos:kickstarter"
-      title="Kickstarter logo"
-      class="kickstarter"
-    />
-  </a>
 
   <style>
     .roster img {
@@ -83,43 +72,35 @@ import { Icon } from "astro-icon/components";
       width: 100%;
       display: block;
     }
-    .call-to-action {
-      background-color: white;
-      padding: 15px 20px;
-      border: 2px solid var(--kickstarter-green);
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-      font-weight: bold;
-      color: #317163;
-      text-decoration: none;
-      align-items: center;
-      max-width: 400px;
-      border-radius: 20px;
-      box-shadow: 0 3px 14px 0 rgba(0, 0, 0, 0.1);
-      margin: 0 auto;
-      transition: all 150ms ease-out;
-      line-height: 1rem;
-      margin-block-start: 2.4rem;
-    }
-    .call-to-action:hover {
-      cursor: pointer;
-      box-shadow: 0 3px 16px 0 rgba(0, 0, 0, 0.2);
-      transform: scale(1.01);
-    }
-    .call-to-action > .kickstarter {
-      display: block;
-      font-size: 2rem !important;
-    }
     .contact-card {
+      width: min(100%, 600px);
+      margin-block-start: 1rem;
+      padding: 36px 40px 40px;
       background-color: white;
-      padding: 20px 35px;
-      border-radius: 16px;
-      box-shadow: 6px 6px 0px 0px var(--fujo-red);
       border: 2px solid var(--terminal-dark);
+      border-radius: 20px;
+      box-shadow: 8px 8px 0 0 var(--fujo-red);
+      text-align: center;
     }
     .contact-card h2 {
-      font-size: 2.2rem;
+      font-size: 2.4rem;
+      margin-bottom: 12px;
+      text-wrap: balance;
+    }
+    .contact-card :global(.signup-description) {
+      max-width: 32rem;
+      margin-inline: auto;
+      text-wrap: pretty;
+    }
+    @media (max-width: 520px) {
+      .contact-card {
+        padding: 28px 20px 30px;
+        border-radius: 16px;
+        box-shadow: 6px 6px 0 0 var(--fujo-red);
+      }
+      .contact-card h2 {
+        font-size: 2rem;
+      }
     }
 
     ul {
