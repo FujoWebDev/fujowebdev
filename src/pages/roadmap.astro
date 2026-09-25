@@ -4,6 +4,7 @@ import PageLayout from "../layouts/PageLayout.astro";
 import SalesSignupDialog from "../components/SalesSignupDialog.astro";
 import RoadmapGraph from "../features/roadmap/RoadmapGraph.astro";
 import slugify from "slugify";
+import ogCard from "../images/og-cards/roadmap.png";
 
 const entries = await getCollection("roadmap");
 const anchors = entries.map((entry) => slugify(entry.id));
@@ -19,7 +20,7 @@ const milestones = entries.map(({ data }, index) => ({
   mainWidth="1200px"
   pageTitle="Roadmap - The Fujoshi Guide to Web Development"
   pageDescription="Where each issue of The Fujoshi Guide to Web Development stands, git log style."
-  pageImage={"/images/og-cards/roadmap.png"}
+  pageImage={ogCard}
 >
   <RoadmapGraph
     milestones={milestones}

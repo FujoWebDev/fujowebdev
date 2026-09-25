@@ -1,10 +1,11 @@
 import icon from "astro-icon";
 import { defineConfig } from "astro/config";
+import characterOgCards from "./src/integrations/character-og-cards";
 
 // https://astro.build/config
 export default defineConfig({
   site: "https://fujoweb.dev",
-  integrations: [icon()],
+  integrations: [icon(), characterOgCards()],
   redirects: {
     "/streams": {
       destination: "https://www.essentialrandomness.com/streams",

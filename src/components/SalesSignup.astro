@@ -37,11 +37,11 @@ const newsletterTarget = `fujocoded-newsletter-${tag}`;
         placeholder="boba-tan@fujocoded.com"
       />
     </label>
+    <button type="submit">Join the waiting list</button>
     <label class="newsletter-option">
-      <input type="checkbox" data-newsletter-opt-in />
+      <input type="checkbox" data-newsletter-opt-in checked />
       <span>Also send me updates about other FujoCoded projects.</span>
     </label>
-    <button type="submit">Join the waiting list</button>
     <input type="hidden" value={tag} name="tag" />
   </form>
   {
@@ -169,7 +169,7 @@ const newsletterTarget = `fujocoded-newsletter-${tag}`;
   input,
   button {
     height: 43px;
-    font-family: sans-serif;
+    font-family: inherit;
   }
   .email-field:focus-within input[type="email"] {
     --form-color: var(--fujo-red);
@@ -179,7 +179,7 @@ const newsletterTarget = `fujocoded-newsletter-${tag}`;
     padding: 7px 15px;
     border-radius: var(--radius);
     border: 2px solid var(--form-color);
-    font-size: 15px;
+    font-size: 1rem;
     background-color: var(--fujo-cream);
   }
   input:focus,
@@ -194,8 +194,9 @@ const newsletterTarget = `fujocoded-newsletter-${tag}`;
     border: 2px solid var(--form-color);
     background-color: var(--form-color);
     color: white;
-    font-weight: bold;
-    font-size: 15px;
+    font-weight: 800;
+    font-size: 1rem;
+    letter-spacing: 0.01em;
   }
   button:hover {
     cursor: pointer;

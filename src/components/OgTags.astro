@@ -1,4 +1,7 @@
 ---
+import type { ImageMetadata } from "astro";
+import defaultImage from "../images/og-cards/og-card.png";
+
 const themeColor = "#c29fc9";
 
 const url = import.meta.env.DEV ? Astro.url.origin : Astro.site?.origin;
@@ -12,16 +15,16 @@ if (!url) {
 interface Props {
   description?: string;
   title?: string;
-  image?: string;
+  image?: ImageMetadata;
 }
 
 const {
   title = "The Fujoshi Guide to Web Development — Build the Web You want!",
   description = "Learn web development with our approachable coding zines, featuring your (next) favorite fictional characters. For fandom & beyond!",
-  image: imagePath = "/images/og-cards/og-card.png",
+  image = defaultImage,
 } = Astro.props;
 
-const image = new URL(imagePath, url).href;
+const imageUrl = new URL(image.src, url).href;
 ---
 
 <meta property="og:locale" content="en_US" />
@@ -31,9 +34,11 @@ const image = new URL(imagePath, url).href;
 <meta property="og:url" content={url} />
 <meta property="og:description" content={description} />
 <meta property="og:site_name" content="FujoWeb.dev" />
-<meta property="og:image" content={image} />
-<meta property="og:image:secure_url" content={image} />
-<meta property="og:image:type" content="image/png" />
+<meta property="og:image" content={imageUrl} />
+<meta property="og:image:secure_url" content={imageUrl} />
+<meta property="og:image:type" content={`image/${image.format}`} />
+<meta property="og:image:width" content={String(image.width)} />
+<meta property="og:image:height" content={String(image.height)} />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:creator" content="FujoWebDev" />
 <meta name="twitter:title" content={title} />

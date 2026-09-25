@@ -2,21 +2,12 @@
 import PageLayout from "../layouts/PageLayout.astro";
 import SalesSignup from "../components/SalesSignup.astro";
 import PreviewStack from "../components/PreviewStack.astro";
+import GitCommitLog from "../components/GitCommitLog.astro";
 import GitIntro from "../images/git-intro.png";
 import GitCoverFront from "../images/git-cover-front.png";
 import GitCoverBack from "../images/git-cover-back.png";
 import GitScenario from "../images/git-scenario.png";
-import ComingSoon from "../images/coming-soon.png";
-
-const gitPreviews = [
-  { src: GitCoverFront, alt: "Issue 1 cover" },
-  { src: GitIntro, alt: "Git's introduction from the guide" },
-  { src: GitScenario, alt: "Scenario page from Issue 1" },
-  { src: GitCoverBack, alt: "Issue 1 back cover" },
-];
-const comingSoon = [
-  { src: ComingSoon, alt: "Cover with coming soon written on top" },
-];
+import GitCloudCover from "../images/git-cloud-cover.png";
 ---
 
 <PageLayout multiLineHeader>
@@ -35,52 +26,65 @@ const comingSoon = [
     <SalesSignup tag="volume-0" />
   </div>
   <article class="issue">
-    <h2 id="issue-1"><a href="#issue-1">Issue 1 – Using Git locally</a></h2>
+    <h2 id="issue-1"><a class="heading-link" href="#issue-1">Issue 1 – Using Git locally</a></h2>
     <div>
-      <PreviewStack images={gitPreviews} />
+      <PreviewStack
+        images={[
+          { src: GitCoverFront, alt: "Issue 1 cover" },
+          { src: GitIntro, alt: "Git's introduction from the guide" },
+          { src: GitScenario, alt: "Scenario page from Issue 1" },
+          { src: GitCoverBack, alt: "Issue 1 back cover" },
+        ]}
+      />
       <div class="content">
         <section>
           <h3>In this Issue</h3>
           <p>
-            Boba-tan learns how Git can help make tracking your code changes and
-            sorting through different versions of a codebase a breeze–no matter
-            the size of your wardrobe!
+            Meet Git and learn his most fundamental commands through a dress-up
+            game with his friends CSS, HTML, ARIA, and Boba-tan! Tracking your
+            code changes and sorting through different versions of a codebase
+            has never been such a breeze–no matter the size of your wardrobe.
           </p>
         </section>
 
         <section>
           <h3>Topics</h3>
-          <ul>
-            <li>What is version control (Git)?</li>
-            <li>The commit cycle</li>
-            <li>Navigating and manipulating code history</li>
-          </ul>
+          <GitCommitLog
+            entries={[
+              { message: "What is version control (Git)?" },
+              { message: "The commit cycle" },
+              { message: "Navigating and manipulating code history" },
+            ]}
+          />
         </section>
 
-        <section>
-          <h3>The scenario</h3>
-          <p>
-            Meet Git and learn about his most fundamental commands through a
-            dress-up game involving his friends: CSS, HTML, ARIA, and Boba-tan.
-          </p>
-        </section>
-
-        <section>
+        <section class="status">
           <h3>Current status</h3>
-          <p>
-            <span class="badge">
-              🎉 Digitally Released to Kickstarter Backers! 🎉</span
-            >
-          </p>
-
-          <ul>
-            <li>Public release coming 2026</li>
-            <li>
-              Early access sales for <a href="https://www.fujocoded.com"
-                >FujoCoded</a
-              >'s special events
-            </li>
-          </ul>
+          <GitCommitLog
+            entries={[
+              {
+                state: "complete",
+                hash: "c001ee",
+                type: "release",
+                tone: "teal",
+                message: "**🎉 Digitally Released to Kickstarter Backers! 🎉**",
+              },
+              {
+                state: "pending",
+                type: "release",
+                tone: "purple",
+                message: "Public release coming 2026",
+              },
+              {
+                state: "pending",
+                type: "sales",
+                tone: "red",
+                message:
+                  "Early access for [FujoCoded](https://www.fujocoded.com)'s special events",
+              },
+            ]}
+            variant="status"
+          />
         </section>
       </div>
     </div>
@@ -88,85 +92,77 @@ const comingSoon = [
 
   <article class="issue">
     <h2 id="issue-2">
-      <a href="#issue-2">Issue 2 – Using Git(Hub) in the cloud</a>
+      <a class="heading-link" href="#issue-2">Issue 2 – Version Control in the Cloud (ft. GitHub)</a>
     </h2>
     <div>
-      <PreviewStack images={comingSoon} disabled />
+      <PreviewStack
+        images={[
+          {
+            src: GitCloudCover,
+            alt: "Issue 2 cover: Version Control in the Cloud",
+          },
+        ]}
+      />
       <div class="content">
         <section>
           <h3>In this Issue</h3>
           <p>
-            When Boba-tan's laptop breaks in the middle of her latest project,
-            Git and GitHub team up to save the day by combining their powers to
-            back up code to the cloud, help her continue working, and prevent
-            future disasters.
+            When Boba-tan's laptop dies in the middle of her latest project, Git
+            and GitHub team up to save the day! With their powers combined (and
+            her code in the cloud), Boba-tan can finally get back to the choice
+            that matters: should her shrine feature her blorbo's sexy monster
+            form, or his equally sexy human fansona?
           </p>
         </section>
 
         <section>
           <h3>Topics</h3>
-          <ul>
-            <li>Uploading code to remotes</li>
-            <li>Cloning a repository</li>
-            <li>Creating branches</li>
-            <li>Merging changes</li>
-          </ul>
+          <GitCommitLog
+            entries={[
+              { message: "Cloning and uploading (pushing) repositories" },
+              { message: "Working with branches" },
+              { message: "Merging changes" },
+              { message: "The pull request process" },
+            ]}
+          />
         </section>
 
-        <section>
-          <h3>The scenario</h3>
-          <p>
-            Explore how to avoid losing your code and work on changes in
-            parallel by using the combined power of Git and GitHub to recover
-            and improve Boba-tan's lost Blorbo Shrine.
-          </p>
-        </section>
-
-        <section>
+        <section class="status">
           <h3>Current status</h3>
-          <ul>
-            <li>Beta #1: Done 🎉</li>
-            <li>Beta #2: Liveblog on Socials 👀</li>
-          </ul>
+          <GitCommitLog
+            entries={[
+              {
+                state: "complete",
+                hash: "d4af7e",
+                type: "draft",
+                tone: "teal",
+                message: "First draft and beta read completed",
+              },
+              {
+                state: "pending",
+                type: "preview",
+                tone: "purple",
+                message:
+                  "**In production:** a (pre)²view for backers (see our [roadmap](/roadmap))",
+              },
+              {
+                state: "pending",
+                type: "release",
+                tone: "red",
+                message: "Digital release to Kickstarter backers",
+              },
+            ]}
+            variant="status"
+          />
         </section>
       </div>
     </div>
   </article>
 
-  <article class="issue">
-    <h2 id="issue-3">
-      <a href="#issue-3">Issue 3 – Open Source Collaboration</a>
-    </h2>
-    <div>
-      <PreviewStack images={comingSoon} disabled />
-      <div class="content">
-        <section>
-          <h3>In this Issue</h3>
-          <p>Work in progress, check back later</p>
-        </section>
-
-        <section>
-          <h3>Topics</h3>
-          <ul>
-            <li>Forking repositories</li>
-            <li>The pull request process</li>
-            <li>Opening issues</li>
-            <li>…and more</li>
-          </ul>
-        </section>
-
-        <section>
-          <h3>The scenario</h3>
-          <p>Work in progress, check back later</p>
-        </section>
-
-        <section>
-          <h3>Current status</h3>
-          <p>Brainstorming content and scenario</p>
-        </section>
-      </div>
-    </div>
-  </article>
+  <p class="note" id="issue-3">
+    <em>Looking for Issue 3?</em> The content originally planned for it has been folded
+    into <a href="#issue-2">Issue 2</a>.
+  </p>
   <style>
     article {
       width: 100%;
@@ -203,66 +199,129 @@ const comingSoon = [
     .content {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 32px;
+      min-width: 0;
     }
 
     .content h3 {
-      text-transform: none;
-      font-size: 1rem;
-      margin-top: 4px;
+      font-family: "freude", sans-serif;
+      font-weight: 400;
+      font-size: 1.35rem;
+      line-height: 1.1;
+      color: var(--terminal-dark);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .content h3::after {
+      content: "";
+      flex: 1;
+      height: 2px;
+      border-radius: 1px;
+      background: var(--terminal-dark);
+      opacity: 0.18;
     }
 
     .content > section {
       display: flex;
       flex-direction: column;
-      gap: 4px;
-      line-height: 1.5;
+      gap: 14px;
     }
 
-    .badge {
-      border: 2px dashed currentColor;
-      background-color: white;
-      display: inline-block;
-      font-weight: 800;
-      padding: 10px 16px;
-      padding-top: 12px;
-      margin-left: 15px;
-      margin-bottom: 10px;
-      border-radius: 12px;
-      display: inline-flex;
-    }
-
-    ul {
-      padding-left: 20px;
-      margin: 6px 0 0 0;
-    }
-
-    li {
+    .content p {
       margin: 0;
-      padding: 0;
-      line-height: 1.4;
+      line-height: 1.55;
+      text-wrap: pretty;
+    }
+
+    .note {
+      font-size: 0.9rem;
+      opacity: 0.8;
     }
 
     .sales {
+      width: 100%;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 19rem);
+      grid-template-areas:
+        "title form"
+        "desc form"
+        "links form";
+      grid-template-rows: auto auto 1fr;
+      column-gap: 40px;
+      align-items: start;
       background-color: white;
-      padding: 24px 40px;
+      padding: 28px 36px 32px;
       border-radius: 16px;
       box-shadow: 6px 6px 0px 0px var(--fujo-red);
       border: 2px solid var(--terminal-dark);
       margin-block: 24px;
     }
 
-    h2 a {
-      color: inherit;
-      text-decoration: none;
-      font-weight: inherit;
-      font-family: inherit;
+    .sales h2 {
+      grid-area: title;
+      margin-bottom: 8px;
+      text-wrap: balance;
     }
 
-    h2 a:hover {
-      color: inherit;
-      text-decoration: 3px underline wavy;
-      text-underline-offset: 5px;
+    .sales :global(.signup) {
+      display: contents;
+    }
+
+    .sales :global(.signup-description) {
+      grid-area: desc;
+      text-wrap: pretty;
+      line-height: 1.5;
+    }
+
+    .sales :global([data-guide-signup]) {
+      grid-area: form;
+      margin: 0;
+      width: 100%;
+    }
+
+    .sales :global(.signup-links) {
+      grid-area: links;
+      align-self: end;
+      width: auto;
+      margin: 20px 0 0;
+      text-align: left;
+    }
+
+    .sales :global(.signup-links ul) {
+      justify-content: flex-start;
+      margin-inline: 0;
+    }
+
+    @media (max-width: 700px) {
+      .sales {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-areas:
+          "title"
+          "desc"
+          "form"
+          "links";
+        grid-template-rows: auto;
+        text-align: center;
+        padding: 28px 24px 30px;
+      }
+
+      .sales :global([data-guide-signup]) {
+        margin-top: 20px;
+        width: min(100%, 32rem);
+        justify-self: center;
+      }
+
+      .sales :global(.signup-links) {
+        text-align: center;
+        margin-top: 28px;
+      }
+
+      .sales :global(.signup-links ul) {
+        justify-content: center;
+        margin-inline: auto;
+      }
     }
   </style>
 </PageLayout>

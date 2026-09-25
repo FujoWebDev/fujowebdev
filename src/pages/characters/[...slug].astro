@@ -1,0 +1,205 @@
+---
+import PageLayout from "../../layouts/PageLayout.astro";
+import CharacterCard from "../../components/CharacterCard.astro";
+import FAQs from "../../components/FAQs.astro";
+
+import { getCollection } from "astro:content";
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+
+export async function getStaticPaths() {
+  const characters = await getCollection("characters");
+  return [
+    { params: { slug: undefined }, props: { name: undefined } },
+    ...characters.map((character) => ({
+      params: { slug: character.id },
+      props: { name: character.data.name },
+    })),
+  ];
+}
+
+const { slug } = Astro.params;
+const { name } = Astro.props;
+
+const pageTitle = name
+  ? `The Fujoshi Guide to Web Development – Meet ${name}`
+  : "The Fujoshi Guide to Web Development – Our Characters";
+const ogCards = import.meta.glob<ImageMetadata>(
+  "../../images/og-cards/characters/*.png",
+  { eager: true, import: "default" }
+);
+const pageImage = slug
+  ? ogCards[`../../images/og-cards/characters/${slug}.png`]
+  : undefined;
+if (slug && !pageImage) {
+  throw new Error(
+    `Missing OG card for ${slug}. Run \`npm run og:characters\`.`
+  );
+}
+const characters = (await getCollection("characters")).toSorted(
+  (left, right) => left.data.order - right.data.order
+);
+
+const homes = [
+  { home: "the real world", id: "the-protagonist", heading: "The protagonist" },
+  {
+    home: "localhost",
+    id: "localhost",
+    heading: "Localhost",
+    intro:
+      "Localhost is where the characters that reside on your own computer live. While GitHub theoretically comes from the Cloud, he's often following Git around and (much to Terminal's chagrin) is an almost-permanent fixture of the place.",
+  },
+  {
+    home: "browserland",
+    id: "browserland",
+    heading: "Browserland",
+    intro:
+      "Browserland characters are responsible for bringing the web as we know it to life. Always hard at work to display any website in its full glory, Browserland's most famous trio (HTML, CSS & ARIA) is inseparable.",
+  },
+] as const;
+---
+
+<PageLayout pageTitle={pageTitle} pageImage={pageImage}>
+  <section>
+    <h1>Our characters</h1>
+    <div>
+      <p>
+        <strong
+          ><em>The Fujoshi Guide to Web Development</em> features gijinka (anthropomorphizations)
+          of programming languages and concepts.</strong
+        > Each of our characters is engineered from the ground up to cater to "transformative"
+        fandom—that is, people who create fanfiction, fanart, meta, and much more.
+      </p>
+    </div>
+    <ul class="selection">
+      {
+        characters.map((character) => (
+          <li>
+            <a href={`#${character.id}`}>
+              <Image
+                src={character.data.icon}
+                alt={`${character.data.name}'s beautiful face'`}
+              />
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+  {
+    homes.map(({ home, id, heading, ...rest }) => (
+      <section>
+        <h2 id={id}>
+          <a class="heading-link" href={`#${id}`}>
+            {heading}
+          </a>
+        </h2>
+        {"intro" in rest && (
+          <div>
+            <p>{rest.intro}</p>
+          </div>
+        )}
+        {characters
+          .filter((character) => character.data.home == home)
+          .map((character) => (
+            <CharacterCard character={character} />
+          ))}
+      </section>
+    ))
+  }
+
+  <section>
+    <h2 id="faqs"><a class="heading-link" href="#faqs">FAQs</a></h2>
+    <FAQs />
+  </section>
+</PageLayout>
+
+<script>
+  const charactersRoute = new URLPattern({
+    pathname: "/characters{/:slug}?{/}?",
+  });
+  const isCharactersPage = (url: URL) => charactersRoute.test(url);
+  let carriedScrollY: number | undefined;
+  document.addEventListener("astro:before-swap", (event) => {
+    const betweenCharacterPages =
+      isCharactersPage(event.from) && isCharactersPage(event.to);
+    if (betweenCharacterPages) {
+      event.viewTransition.skipTransition();
+    }
+    carriedScrollY =
+      betweenCharacterPages && event.navigationType !== "traverse"
+        ? scrollY
+        : undefined;
+  });
+  document.addEventListener("astro:after-swap", () => {
+    if (carriedScrollY !== undefined) {
+      scrollTo({ top: carriedScrollY, behavior: "instant" });
+    }
+  });
+
+  let navigationType: string | undefined;
+  document.addEventListener("astro:before-preparation", (event) => {
+    ({ navigationType } = event);
+  });
+  document.addEventListener("astro:page-load", () => {
+    if (!isCharactersPage(new URL(location.href))) {
+      return;
+    }
+    document.documentElement.classList.add("smooth-scroll");
+
+    if (navigationType === "traverse") {
+      return;
+    }
+    const slug = charactersRoute.exec(location.href)?.pathname.groups.slug;
+    if (slug) {
+      document.getElementById(slug)?.scrollIntoView();
+    }
+  });
+</script>
+
+<style>
+  @media (prefers-reduced-motion: no-preference) {
+    :global(html.smooth-scroll) {
+      scroll-behavior: smooth;
+    }
+  }
+
+  :global(h2),
+  :global(h1) {
+    margin-bottom: -12px;
+  }
+
+  section {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    width: 100%;
+  }
+  ul {
+    display: flex;
+    gap: 10px;
+    list-style: none;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-block: 20px;
+  }
+  img {
+    width: 65px;
+    height: 65px;
+    border: 3px solid var(--terminal-dark);
+    border-radius: 10px;
+  }
+
+  a:hover img {
+    border: 3px solid var(--fujo-red);
+    cursor: pointer;
+    transform: scale(1.5);
+  }
+
+  h2 {
+    margin-top: 1.5rem;
+    color: var(--fujo-light-blue);
+    font-size: 2.5rem;
+    font-weight: 800;
+  }
+</style>

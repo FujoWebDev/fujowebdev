@@ -1,0 +1,211 @@
+---
+import CharacterCard from "../../components/CharacterCard.astro";
+import Sparkles, {
+  LOGO_TEAL,
+  type SparkleConfig,
+} from "../../components/Sparkles.astro";
+
+import { getCollection } from "astro:content";
+import "../../styles/global.css";
+
+export async function getStaticPaths() {
+  const characters = await getCollection("characters");
+  return characters.map((character) => ({
+    params: { slug: character.id },
+    props: { character },
+  }));
+}
+
+const { character } = Astro.props;
+const { slug } = Astro.params;
+
+const burst = (
+  left: number,
+  top: number,
+  size: number,
+  color: string,
+  motif: SparkleConfig["motif"] = "star"
+): SparkleConfig => ({
+  left: `${left}px`,
+  top: `${top}px`,
+  size: `${size}px`,
+  color,
+  glow: "transparent",
+  motif,
+  delay: "0s",
+  dur: "0s",
+  driftDur: "0s",
+  driftDelay: "0s",
+});
+
+const RED = "#ff7976";
+const PINK = "#f4a8ab";
+const ORANGE = "#f0a63c";
+const PURPLE = "#8b7bc4";
+
+const BURST: SparkleConfig[] = [
+  // Around the logo.
+  burst(700, 13, 22, RED, "heart"),
+  burst(662, 12, 14, ORANGE),
+  burst(612, 15, 16, PURPLE),
+  burst(1180, 70, 30, ORANGE),
+  burst(1168, 200, 44, RED, "heart"),
+  burst(1186, 252, 16, LOGO_TEAL),
+  burst(1166, 295, 22, PURPLE, "branch"),
+  burst(1184, 345, 18, PINK, "heart"),
+  burst(1170, 395, 14, ORANGE),
+  // Spilling from the logo into the card's empty top-right corner.
+  burst(1085, 162, 26, RED, "heart"),
+  burst(1040, 156, 18, ORANGE),
+  burst(1003, 172, 12, LOGO_TEAL),
+  burst(962, 158, 16, PINK, "heart"),
+  burst(1108, 200, 14, PURPLE),
+  // Bottom left.
+  burst(34, 562, 40, RED, "heart"),
+  burst(38, 480, 26, ORANGE),
+  burst(28, 415, 20, LOGO_TEAL, "branch"),
+  burst(110, 608, 22, PURPLE),
+  burst(170, 612, 16, PINK, "heart"),
+  burst(230, 606, 12, LOGO_TEAL),
+  // A few strays to tie the corners together.
+  burst(30, 34, 22, PINK, "heart"),
+  burst(420, 18, 14, LOGO_TEAL),
+  burst(640, 612, 18, LOGO_TEAL, "heart"),
+  burst(1150, 606, 16, ORANGE),
+];
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://use.typekit.net/exd6spk.css" />
+  </head>
+  <body>
+    <div class="og">
+      <Sparkles
+        class="burst"
+        sparkles={BURST}
+        animated={false}
+        inline={false}
+        fill
+      />
+      <img class="logo" src="/images/bobatan-logo.png" alt="" />
+      <div class="card">
+        <CharacterCard character={character} />
+        <p class="url">fujoweb.dev/characters/{slug}</p>
+      </div>
+    </div>
+  </body>
+</html>
+
+<style>
+  :global(body) {
+    display: block;
+    padding: 0;
+  }
+
+  .og {
+    position: relative;
+    width: 1200px;
+    height: 630px;
+    overflow: hidden;
+    background-color: var(--fujo-cream);
+  }
+
+  .og :global(.burst) {
+    z-index: 2;
+  }
+
+  .logo {
+    position: absolute;
+    z-index: 1;
+    top: 8px;
+    right: 24px;
+    width: 440px;
+    transform: rotate(3deg);
+  }
+
+  .card {
+    position: absolute;
+    top: 28px;
+    left: 66px;
+    width: 1060px;
+    height: 562px;
+  }
+
+  .card :global(article) {
+    height: 100%;
+    align-content: center;
+    grid-template-rows: 1fr auto auto auto auto 1fr;
+    grid-template-columns: 240px 1fr 1fr;
+    column-gap: 48px;
+    grid-template-areas:
+      "character . ."
+      "character name name"
+      "character likes dislikes"
+      "character about about"
+      "character tropes tropes"
+      "character . .";
+    padding: 40px 40px 72px;
+    border-width: 3px;
+    border-radius: 18px;
+    box-shadow: 8px 8px 0 var(--fujo-red);
+  }
+
+  .card :global(.about p ~ p),
+  .card :global(.trivia) {
+    display: none;
+  }
+
+  .card :global(.about p) {
+    font-size: 1.15rem;
+    line-height: 1.4;
+  }
+
+  .card :global(article img) {
+    max-height: 420px;
+    justify-self: center;
+    translate: 0 16px;
+  }
+
+  .card :global(article h2) {
+    font-size: 3.8rem;
+    line-height: 1;
+  }
+
+  .card :global(article h3) {
+    font-size: 1.8rem;
+    margin-bottom: 4px;
+  }
+
+  .card :global(article li) {
+    font-size: 1.2rem;
+    line-height: 1.3;
+    margin-bottom: 6px;
+  }
+
+  .card :global(.tropes h3) {
+    margin-bottom: 12px;
+  }
+
+  .card :global(.tropes ul) {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 28px;
+  }
+
+  .card :global(article .icon) {
+    font-size: 1.1rem;
+    align-self: center;
+  }
+
+  .url {
+    position: absolute;
+    right: 40px;
+    bottom: 26px;
+    margin: 0;
+    font-family: "freude", sans-serif;
+    font-size: 1.4rem;
+    color: var(--terminal-dark);
+  }
+</style>

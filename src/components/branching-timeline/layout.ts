@@ -61,7 +61,7 @@ interface CorridorSegment {
   orders: [number, ...number[]];
 
   from: number;
-  to: number;
+  until: number;
 }
 
 interface CorridorAssignment {
@@ -110,7 +110,7 @@ function corridorSegmentsOf(run: BranchRun): CorridorSegment[] {
         position === 0
           ? run.beginsAfterMergeAt ?? group.orders[0]
           : group.orders[0],
-      to: next ? next.orders[0] : run.mergesAt ?? group.last,
+      until: next ? next.orders[0] : run.mergesAt ?? group.last,
     };
   });
 }
@@ -127,9 +127,9 @@ export function assignCorridors(plan: TimelinePlan): CorridorAssignment {
       let slot = slotEnds.findIndex((end) => end <= segment.from);
       if (slot === -1) {
         slot = slotEnds.length;
-        slotEnds.push(segment.to);
+        slotEnds.push(segment.until);
       } else {
-        slotEnds[slot] = segment.to;
+        slotEnds[slot] = segment.until;
       }
       segment.index = slot;
     }
@@ -382,18 +382,18 @@ function layoutRun({ build, run }: RunBuild): void {
   });
 
   let from = first;
-  for (const to of points.slice(1)) {
-    const path = edgePath({ build, from, to });
+  for (const target of points.slice(1)) {
+    const path = edgePath({ build, from, target });
     if (path !== null) {
       build.segments.push({
         kind: "branch",
-        lane: to.side,
-        atOrder: to.order,
+        lane: target.side,
+        atOrder: target.order,
         runKey: run.key,
         path,
       });
     }
-    from = to;
+    from = target;
   }
 
   mergeIntoMain({ build, run, last: from });
@@ -429,32 +429,32 @@ function forkPath({
 function edgePath({
   build,
   from,
-  to,
+  target,
 }: {
   build: RailBuild;
   from: CorridorPoint;
-  to: CorridorPoint;
+  target: CorridorPoint;
 }): string | null {
-  if (to.posY <= from.posY) {
+  if (target.posY <= from.posY) {
     build.diagnostics.push({
       code: "non-monotonic-edge",
-      order: to.order,
+      order: target.order,
       detail: String(from.order),
     });
     return null;
   }
-  if (to.posX === from.posX) {
-    return verticalPath({ posX: from.posX, fromY: from.posY, toY: to.posY });
+  if (target.posX === from.posX) {
+    return verticalPath({ posX: from.posX, fromY: from.posY, toY: target.posY });
   }
   return descendThenBend({
     from,
-    toX: to.posX,
-    toY: to.posY,
+    toX: target.posX,
+    toY: target.posY,
     bend: bendRoom({
       build,
-      available: to.posY - from.posY,
+      available: target.posY - from.posY,
       wanted: build.policy.bend,
-      order: to.order,
+      order: target.order,
       detail: "cross-side",
     }),
   });

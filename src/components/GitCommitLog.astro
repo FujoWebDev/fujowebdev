@@ -1,0 +1,173 @@
+---
+import { Icon } from "astro-icon/components";
+import { parseInline } from "marked";
+
+interface Props {
+  entries: {
+    message: string;
+    state?: "complete" | "pending";
+    hash?: string;
+    type?: string;
+    tone?: "teal" | "purple" | "red";
+  }[];
+  variant?: "topics" | "status";
+}
+
+const { entries, variant = "topics" } = Astro.props;
+const isStatus = variant === "status";
+---
+
+<ul class:list={["log", { topics: !isStatus }]} role="list">
+  {
+    entries.map((entry) => (
+      <li class:list={["commit", { pending: entry.state === "pending" }]}>
+        {entry.state && (
+          <span class="visually-hidden">
+            {entry.state === "complete" ? "Done" : "Pending"}:{" "}
+          </span>
+        )}
+        <span class="graph-node" aria-hidden="true">
+          {entry.state === "pending" ? (
+            <span class="node-pending" />
+          ) : (
+            <Icon name="roadmap/commit" />
+          )}
+        </span>
+        {isStatus && (
+          <span class="hash" aria-hidden="true">
+            {entry.hash ?? (entry.state === "pending" ? "······" : "")}
+          </span>
+        )}
+        <span class="message">
+          {isStatus && entry.type && (
+            <>
+              <strong class:list={["type", entry.tone]}>
+                {entry.type}:
+              </strong>{" "}
+            </>
+          )}
+          <span class="text" set:html={parseInline(entry.message)} />
+        </span>
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  .log {
+    --log-teal: #14967c;
+    --log-red: #e05a57;
+    --log-purple: #6a6fc4;
+    --log-muted: #615b7d;
+    --log-row: 10px;
+    --log-mono:
+      "Monaspace Neon", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--log-row);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .commit {
+    position: relative;
+    display: grid;
+    grid-template-columns: 18px auto 1fr;
+    align-items: baseline;
+    column-gap: 12px;
+    margin: 0;
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  .commit:not(:last-child)::before {
+    content: "";
+    position: absolute;
+    top: 0.75em;
+    bottom: calc(-1 * (var(--log-row) + 0.75em));
+    left: 8.5px;
+    width: 1px;
+    background: repeating-linear-gradient(
+      to bottom,
+      var(--log-purple) 0 2px,
+      transparent 2px 4.5px
+    );
+  }
+
+  .graph-node {
+    position: relative;
+    z-index: 1;
+    align-self: start;
+    display: grid;
+    place-items: center;
+    height: 1.5em;
+    color: var(--log-teal);
+  }
+
+  .graph-node::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: var(--fujo-cream);
+  }
+
+  .graph-node :global(svg) {
+    width: 13px;
+    height: 13px;
+  }
+
+  .node-pending {
+    width: 9px;
+    height: 9px;
+    border: 1.5px dashed currentColor;
+    border-radius: 50%;
+  }
+
+  .hash,
+  .type {
+    font-family: var(--log-mono);
+  }
+
+  .hash {
+    color: color-mix(in oklab, var(--log-muted) 70%, transparent);
+    font-size: 0.8rem;
+  }
+
+  .topics .commit {
+    grid-template-columns: 18px 1fr;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--terminal-dark);
+  }
+
+  .topics .graph-node :global(svg) {
+    width: 15px;
+    height: 15px;
+  }
+
+  .type {
+    font-weight: 700;
+  }
+
+  .type.teal {
+    color: var(--log-teal);
+  }
+
+  .type.red {
+    color: var(--log-red);
+  }
+
+  .type.purple {
+    color: var(--log-purple);
+  }
+
+  .text :global(strong) {
+    font-weight: 800;
+  }
+</style>

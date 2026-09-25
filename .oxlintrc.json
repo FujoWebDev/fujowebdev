@@ -18,7 +18,9 @@
       "error",
       {
         "min": 3,
-        "exceptions": []
+        "properties": "never",
+        "checkGeneric": false,
+        "exceptions": ["x", "y", "id", "fs", "db", "e"]
       }
     ],
     "no-console": [

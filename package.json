@@ -4,6 +4,7 @@
   "type": "module",
   "scripts": {
     "astro": "astro",
+    "prebuild": "node src/integrations/character-og-cards/generate.ts",
     "build": "astro check && astro build",
     "dev": "astro dev",
     "preview": "astro preview",
@@ -11,7 +12,8 @@
     "lint": "oxlint",
     "lint:fix": "oxlint --fix",
     "format": "oxfmt",
-    "format:check": "oxfmt --check"
+    "format:check": "oxfmt --check",
+    "og:characters": "node src/integrations/character-og-cards/generate.ts --force"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.10",
@@ -26,18 +28,20 @@
     "astro-icon": "^1.2.0",
     "marked": "^12.0.1",
     "slugify": "^1.6.9",
-    "typescript": "^5.6.2",
+    "typescript": "^6.0.3",
     "zod": "^4.5.4"
   },
   "devDependencies": {
+    "@types/node": "^22.20.4",
     "oxfmt": "^0.66.0",
     "oxlint": "^1.81.0",
     "oxlint-tsgolint": "^7.0.2001",
+    "playwright": "^1.63.0",
     "prettier": "^3.2.5",
     "prettier-plugin-astro": "^0.14.1",
-    "social-links": "^1.14.0"
+    "vite": "^7.3.6"
   },
   "engines": {
-    "node": ">=22.12.0"
+    "node": ">=22.18.0"
   }
 }

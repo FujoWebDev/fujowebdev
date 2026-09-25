@@ -1,0 +1,14 @@
+{
+  "hash": "029ccbd7a77b8603e8e4410d5beb1a5f5d59831514a5a6da72281be2994fd785",
+  "inputs": [
+    "astro.config.mjs",
+    "public/images/bobatan-logo.png",
+    "src/components/CharacterCard.astro",
+    "src/components/Sparkles.astro",
+    "src/content/characters",
+    "src/integrations/character-og-cards/OgCardPage.astro",
+    "src/integrations/character-og-cards/generate.ts",
+    "src/integrations/character-og-cards/index.ts",
+    "src/styles/global.css"
+  ]
+}
