@@ -1,115 +1,65 @@
 ---
-import { Image } from "astro:assets";
-import characterx from "../images/characterx.png";
-import charactery from "../images/charactery.png";
-import canonrules from "../images/canonrules.gif";
+import { getCollection, render } from "astro:content";
+import { parseInline } from "marked";
+
+const faqs = (
+  await getCollection("faqs", ({ data }) => data.type === "character")
+).sort((a, b) => a.id.localeCompare(b.id));
+const renderedFaqs = await Promise.all(
+  faqs.map(async (faq) => ({
+    // Drop the ordering prefix ("01-fanworks" -> "faq-fanworks") so links
+    // survive reordering.
+    anchor: `faq-${faq.id.replace(/^\d+-/, "")}`,
+    title: await parseInline(faq.data.title),
+    Content: (await render(faq)).Content,
+  })),
+);
 ---
 
-<article>
-  <details>
-    <summary>Can I make fanworks with your characters?</summary>
+{renderedFaqs.map(({ anchor, title, Content }) => (
+  <article>
+    <details id={anchor}>
+      <summary>
+        <span class="question" set:html={title} />
+        <a class="faq-link" href={`#${anchor}`} aria-label="Link to this question">
+          #
+        </a>
+      </summary>
+      <div class="answer">
+        <Content />
+      </div>
+    </details>
+  </article>
+))}
 
-    <p>
-      Yes, <em>please</em>. Fanfic, fanart, memes, meta, elaborate shipping
-      charts... literally anything (and we really do mean <em>anything</em>)
-      your fannish heart desires!
-    </p>
-    <p>
-      We're making these characters for fandom, and thus, <strong>you</strong> to
-      play with. Consider them your dolls, so go ahead and give your faves a happy
-      ending, put them through the wringer, and smash them together however you please.
-    </p>
-    <p>
-      We're <em>so</em> excited to see what you make. If you feel like sharing, tag
-      us on socials so we can gush about it!
-    </p>
-  </details>
-</article>
-
-<article>
-  <details>
-    <summary>How much room is there for headcanons?</summary>
-
-    <p>
-      <em>All</em> the room. Our designs and character profiles are just a starting
-      point, not canon <em>per se</em>. They're not meant to limit your
-      imagination, but to spark your interest instead.
-    </p>
-    <figure class="gif">
-      <img
-        src={canonrules.src}
-        width={canonrules.width}
-        height={canonrules.height}
-        alt="GIF of Captain Barbossa from Pirates of the Caribbean saying 'The canon is more what you'd call guidelines than actual rules.'"
-      />
-    </figure>
-    <p>
-      We welcome your takes on our characters' backgrounds, personalities,
-      genders, relationships; all of it. We can only hope these characters stick
-      with you long enough to inspire you that way.
-    </p>
-    <p>
-      For our part, we use he/him for the programming gijinka in official
-      materials as a nod to the genres that inspired FujoGuide. That's our
-      convention, it doesn't need to be yours!
-    </p>
-  </details>
-</article>
-
-<article>
-  <details>
-    <summary>What goes into designing the cast?</summary>
-
-    <p>
-      We bring the characters to life by combining programming concepts and our
-      favorite character tropes. We decide how characters fit together and
-      develop their looks, personalities and quirks to make them feel unique and
-      memorable.
-    </p>
-    <p>
-      The research stage involves pulling bits from our own experiences and
-      those around us and, of course, going down plenty of rabbit holes. When we
-      need a perspective we don't have, we bring in outside consultants. For
-      CSS, that meant working with <a href="/contributors/moon">Moon</a>, our
-      Mi'kmaq sensitivity reader, and a deaf sensitivity reader who prefers to
-      remain anonymous. You can see all our collaborators on our
-      <a href="/contributors">contributors page</a>.
-    </p>
-  </details>
-</article>
-
-<article>
-  <details>
-    <summary>Are there more characters upcoming?</summary>
-
-    <p>
-      Oh, so many. We started developing the cast before we'd settled on what
-      Volume 0 would cover, which means we built out a lot of characters who
-      haven't had their turn in the spotlight yet.
-    </p>
-    <p>Here's a little sneak peek:</p>
-    <figure>
-      <Image
-        src={characterx}
-        alt="Sketches of the unreleased FujoGuide character [Redacted]. He has a thicc build, a medium-dark skin tone, and tightly curled black hair shown in different styles. On the left is a nearly full-body drawing of him wearing a patchwork sweater, smiling, with a flat top hair style, and holding a steaming mug. The artist's notes read 'dimples? uwu'. In the middle are two side profiles with hair ideas: the top one has a flat top with fade hair style and the bottom one has box braids on top with a fade. The artist's notes read 'yarn braids :3'. On the right is a drawing of him knitting with his elbows on the table and his tongue sticking out in focus mode. He is wearing a white long-sleeve shirt and a very short hairstyle. The artist's notes read 'focusing too hard'."
-      />
-      <Image
-        src={charactery}
-        alt="Sketches of the unreleased FujoGuide character [Redacted]. He has a thin build, a light skin tone, and long hair swept to one side and gathered in a ponytail. He is neatly dressed in a button down shirt, collared vest, dress pants, driving gloves, and oval bottom rim glasses. On the left, he is holding and reading a large book. In the middle, he is sitting cross-legged and looking thoughtful with a finger on his lips. On the right, he is walking down a grand staircase with one hand on the railing and a pencil behind his ear."
-      />
-    </figure>
-    <p>
-      We can't go into many details because they will be featured in future
-      volumes, but know that there are so, so many more hot anime boys waiting
-      for you.
-    </p>
-  </details>
-</article>
+<script>
+  // Arriving on a question's anchor should show its answer, not a closed row.
+  const openFromHash = () => {
+    const id = decodeURIComponent(location.hash.slice(1));
+    const target = id && document.getElementById(id);
+    if (target instanceof HTMLDetailsElement) {
+      target.open = true;
+    }
+  };
+  // Run once now too: on a fresh load, astro:page-load can fire before this
+  // script has registered its listener.
+  openFromHash();
+  document.addEventListener("astro:page-load", openFromHash);
+  window.addEventListener("hashchange", openFromHash);
+  // The client router updates same-page hashes with pushState, which doesn't
+  // fire hashchange, so the link icon opens its question directly.
+  document.addEventListener("click", (event) => {
+    const link =
+      event.target instanceof Element && event.target.closest(".faq-link");
+    if (link) {
+      link.closest("details")!.open = true;
+    }
+  });
+</script>
 
 <style>
   article {
     background-color: white;
-    padding: 25px 30px;
     border-radius: 10px;
     row-gap: 10px;
     box-shadow: 2px 2px 0px 0px var(--text-color-disabled);
@@ -118,46 +68,89 @@ import canonrules from "../images/canonrules.gif";
     border: 2px dashed var(--terminal-dark);
   }
 
+  details {
+    width: 100%;
+  }
+
+  /* The padding lives on the summary so the whole top of the card toggles,
+     not just the title text. */
   summary {
+    padding: 25px 30px;
+    cursor: pointer;
     font-family: "freude", sans-serif;
     font-weight: 400;
     color: var(--fujo-red);
     font-size: larger;
   }
 
-  p,
-  ul {
+  /* The global `* { font-family }` reset would otherwise put the title back
+     in nunito. */
+  .question {
+    font-family: inherit;
+  }
+
+  details[open] summary {
+    padding-bottom: 10px;
+  }
+
+  .answer {
+    padding: 0 30px 25px;
+  }
+
+  .faq-link {
+    margin-left: 0.4em;
+    color: var(--text-color-disabled);
+    font-family: inherit;
+    font-weight: inherit;
+    text-decoration: none;
+    opacity: 0;
+  }
+
+  summary:hover .faq-link,
+  .faq-link:focus-visible {
+    opacity: 1;
+  }
+
+  .faq-link:hover {
+    color: var(--fujo-pink);
+    text-decoration: none;
+  }
+
+  article :global(p),
+  article :global(ul) {
     line-height: 1.8;
     padding-inline: 10px;
   }
-  ul {
+  article :global(ul) {
     margin-top: 1rem;
     padding-left: 1rem;
   }
 
-  li {
+  article :global(li) {
     margin-left: 20px;
   }
 
-  figure {
+  :global(figure) {
     display: flex;
     align-items: center;
     justify-content: center;
     margin-top: 10px;
     margin-bottom: 10px;
+    max-width: 100%;
   }
 
-  img {
-    min-width: 300px;
+  :global(figure img) {
+    min-width: 0;
+    width: 50%;
     max-width: 50%;
     height: auto;
   }
 
-  figure.gif {
+  :global(figure.gif) {
     margin-inline: 0;
   }
 
-  figure.gif img {
+  :global(figure.gif img) {
     max-width: 80%;
   }
 
@@ -168,16 +161,28 @@ import canonrules from "../images/canonrules.gif";
       align-content: center;
       align-items: center;
       max-width: 90vw;
+    }
+
+    summary {
       padding: 18px 20px;
     }
 
-    figure {
+    .answer {
+      padding: 0 20px 18px;
+    }
+
+    :global(figure) {
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       margin-top: 10px;
       margin-bottom: 10px;
+    }
+
+    :global(figure img) {
+      width: 100%;
+      max-width: 100%;
     }
   }
 </style>

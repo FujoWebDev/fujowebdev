@@ -40,6 +40,17 @@ const characterCollection = defineCollection({
     }),
 });
 
+const faqsCollection = defineCollection({
+  loader: glob({
+    pattern: "**/*.mdx",
+    base: "./src/content/faqs",
+  }),
+  schema: z.object({
+    type: z.literal("character"),
+    title: z.string(),
+  }),
+});
+
 const inlineMarkdownSchema = z
   .string()
   .transform(async (source) => await parseInline(source));
@@ -119,5 +130,6 @@ const roadmapCollection = defineCollection({
 export const collections = {
   contributors: contributorsCollection,
   characters: characterCollection,
+  faqs: faqsCollection,
   roadmap: roadmapCollection,
 };
